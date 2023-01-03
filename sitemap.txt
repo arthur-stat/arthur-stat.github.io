@@ -1,6 +1,6 @@
-http://example.com/2022/12/31/SVM%E7%90%86%E8%AE%BA/
 http://example.com/tags/index.html
-http://example.com/2022/12/25/test-my-site-1/
-http://example.com/2022/12/25/test-my-site/
+http://example.com/categories/index.html
+http://example.com/2022/12/31/SVM%E7%90%86%E8%AE%BA/
 http://example.com/
-http://example.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/
+http://example.com/tags/SVM/
+http://example.com/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/
