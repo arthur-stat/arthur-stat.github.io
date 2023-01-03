@@ -1,4 +1,4 @@
-http://example.com/2022/12/31/SVM%E7%9A%84%E6%95%B0%E7%90%86%E8%A7%82%E7%82%B9/
+http://example.com/2022/12/31/SVM%E7%90%86%E8%AE%BA/
 http://example.com/tags/index.html
 http://example.com/2022/12/25/test-my-site-1/
 http://example.com/2022/12/25/test-my-site/

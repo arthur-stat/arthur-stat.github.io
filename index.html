@@ -259,7 +259,7 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/31/SVM%E7%9A%84%E6%95%B0%E7%90%86%E8%A7%82%E7%82%B9/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/12/31/SVM%E7%90%86%E8%AE%BA/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -273,7 +273,7 @@ mjx-container[display="true"] + br {
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2022/12/31/SVM%E7%9A%84%E6%95%B0%E7%90%86%E8%A7%82%E7%82%B9/" class="post-title-link" itemprop="url">SVM的数理观点</a>
+            <a href="/2022/12/31/SVM%E7%90%86%E8%AE%BA/" class="post-title-link" itemprop="url">SVM理论</a>
         </h2>
 
         <div class="post-meta">
@@ -290,7 +290,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-01-03 06:43:37" itemprop="dateModified" datetime="2023-01-03T06:43:37+08:00">2023-01-03</time>
+                <time title="Modified: 2023-01-03 21:21:38" itemprop="dateModified" datetime="2023-01-03T21:21:38+08:00">2023-01-03</time>
               </span>
 
           
@@ -304,463 +304,15 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>​        作为数学与统计学院统计系的学生，在修完数学课程如实变函数论、近世代数与泛函分析后，学院相继为全体学生开设了最优化理论、统计计算、多元统计分析与回归分析等多门统计课程，唯独不统一在学院开设机器学习。优化理论与统计计算算法在机器学习中扮演了重要角色，譬如大名鼎鼎的拟牛顿法之代表BFGS算法、用于非凸优化问题的退火算法和遗传算法都有广泛的应用，但学习了这些理论却不开设后续课程实属遗憾，这些理论当然也就没有了用武之地，成了一纸空谈。通过参考多方资料，我在没有教师帮助下自学了一些机器学习理论，希望结合数学理论与数理统计学方法，加深对机器学习的理解。本文主题是记录一些我关于“SVM”的想法与感悟，由于才疏学浅，只能做到泛泛而谈，如有纰漏与谬误恳请与我联系。</p>
-<p>​        个人认为，许多机器学习算法都或隐或明地蕴含了不少的数学与统计思想，如SVM的优化涉及最优化理论与统计计算算法（退火算法、遗传算法），核函数的提出源自希尔伯特空间算子理论，正则化与$L^p$空间息息相关，核方法的理论支持Mercer定理更是一个经典的泛函分析定理。本文大概读者具有一定的回归分析基础、优化理论基础与泛函分析基础时，阅读是没有问题的。</p>
-<p>​        鹦鹉学舌也好，拾人牙慧也罢，普通学生，普通家庭，确实没有动力与能力独立开创、推广什么新理论，这篇文档的意义可能是十年后再回首，说明本科时的我曾经有试图学习些什么过吧。</p>
-<p>​        为方便表述，记$\Vert\boldsymbol{x}\Vert$表示$\boldsymbol{x}$的$L^2$范数的算术平方根$\sqrt{ {\Vert\boldsymbol{x}\Vert}^2_2}$，即欧氏空间意义下的距离；</p>
-<p>​        MSE：均方误差，$MSE(\hat{\boldsymbol{\beta}})=\mathbb{E}{\Vert \hat{\boldsymbol{\beta}}-\boldsymbol{\beta} \Vert}^2_2=tr\left(Cov(\hat{\boldsymbol{\beta}})\right)+{\Vert \mathbb{E}\hat{\boldsymbol{\beta}}-\boldsymbol{\beta} \Vert}^2_2$，当估计$\hat{\boldsymbol{\beta}}$无偏时，有$MSE(\hat{\boldsymbol{\beta}})=\mathbb{E}(\hat{\boldsymbol{\Vert\beta}\Vert^2_2})-{\boldsymbol{\beta}}^T\boldsymbol{\beta}$，即方差之和。MSE综合考虑了无偏性与有效性，是常用的评估标准；</p>
-<p>​        广义拉格朗日乘子法与KKT条件：用隐函数组定理是容易证明的，在任意一本数学分析与最优化理论教材都有证明过程。</p>
-<p>[TOC]</p>
-<h1 id="SVM（SVC）"><a href="#SVM（SVC）" class="headerlink" title="SVM（SVC）"></a>SVM（SVC）</h1><h2 id="SVM概论"><a href="#SVM概论" class="headerlink" title="SVM概论"></a>SVM概论</h2><h3 id="SVM的思想"><a href="#SVM的思想" class="headerlink" title="SVM的思想"></a>SVM的思想</h3><p>​        SVM（支持向量机，Support Vector Machine）是一种有监督学习方法，属广义线性分类器家族，其目的是对数据进行二分类，既可以通过寻找一个当前样本空间的分割超平面进行线性分类，也可以通过核方法在更高维空间中寻求高维超平面进行非线性分类，并且可以被应用在回归分析。在我看来，SVM的想法是自然的，这与线性回归中OLS的思路如出一辙。如果说OLS的目的是获得使得RSS最小的估计，则二分类SVM的目的是获得某个超平面，使得其两边支持向量到超平面距离最大且相等。在高斯-马尔可定理条件成立情况设下，线性模型的OLS得到BLUE，误差在MSE意义下最小，对于良好的数据集大部分样本点都应该以较小的距离分布在拟合直线两侧；而SVM试图找出一个高维的超平面，使两类样本距离这个超平面最近的距离相等且最大，如下图所示。显然，三条一维直线中$H_3$的划分要优于$H_1$和$H_2$，拥有更强的分类能力。</p>
-<p>​        但OLS与SVM并非高度相似，在信息利用上有明显的差异：OLS利用了所有的样本（最小化RSS），而SVM只利用到了支持向量，非支持向量的任何改变都不会对结果产生丝毫影响。</p>
-<h3 id="SVM在应用中的的优缺点"><a href="#SVM在应用中的的优缺点" class="headerlink" title="SVM在应用中的的优缺点"></a>SVM在应用中的的优缺点</h3><p>​        SVM在小样本、非线性以及高维模式识别等方面有出色的表现，且容易结合其他方法进行推广应用，在文本、超文本分类与生物、医学及其他科学领域已经有了广泛的运用，一些浅层语义分析也基于SVM；SVM也存在作为彻底的有监督学习，能利用的样本必需有完整的标记（决策树方法不需要）、只适用于二分类任务、极大样本量下内存开销大与得到的模型参数难以解释（业务上线性回归参数便有极强的可解释性，SVM通常不能做到）等潜在问题。</p>
-<p>​        对于扁平化数据，选择适合的核函数与正则化方式至关重要，否则非常容易导致过拟合，这是SVM最大的变数。</p>
-<p>​        与一些神经网络算法不同，SVM目前已有严格的数学与统计理论支持。SVM基于Vapnik 和 Chervonenkis提出的Vapnik-Chervonenkis 理论（下称VC理论）与结构风险最小原理，属于非概率二元线性分类器，并没有严格按照随机抽样的原则抽取样本，无法确定抽样误差，因此大数律与中心极限定理等极限理论也并不适用；同时也使得他并没有过分在意样本空间的维数，以至于为了达到非线性分类的目的可以多次升维，而且折中了精度（Accuracy）与学习能力的原理令SVM有较好的泛化能力，但这需要对SVM进行一些改进以达到更好的效果，比如软间隔的方法。</p>
-<p>​        此外，非线性核的SVM理论上时间复杂度不低于$O(n^2)$，因此人们基于SVM理论研究出了多种近似算法，比如CVM、随即傅里叶特征算法、Nyström算法等。</p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20221230235905297.png" alt="关于某地区GDP的一个线性回归"  /></p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20221230234456041.png" alt="哪条线是我们希望的最佳分类？" style="zoom: 50%;" /></p>
-<h2 id="支持向量"><a href="#支持向量" class="headerlink" title="支持向量"></a>支持向量</h2><p>​        假设我们需要找到的分割超平面为$\boldsymbol{w}^T\boldsymbol{x}+b=0$，其中$\boldsymbol{w}$为超平面的法向量（不一定单位化）；从空间解析几何角度看，$\boldsymbol{w}$表示超平面的方向，$b$表示位移，即超平面到远点的距离。</p>
-<p>​        根据空间解析几何理论，样本空间中任意一点$\boldsymbol{x}_0$到超平面$(\boldsymbol{w},b)$的欧式距离$d_0$为</p>
-<script type="math/tex; mode=display">
-d_0=\frac{\vert\boldsymbol{w}^T\boldsymbol{x}+b\vert}{\Vert\boldsymbol{w}\Vert}</script><p>​    不妨设因变量$y_i$取值为$-1$或$1$，如果超平面能正确对样本进行分类，方便起见，我们希望找到一个超平面$(\boldsymbol{w},b)$，使得当$\boldsymbol{w}^T\boldsymbol{x}_i+b\leqslant-1$则样本点位于超平面“下方”，$y_i=-1$；当$\boldsymbol{w}^T\boldsymbol{x_i}+b\geqslant1$则样本点位于超平面“上方”，$y_i=1$，即</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\boldsymbol{w}^T\boldsymbol{x}_i+b\leqslant-1,\,\,& &此时y_i=-1\\
-&\boldsymbol{w}^T\boldsymbol{x}_i+b\geqslant1,\,\,& &此时y_i=1\\
-\end{aligned}
-\right.
-\end{equation}
-\tag{1}</script><p>​        $(1)$可以将两个不等式综合为一式$y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1$，方便我们后续解决优化问题（这里也能看出，为什么我们设$y_i$的值域为${-1,1}$）；此外，易见在这样的定义下$\forall\boldsymbol{x}_i$，恒有$\vert\boldsymbol{w}^T\boldsymbol{x}_i+b\vert\geqslant1$。</p>
-<p>​        令使得$(1)$式中任意一不等式等号成立的样本为支持向量（Support Vector），直观上看支持向量全部落在决策边界上，是距离超平面最近的一组样本。当$\Vert\boldsymbol{w}\Vert$确定，$d<em>0$仅与$\vert\boldsymbol{w}^T\boldsymbol{x}+b\vert$有关，由距离公式与所定义的$(1)$式得出，支持向量$\boldsymbol{x}’$一定满足$d</em>{\boldsymbol{x}’}=\frac{1}{\Vert\boldsymbol{w}\Vert}$（当且仅当$\vert\boldsymbol{w}^T\boldsymbol{x}_i+b\vert=1$时距离最小），因此两个互类支持向量到超平面距离之和为$\gamma=\frac{2}{\Vert\boldsymbol{w}\Vert}$，称之为间隔，可以认为间隔是互异决策边界的距离。</p>
-<script type="math/tex; mode=display">
-间隔=\frac{2}{\Vert\boldsymbol{w}\Vert}</script><p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20221231000256146.png" alt="间隔的直观展示" style="zoom:50%;" /></p>
-<h2 id="优化问题"><a href="#优化问题" class="headerlink" title="优化问题"></a>优化问题</h2><p>​        SVM中一般考虑对直观下约束优化问题的拉格朗日对偶问题进行优化，相对原优化目标效率更高。</p>
-<p>​        大体上，我们的求解办法是通过优化方法计算出对偶问题的解（即拉格朗日乘子的解），然后代入KKT条件计算出$b$，再同时将拉格朗日乘子与解得的$b$代入KKT条件的稳定性条件$1$即解出$\boldsymbol{w}$，至此我们得到超平面的解析式。</p>
-<h3 id="支持向量与对偶问题"><a href="#支持向量与对偶问题" class="headerlink" title="支持向量与对偶问题"></a>支持向量与对偶问题</h3><p>​        容易想到，一般分割超平面间隔越大，分类能力越强，因为越大的分割对误差有更大的容许，对噪声导致的数据波动有更高的忍耐，而不至于某样本稍稍偏离主体便被错误划分为另一类。</p>
-<p>​        直观来看，为了找到这个最合适的超平面，我们需要解决一个如下的约束下最大化分隔$\frac{2}{\Vert\boldsymbol{w}\Vert}$的优化问题</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\max\limits_{(\boldsymbol{w},b)}\frac{2}{\Vert\boldsymbol{w}\Vert}\\
-&\ s.t.\ y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1\,\,for\,\,\forall{i}\\
-\end{aligned}
-\right.
-\end{equation}</script><p>​        值得注意的是$b$对这个优化问题的结果也有影响，考虑到$y_i=\pm1=y^{-1}_i\ \Leftrightarrow\ b=\boldsymbol{w}^T\boldsymbol{x}_i-y_i$，因此$b$的大小确会影响约束优化的解。为了方便优化，我们希望将其转化为一个凸优化问题，考虑到最小化$\frac{2}{\Vert\boldsymbol{w}\Vert}$与最大化${\Vert\boldsymbol{w}\Vert}^2$是等价的，于是可以改写求解超平面问题为</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\min\limits_{(\boldsymbol{w},b)}\frac{1}{2}\Vert\boldsymbol{w}\Vert^2\\
-&\ s.t.\ y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1\,\,for\,\,\forall{i}\\
-\end{aligned}
-\right.
-\end{equation}
-\tag{2}</script><p>​        由凸优化理论，拉格朗日对偶函数一定是凹函数、弱对偶的，且凹性与原目标函数与约束无关；当原优化问题为凸优化问题时，即满足Slater条件，拉格朗日对偶问题一定是强对偶的，$(2)$便是一个典型的凸优化问题，因此其拉格朗日对偶问题与$(2)$自身等价。再考虑到SVM优化目标$(2)$，考虑他的拉格朗日乘子的优化比直接考虑$\boldsymbol{w}$的优化更简便，对偶问题处理起来也会更高效（也能看出拉格朗日乘子具有一定的约束意义，能帮助我们讨论模型），下求解$(2)$的拉格朗日对偶问题，这根据最优化理论不难求出，应用广义拉格朗日乘子法，首先写出不等式约束问题下的拉格朗日函数</p>
-<script type="math/tex; mode=display">
-L(\boldsymbol{w},b;\boldsymbol{\lambda})=\frac{1}{2}\Vert\boldsymbol{w}\Vert^2-\sum^n_{i=1}\lambda_i\left(y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\right)=\frac{1}{2}\boldsymbol{w}^T\boldsymbol{w}+\left(1-y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\right)\boldsymbol{\lambda}^T\boldsymbol{1}</script><p>​        分别令$L$对$\boldsymbol{w}$与$b$偏导为$0$，得到$(3)$、$(4)$</p>
-<script type="math/tex; mode=display">
-稳定性条件1\ \ \frac{\partial L}{\partial\boldsymbol{w}}=\boldsymbol{w}-\sum^n_{i=1}\lambda_iy_i\boldsymbol{x}_i=0\tag{3}</script><script type="math/tex; mode=display">
-稳定性条件2\ \ \frac{\partial L}{\partial b}=\sum^n_{i=1}\lambda_iy_i=0\tag{4}</script><script type="math/tex; mode=display">
-\begin{equation}
-for\,\,\forall{i}\ \ \ \left\{
-\begin{aligned}
-&原问题可行性\ \ y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1\\
-&对偶问题可行性\ \ \lambda_i\geqslant0\\
-&互相松弛条件\ \ \lambda_i\left(y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\right)=0
-\end{aligned}
-\right.
-\end{equation}
-\tag{5}</script><p>​        $(3)$、$(4)$、$(5)$联立即$(2)$的KKT条件（可认为是$(6)$全局最优解的约束，从而间接得到$(2)$的最优解），最终由$(3)$、$(4)$得到$(2)$的拉格朗日对偶问题</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\max\limits_{\boldsymbol{\lambda}}\sum^n_{i=1}\lambda_i-\frac{1}{2}\sum^n_{j=1}\sum^n_{k=1}\lambda_j\lambda_ky_jy_k\boldsymbol{x}^T_j\boldsymbol{x}_k\\
-&\left.
-\begin{aligned}
-\ s.t.\ &\sum^n_{i=1}\lambda_iy_i=0\\
-&\ \lambda_i\geqslant0
-\end{aligned}\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{6}</script><p>​        需要注意的是，KKT条件是原问题最优解的必要条件，当原问题是凸优化问题时当然是全局最优解（此时局部最优解与全局最优解等价），对于强对偶问题的拉格朗日对偶问题的最优解也一定满足KKT条件，这是为什么在这里可以认为拉格朗日对偶问题加上KKT条件的约束便得到全局最优解的原因。</p>
-<p>​        注意到，$(5)$的限制使得如果某点$\boldsymbol{x}_i$的拉格朗日乘子$\lambda_i\textgreater0$，则必有$\boldsymbol{w}^T\boldsymbol{x}_i+b=1$，即此样本点为支持向量；若有$\boldsymbol{w}^T\boldsymbol{x}_i+b\textgreater1$则一定有$\lambda_i=0$，进一步观察Wolfe对偶问题$(6)$可以发现拉格朗日乘子为$0$的样本点对优化问题没有任何影响只有拉格朗日乘子非$0$的样本点对于优化问题有意义，这表明了SVM的一个极其重要的性质：只有支持向量才会影响超平面的选取，而不在分割边界上的任何一点对超平面的选取都不产生任何影响，这也是SVM——支持向量机名字的由来。</p>
-<p>​        容易看出$(6)$也是一个二次凸优化问题（实质上这是优化理论所保证的），实际应用中一般考虑二次规划优化算法求解，比较高效的算法有次梯度下降法、坐标下降法和SMO算法等等，其中，今天SMO算法对于SVM问题较为流行，他的思想与坐标下降法有异曲同工之处，关于优化算法在附录再稍做介绍。</p>
-<p>​        值得一提的是，SVM之所以在高位模式识别领域具有优势，是因为面对维数诅咒SVM只利用了比较少的样本（只利用了支持向量）。通常对于高维数据，常用的方法有①特征选择，如Lasso回归；②直接降维，如PCA、MDS、LLE；③正则化，以减轻高维样本空间带来的多重共线性等不良影响；④增加样本量，深度学习便是沿着这个思路；在今天大数据的时代下，一个大型深度学习模型拥有上百亿个参数都不足为奇。</p>
-<h3 id="参数-boldsymbol-w-与-b-的解"><a href="#参数-boldsymbol-w-与-b-的解" class="headerlink" title="参数$\boldsymbol{w}$与$b$的解"></a>参数$\boldsymbol{w}$与$b$的解</h3><p>​        求参数的解我们仅用到了支持向量，因此在优化求拉格朗日乘子完成以后，我们需要的样本便只剩下支持向量了。</p>
-<p>​        对于$\boldsymbol{w}$，在通过求解优化问题$(6)$解得$\boldsymbol{\lambda}$后由$(3)$直接得到$\boldsymbol{w}=\sum\limits^n_{i=1}\lambda_iy_i\boldsymbol{x}_i$，理论上只需要考虑$\boldsymbol{x}_i$为支持向量的样本（否则其拉格朗日乘子$\lambda_i$为$0$，与和式结果无关）；</p>
-<p>​        对于$b$，我们知道对任何支持向量$\boldsymbol{x}<em>j$，都有$y_j(\boldsymbol{w}^T\boldsymbol{x}_j+b)=1$，结合$\boldsymbol{w}=\sum\limits^n</em>{i=1}\lambda_iy_i\boldsymbol{x}_i$，有</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\begin{aligned}
-&y_j(\sum^n_{i=1}\lambda_iy_i\boldsymbol{x}_i^T\boldsymbol{x}_j+b)=1\\
-\Leftrightarrow\ &b=\frac{1}{y_j}-\sum^n_{i=1}\lambda_iy_i\boldsymbol{x}_i^T\boldsymbol{x}_j
-\end{aligned}
-\end{equation}</script><p>​        为了利用更多的样本以增强稳健性，常常使用全部的支持向量计算$b$以减轻误差、噪声等因素带来的影响；记支持向量的集合为$S$，势为$\vert S\vert$，则有</p>
-<script type="math/tex; mode=display">
-b=\frac{1}{\vert S\vert}\sum_{j\in S}\left(\frac{1}{y_j}-\sum^n_{i\in S}\lambda_iy_i\boldsymbol{x}_i^T\boldsymbol{x}_j\right)</script><p>​        上式可认为是利用所有支持向量分别求解$b$后取他们的算数平均值。</p>
-<p>​        在通过算法求出$\boldsymbol{\lambda}$、$\boldsymbol{w}$与$b$后，由$(3)$式即可得出我们所需要超平面的解析式：记所求超平面为$\alpha$，则</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\begin{aligned}
-\alpha&=\boldsymbol{w}^T\boldsymbol{x}+b\\
-&=(\sum^n_{i=1}\lambda_iy_i\boldsymbol{x}^T_i)\boldsymbol{x}+b
-\end{aligned}
-\end{equation}
-\tag{7}</script><p>​        这一章节中所有超平面的解，都代入$(7)$式便能得到结果，如果存在多个拉格朗日乘子，将$\lambda^{(1)}_i$代入$\lambda_i$即可；如果涉及到核方法，则</p>
-<script type="math/tex; mode=display">
-\alpha=\sum^n_{i=1}\lambda^{(1)}_iy_ik(\boldsymbol{x}_i,\boldsymbol{x})+b</script><h2 id="核方法"><a href="#核方法" class="headerlink" title="核方法"></a>核方法</h2><p>​        目前为止，我们的SVM算法只能求解线性分类问题，比如“且”问题、“并”问题与“非”问题，但“异或”这样的非线性分类问题并没有办法解决，从我们的思路与$(2)$式可以观察出现在我们只是在当前样本空间中寻找合适的分割超平面，譬如有两个自变量$X_1$与$X_2$的分类问题里，从$(2)$出发我们只能得到$X_1-X_2$平面图的一条直线的分割，而当样本类别分布的分界线呈现出明显的O形，我们目前的方法便不再可行了。</p>
-<p>​        不过我们仍有解决办法让SVM有能力处理非线性分类问题：我们可以将样本空间映射到一个更高维的空间，使样本在这个更高维的空间可分，例如下图左部分的分类问题，当我们把二维的自变量空间升至$3$维，即下图右部分，便能够找到一个超平面使得样本可分；如果升$1$维仍不线性可分，可以继续升高维数。升维时是可以将样本映射到无穷维空间的。</p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20230103052957182.png" alt="当前样本空间线性可分情况在高维下的体现" style="zoom:80%;" /></p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20221231001704519.png" alt="二分类的例子，高维空间中的超平面投影到三维空间为一个抛物面，这个抛物面在平面上的投影为一个圆，通过这个圆得以分类"  /></p>
-<p>​        上图是二维因变量空间的情况，我们还可以举一些更简单的例子，如一维因变量：？？？？？？？</p>
-<p>​        可以证明，对于有限维的样本空间，如果属性数是有限的，则必存在一个高维空间使得样本线性可分。？？？？？？</p>
-<p>​        对于非线性分类问题，用$\varphi(\boldsymbol{x})$表示将$\boldsymbol{x}$映射至高维空间后的特征向量，需要寻得的高维空间下新超平面为$\boldsymbol{w}^T\varphi(\boldsymbol{x})+b$，于是得到高维空间下的优化问题$(2^<em>)$、$(6^</em>)$，把$(2)$、$(6)$的$\boldsymbol{x}$替换为$\varphi(\boldsymbol{x})$即可。</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\max\limits_{\boldsymbol{\lambda}}\sum^n_{i=1}\lambda_i-\frac{1}{2}\sum^n_{j=1}\sum^n_{k=1}\lambda_j\lambda_ky_jy_k\varphi(\boldsymbol{x}_j)^T\varphi(\boldsymbol{x}_k)\\
-&\left.
-\begin{aligned}
-\ s.t.\ &\sum^n_{i=1}\lambda_iy_i=0\\
-&\ \lambda_i\geqslant0
-\end{aligned}\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{6*}</script><p>​        $(6<em>)$中涉及到高维空间下的内积计算$\varphi(\boldsymbol{x}_j)^T\varphi(\boldsymbol{x}_k)$，这可能不是很好解决，因为SVM在升维的时候可以升至极高的维数甚至无穷维，用计算机计算无穷维的向量内积并不现实。不过不要担心，我们可以通过核技巧（凡是涉及升维内积计算都可以运用核技巧，如分布式运算、深度学习中的运用）绕过这个障碍。我们可以试图找到一个函数$k(\boldsymbol{x}_j,\boldsymbol{x}_k)$称之为核函数，使得$k(\boldsymbol{x}_j,\boldsymbol{x}_k)=\left&lt;\varphi(\boldsymbol{x}_j),\varphi(\boldsymbol{x}_k)\right&gt;=\varphi(\boldsymbol{x}_j)^T\varphi(\boldsymbol{x}_k)$从而避开对升维后内积的直接计算，如果能够找到这样一个核函数，那么优化问题进一步转化为$(6^{*</em>})$。</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\max\limits_{\boldsymbol{\lambda}}\sum^n_{i=1}\lambda_i-\frac{1}{2}\sum^n_{j=1}\sum^n_{k=1}\lambda_j\lambda_ky_jy_kk(\boldsymbol{x}_j,\boldsymbol{x}_k)\\
-&\left.
-\begin{aligned}
-\ s.t.\ &\sum^n_{i=1}\lambda_iy_i=0\\
-&\ \lambda_i\geqslant0
-\end{aligned}\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{6**}</script><p>​        则由用$\varphi(\boldsymbol{x}_i)$替换$(3)$中$\boldsymbol{x}_i$后的$(3^{<em>})$式并用$\varphi(\boldsymbol{x})$替换$\boldsymbol{x}$推导，或直接对$(7)$式做同样替换，得到我们称之为支持向量展式$(7^{*</em>})$</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\begin{aligned}
-\alpha&=\boldsymbol{w}^T\varphi(\boldsymbol{x})+b\\
-&=\sum^n_{i=1}\lambda_iy_i\varphi(\boldsymbol{x}_i)^T\varphi(\boldsymbol{x})+b\\
-&=\sum^n_{i=1}\lambda_iy_ik(\boldsymbol{x}_i,\boldsymbol{x})+b
-\end{aligned}
-\end{equation}
-\tag{7**}</script><p>​        看上去，只要我们能找出这样一个合适的核函数$k(\cdot,\cdot)$，就能由$(7^{**})$式，通过训练样本中的核函数展开得到最优解，故而我们仅需要针对支持向量这少量的样本寻找一个合适的核函数，而不需要关心具体是何种映射。接下来的问题是，我们是否总能找到这样一个核函数？或者，我们如何找到这样一个核函数？</p>
-<p>​        Mercer定理：设为$L^2\left[s\right]$？？？？？？？？</p>
-<p>​        Mercer定理确保了只要一个对称函数对应的核矩阵半正定，那么他就能被当作核函数应用，这是核技巧的关键，是核技巧得以存在的理论支持。事实上，定义核函数等价于定义了一个再生核的希尔伯特空间。</p>
-<p>​        Mercer定理只是的一个特例，我们证明更一般的？？？？？？？？</p>
-<p>​        理论上，如果知道了映射的选取，便能确定一个最佳核函数；但许多时候这并不容易做到，下列部分常用的核函数，在一些特定情况下能取得不错的效果。除线性核外，统称非线性核。</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">一些常见的核函数</th>
-<th></th>
-<th style="text-align:center">函数形式</th>
-<th></th>
-<th style="text-align:center">注解</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">线性核</td>
-<td></td>
-<td style="text-align:center">$k(\boldsymbol{x}_i,\boldsymbol{x}_j)=\boldsymbol{x}^T_i\boldsymbol{x}_j$</td>
-<td></td>
-<td style="text-align:center">即多项式核在$m=1$时的特例</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">齐次多项式核</td>
-<td></td>
-<td style="text-align:center">$k(\boldsymbol{x}_i,\boldsymbol{x}_j)=(\boldsymbol{x}^T_i\boldsymbol{x}_j)^m$</td>
-<td></td>
-<td style="text-align:center">$m\geqslant1$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">非齐次多项式核</td>
-<td></td>
-<td style="text-align:center">$k(\boldsymbol{x}_i,\boldsymbol{x}_j)=(\boldsymbol{x}^T_i\boldsymbol{x}_j+r)^m$</td>
-<td></td>
-<td style="text-align:center"></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">径向基函数核，RBF核（高斯核）</td>
-<td></td>
-<td style="text-align:center">$k(\boldsymbol{x}_i,\boldsymbol{x}_j)=\exp{\left(-\gamma\Vert \boldsymbol{x}_i-\boldsymbol{x}_j\Vert^2\right)}$</td>
-<td></td>
-<td style="text-align:center">更常见的是参数化令$\gamma=\frac{1}{2\sigma^2}$</td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">拉普拉斯核</td>
-<td></td>
-<td style="text-align:center"><script type="math/tex">k(\boldsymbol{x}_i,\boldsymbol{x}_j)=\exp{\left(-\frac{\Vert \boldsymbol{x}_i-\boldsymbol{x}_j\Vert}{\sigma}\right)}</script></td>
-<td></td>
-<td style="text-align:center"></td>
-<td></td>
-</tr>
-<tr>
-<td style="text-align:center">双曲正切Sigmoid核</td>
-<td></td>
-<td style="text-align:center">$k(\boldsymbol{x}_i,\boldsymbol{x}_j)=\tanh(\beta\boldsymbol{x}^T_i\boldsymbol{x}_j+\theta)$</td>
-<td></td>
-<td style="text-align:center">$\beta\textgreater0,\,\theta\textless0$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>​        核函数的一些运算性质，使得我们可以通过已有核函数构造获得更多新的核函数：</p>
-<p>​                ① 若$k_1$与$k_2$是核函数，则$\forall t_1,t_2\in\mathbb{R^+}$，$t_1k_1+t_2k_2$仍是一个核函数；</p>
-<p>​                ② 若$k_1$与$k_2$是核函数，则$k_1(\boldsymbol{x}_i,\boldsymbol{x}_j)k_2(\boldsymbol{x}_i,\boldsymbol{x}_j)$仍是一个核函数；</p>
-<p>​                ③ 若$k_1$是核函数，则$\forall f(\cdot)$，$f(\boldsymbol{x}_i)k(\boldsymbol{x}_i,\boldsymbol{x}_j)f(\boldsymbol{x}_j)$仍是一个核函数。</p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20230102105706892.png" alt="选择不同的核，得到不同效果的分类结果"  /></p>
-<p>​        既然核方法如此强大，为何我们不在逻辑斯蒂回归中也大量运用？这是因为SVM优化问题的拉格朗日对偶问题便于使用核方法，而逻辑斯蒂回归的损失函数交叉熵核化后难以优化求解，甚至不能确定凹凸性。</p>
-<h2 id="软间隔与正则化"><a href="#软间隔与正则化" class="headerlink" title="软间隔与正则化"></a>软间隔与正则化</h2><p>​        软间隔与正则化都是对付过拟合的手段。</p>
-<h3 id="软间隔"><a href="#软间隔" class="headerlink" title="软间隔"></a>软间隔</h3><p>​        上文提到了一个问题：虽然我们可以通过核方法将样本映射至高维使得样本在高维空间线性可分，但我们还不能确定该选用何种核函数较为合适，也不能确定究竟要将样本映射到多高维的空间能使得其线性可分。同时，目前我们的SVM方法过于严格，因为我们要求分割超平面必须考虑所有的样本点来寻找支持向量。这可能在实际情况下并不太实用，因为非常容易造成过拟合的问题，让SVM学习到一些本不应该学习的、仅出现在特定样本的特点。</p>
-<p>​        通过允许一些SMV在部分样本上“犯错”，即让部分样本突破限制而使得其满足$y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\textless1$，这种方法称之为软间隔；相应的，前文中严格要求$\forall \boldsymbol{x}_i$，必须满足$y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1$，即所有样本都必须严格“正确”划分而不能“犯错”，这种方法称之为硬间隔；同时，我们需要保证不满足$(2)$约束的样本应该尽量少一些，否则会产生极大的偏差。</p>
-<h4 id="替代损失"><a href="#替代损失" class="headerlink" title="替代损失"></a>替代损失</h4><p>​        为了达到上述目的，我们对$(2)$的限制做进一步处理，得到软间隔的原始优化问题：其中$\zeta\textgreater0$是我们最大能容忍的满足$y<em>i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\textless1$的样本点个数，即最大的允许SVM犯错次数；$\ell(\cdot)$则为一个控制，不等式左边的和式为一个计数器，这个计数器仅对满足$y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\textless1$的$\boldsymbol{x}_i$计数，即SVM犯错的次数。显然最自然、最直观的$\ell(\cdot)$是$0-1$损失函数$\ell</em>{0-1}(\cdot)$。</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\min\limits_{(\boldsymbol{w},b)}\frac{1}{2}\Vert\boldsymbol{w}\Vert^2\\
-&\ s.t.\sum^n_{i=1}\ell\left(y_i(1-\boldsymbol{w}^T\boldsymbol{x}_i+b)\right)\leqslant\zeta\\
-\end{aligned}
-\right.
-\end{equation}
-\tag{8}</script><script type="math/tex; mode=display">
-\begin{equation}
-\ell_{0-1}(z)=\left\{
-\begin{aligned}
-&1,\ \ \,\,z\textless0\\
-&0,\ \ \,\,else
-\end{aligned}
-\right.
-\end{equation}</script><p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20230102170915138.png" alt="0-1损失函数图像" style="zoom: 80%;" /></p>
-<p>​        但这个函数解析性质较差，不方便推导，也不易优化求解，常用其他函数替代，称为替代损失，为了有良好的优化性质，一般都期望替代损失是凸函数；SVM需要的替代损失还要求在$z$取值为正时应以较快的速度收敛至$0$</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th style="text-align:center">一些的替代损失</th>
-<th style="text-align:center">函数形式</th>
-<th style="text-align:center">注解</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">Hinge损失（铰链损失）</td>
-<td style="text-align:center">$\ell(z)=\max(0,1-z)$</td>
-<td style="text-align:center">Hinge损失的应用非常常见，解较为稀疏</td>
-</tr>
-<tr>
-<td style="text-align:center">指数损失</td>
-<td style="text-align:center">$\ell(z)=e^{-z}$</td>
-<td style="text-align:center"></td>
-</tr>
-<tr>
-<td style="text-align:center">逻辑斯蒂损失（Logistic损失，对数几率损失）</td>
-<td style="text-align:center">$\ell(z)=\frac{\log(1+e^{-z})}{\log2}$</td>
-<td style="text-align:center">对异常值不敏感</td>
-</tr>
-<tr>
-<td style="text-align:center">Savage损失</td>
-<td style="text-align:center">$\ell(z)=\frac{1}{(1+\exp(z))^2}$</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>​        由于Hinge损失在$1$以后值严格为$0$，因此Hinge损失倾向于得到稀疏的解，得到非零分量尽可能少的解；如果使用逻辑斯蒂损失，则SVM结果与逻辑斯蒂回归非常相似，可以发现他们的优化目标是大同小异的，但与逻辑斯蒂回归不同的是SVM的参数通常没有那么强的实际意义。关于逻辑斯蒂回归如果在今后有时间，我会把我已经写好的$\LaTeX$文档重新用Markdown整理一遍，这是关于属性数据分析的文档，文中着重推导了逻辑斯蒂回归。</p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20230102174433237.png" alt="几种损失函数的图像" style="zoom:;" /></p>
-<p>​        对$(8)$应用拉格朗日乘子法，得到等价的优化问题</p>
-<script type="math/tex; mode=display">
-\min\limits_{(\boldsymbol{w},b)}\frac{1}{2}\Vert\boldsymbol{w}\Vert^2+C\sum^n_{i=1}\ell\left(y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1\right)
-\tag{9}</script><p>​        这里$C$的意义与$(8)$式中$\zeta$的意义是相似的，他们都可以视为拉格朗日乘子，$C$越小，约束对优化的结果影响越小（因此$C$也可以被理解为约束对结果影响的权重），容许SVM犯错的机会越大，结果越倾向于犯更多的错误，与硬边距结果相差越大；$C$越大，约束对优化的结果影响越大，对SVM正确率要求越严格，结果越倾向于犯更少的错，结果越与硬边距q看相似。</p>
-<p>​        可以认为$\lim\limits_{C\to+\infty}(9)式=(2)式$，即当$C$取正无穷大时等价于不允许SVM犯错，即硬边距情况，当$C$取充分大的有限值时SVM的行为类似硬边距情况，但仍会学习分类的规则是否可行。值得一提的是，这一步的操作与岭回归中由$L^2$约束下最小二乘估计导出岭估计的损失函数的操作是相同的。</p>
-<h4 id="松弛变量与软间隔SVM"><a href="#松弛变量与软间隔SVM" class="headerlink" title="松弛变量与软间隔SVM"></a>松弛变量与软间隔SVM</h4><p>​        这里考虑应用Hinge损失，引入松弛变量$\xi_i\geqslant\max(0,1-y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant0$（$\min\xi_i=\max(0,1-y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)$），于是可以改写$(9)$，得到软间隔SVM的优化问题</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\min\limits_{\boldsymbol w,b,\xi_i}\frac{1}{2}\Vert\boldsymbol{w}\Vert^2+C\sum^n_{i=1}\xi_i\\
-&\left.
-\begin{aligned}
-\ s.t.\ &y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1-\xi_i\\
-&\xi_i\geqslant0
-\end{aligned}
-\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{10}</script><p>​        $(10)$式成立时，若样本$\boldsymbol{x}_i$的松弛变量$\xi_i$不为$0$，说明SVM允许了一次“犯错”，且松弛变量越大说明“犯错”的程度越重，允许“犯错”的最大程度与$C$有关。类似的，为了看出与硬间隔的联系，可以导出$(10)$的拉格朗日对偶问题</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\max\limits_{\boldsymbol{\lambda}^{(1)}}\lambda^{(1)}_i-\frac{1}{2}\sum^n_{j=1}\sum^n_{k=1}\lambda^{(1)}_j\lambda^{(1)}_ky_jy_k\boldsymbol{x}^T_j\boldsymbol{x}_k\\
-&\left.
-\begin{aligned}
-\ s.t.\ &\sum^n_{i=1}\lambda^{(1)}_iy_i=0\\
-&\ 0\leqslant\lambda^{(1)}_i\leqslant C
-\end{aligned}
-\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{11}</script><p>​        $(11)$的最优解一定满足KKT条件，与上文同样的操作，可以得知这个问题的KKT条件为</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-for\,\,\forall{i}\ \ \ \ \left\{
-\begin{aligned}
-&稳定性条件1\ \ \boldsymbol{w}-\sum^n_{i=1}\lambda^{(1)}_iy_i\boldsymbol{x}_i=0\\
-&稳定性条件2\ \ \sum^n_{i=1}\lambda^{(1)}_iy_i=0\\
-&稳定性条件3\ \ C=\lambda^{(1)}_i+\lambda^{(2)}_i\\
-&原问题可行性\ \ y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)\geqslant1-\xi_i,\ \xi_i\geqslant0\\
-&对偶问题可行性\ \ \lambda^{(1)}_i\geqslant0,\ \lambda^{(2)}_i\geqslant0\\
-&互相松弛条件\ \ \lambda_i\left(y_i(\boldsymbol{w}^T\boldsymbol{x}_i+b)-1+\xi_i\right)=0,\ \lambda^{(2)}_i\xi_i=0
-\end{aligned}
-\right.
-\end{equation}</script><p>​        观察$(6)$与$(11)$，可以发现在硬间隔与软间隔问题之间，他们的不同仅在于对拉格朗日乘子的约束不同，软间隔方法较之硬间隔除了限定$\lambda_i\geqslant0$，还要求$\lambda_i\leqslant C$，这是$C$的另一个意义——限定所有样本对应的拉格朗日乘子的最大值。</p>
-<p>​        软间隔具有非常广泛的应用，能有效降低过拟合带来的影响，使得SVM不会学习太多特定样本的特征。实际应用中大多数两类样本的分布很可能是糅合的，如果不允许SVM在特定样本上稍稍“犯错”会使得把这一特定样本的误差、噪声、极端分布等因素通通不加筛选地学习，这大大降低了模型泛化的能力。</p>
-<h3 id="正则化的观点"><a href="#正则化的观点" class="headerlink" title="正则化的观点"></a>正则化的观点</h3><p>​        首先我们提出更一般的优化目标</p>
-<script type="math/tex; mode=display">
-\min\limits_f\Omega(f)+C\sum^n_{i=1}\ell\left(f(\boldsymbol{x}_i),y_i\right)
-\tag{12}</script><p>​        $\Omega(f)$称结构风险，与模型$f$本身性质有关；$\sum\limits^n_{i=1}\ell\left(f(\boldsymbol{x}_i),y_i\right)$称经验风险，描述模型与训练集数据的联系，$C$控制其较之结构风险对结果影响的的权重。</p>
-<p>​        结构风险$\Omega(f)$蕴含了我们希望模型具有何种属性的目的，例如在SVM中结构风险通常取根号下$\boldsymbol{w}$的$L^2$范数，即$L^2$正则化，因此前文的所有公式实际上都暗暗包含了$L^2$正则化的过程，这将倾向于得到非零个数相对稠密的解；我们也可以取其余的$L^p$范数甚至其他的方法进行正则化，例如$L^0$、$L^1$范数，这又倾向于得到相对稀疏的解，即非零分量数尽可能少。范数的定义源自实变函数论与泛函分析，不同的正则化有不同的最适场景，没有绝对的优劣之分，这在线性回归中也有体现，一般提到的线性回归我们都采用OLS的办法估计模型的参数，即最小化RSS——残差的$L^2$范数，但没有任何证据表明整体上最小一乘法一定便劣于OLS，只不过OLS数学性质较好，易于推导，并且在高斯-马尔可夫定理的条件成立情况下有非常良好的统计性质；在OLS基础上进行$L^2$正则化得到岭估计，在OLS基础上进行$L^1$正则化得到Lasso估计。</p>
-<p>​        经验风险$\sum\limits^n_{i=1}\ell\left(f(\boldsymbol{x}_i),y_i\right)$有助于削减假设空间、降低过拟合风险。</p>
-<p>​        式$(12)$便是大名鼎鼎的正则化问题的数学定义，$\Omega(f)$称为正则化项，$C$称为正则化常数，从罚函数的观点来看，其实是给予了两种目的不同的惩罚；正则化也可以认为是模型的先验概率。</p>
-<p>​        从VC理论的角度出发，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/94480190?utm_id=0">https://zhuanlan.zhihu.com/p/94480190?utm_id=0</a></p>
-<h1 id="SVR"><a href="#SVR" class="headerlink" title="SVR"></a>SVR</h1><h2 id="SVR概论"><a href="#SVR概论" class="headerlink" title="SVR概论"></a>SVR概论</h2><h3 id="SVR的思想"><a href="#SVR的思想" class="headerlink" title="SVR的思想"></a>SVR的思想</h3><p>​        此前我们讨论的SVM是从二分类问题出发的，即所谓的SVC，Support Vector Classification，支持向量分类。这里我们着重探讨SVR，Support Vector Regression，即支持向量回归，是将SVM技术应用在回归分析的一种方法。</p>
-<p>​        1996年，Vladimir N. Vapnik、Harris Drucker、Christopher JC Burges、Linda Kaufman 和 Alexander J. Smola提出了将SVM应用于回归的方法，称为SVR。将SVM技术应用在回归问题的想法是自然的，因为对于一条回归曲线，抛开预测值恰等于真实值的情况，预测值或大于真实值，或小于真实值，这便产生了一个二分类问题。</p>
-<p>​        种种经典的（广义）线性回归模型，包括岭回归、Lasso回归、Elastic Net回归与逻辑斯蒂回归等等，都有一个共同的特点：当且仅当预测值与真实值完全相同时，损失才为$0$，否则有越大的偏移，会产生越大的损失；而在SVR中我们允许预测值与真实值存在可容忍的最大偏差$\varepsilon$，只有当真实值$y<em>i$越过以预测值$\hat y_i$为中心上下至多$\varepsilon$偏差时损失才开始增大，而若$y_i\in\left[\hat y_i-\varepsilon,\hat y_i+\varepsilon\right]$则损失为零，此时我们认为预测值是正确的，在一个可容忍的范围内。换句话讲，所有的$y_i$与$\hat y_i$形成了隔带$\bigcup\limits</em>{i}\left{(\boldsymbol{x}_i,\breve{y}_i):\breve{y}_i\in\left[\hat y_i-\varepsilon,\hat y_i+\varepsilon\right]\right}$，只对真实值在隔带以外的样本点计算损失。</p>
-<p>​        在SVR中，最佳拟合超平面就是容许至多偏差$\varepsilon$范围内，$f(\boldsymbol{x})\pm\varepsilon$具有点数最多的超平面。</p>
-<p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20230103051306291.gif" alt="一个SVR中最佳拟合超平面的例子，容许偏差内含有最多的点"  /></p>
-<h3 id="SVR在应用中的优缺点"><a href="#SVR在应用中的优缺点" class="headerlink" title="SVR在应用中的优缺点"></a>SVR在应用中的优缺点</h3><h2 id="核方法下的优化问题"><a href="#核方法下的优化问题" class="headerlink" title="核方法下的优化问题"></a>核方法下的优化问题</h2><h3 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h3><p>​        对于SVR，根据前文的分析，我们从软间隔SVM的优化目$(8)$式出发，通过令“用来计数的替代损失$\ell(\cdot)$”具象化为“$\ell_{\varepsilon}(\cdot)$”达到仅针对使得$\vert\hat y_i-y_i\vert\textless\varepsilon$的样本点$\boldsymbol{x}_i$计数</p>
-<script type="math/tex; mode=display">
-\ell_{\varepsilon}(z)=\begin{cases}
-0,&\ \ \,\,z\textless0\\
-\vert z\vert-\varepsilon,&\ \ \,\,else
-\end{cases}</script><p>​        我们提出SVR的原始优化问题</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\min\limits_{(\boldsymbol{w},b)}\frac{1}{2}\Vert\boldsymbol{w}\Vert^2\\
-&\ s.t.\sum^n_{i=1}\ell_{\varepsilon}(\hat y_i-y_i)\leqslant\zeta\\
-\end{aligned}
-\right.
-\end{equation}
-\tag{13}</script><p>​        类似地，引入松弛变量，考虑到隔带两侧松弛程度可能不尽相同，我们用两个松弛变量$\xi^{(1)}_i$与$\xi^{(2)}_i$分别控制隔带两侧的松弛程度，改写$(13)$，为方便表示这里用$f(\boldsymbol{x}_i)=\boldsymbol{w}^T\boldsymbol{x}_i+b$表示经过SVR得到的预测值（估计值）$\hat y_i$</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\min\limits_{\boldsymbol w,b,\xi_i}\frac{1}{2}\Vert\boldsymbol{w}\Vert^2+C\sum^n_{i=1}(\xi^{(1)}_i+\xi^{(2)}_i)\\
-&\left.
-\begin{aligned}
-\ s.t.\ &f(\boldsymbol{x}_i)-y_i\leqslant\varepsilon+\xi^{(1)}_i\\
-&y_i-f(\boldsymbol{x}_i)\leqslant\varepsilon+\xi^{(2)}_i\\
-&\xi^{(1)}_i\geqslant0,\xi^{(2)}_i\geqslant0
-\end{aligned}\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{14}</script><p>​        与上文相同，令$(14)$的拉格朗日函数分别对$\boldsymbol{w}$、$b$、$\xi^{(1)}_i$与$\xi^{(2)}_i$偏导为$0$，进而导出$(14)$的拉格朗日对偶问题</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\left\{
-\begin{aligned}
-&\max\limits_{\boldsymbol{\lambda}^{(1)},\boldsymbol{\lambda}^{(2)}}\sum^n_{i=1}y_i(\lambda^{(1)}_i-\lambda^{(2)}_i)-\varepsilon(\lambda^{(1)}_i+\lambda^{(2)}_i)-\frac{1}{2}\sum^n_{j=1}\sum^n_{k=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)(\lambda^{(1)}_k-\lambda^{(2)}_k)\boldsymbol{x}^T_j\boldsymbol{x}_k\\
-&\left.
-\begin{aligned}
-\ s.t.\ &\sum^n_{i=1}(\lambda^{(1)}_i-\lambda^{(2)}_i)=0\\
-&\ 0\leqslant\lambda^{(1)}_i\leqslant C,0\leqslant\lambda^{(2)}_i\leqslant C
-\end{aligned}\right\}\ \ for\,\,\forall{i}
-\end{aligned}
-\right.
-\end{equation}
-\tag{15}</script><p>​        $(15)$的最优解一定满足问题$(14)$的KKT条件</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-for\,\,\forall{i}\ \ \ \ \left\{
-\begin{aligned}
-&稳定性条件\ \ \left\{\begin{aligned}
-&\ \boldsymbol{w}-\sum^n_{i=1}(\lambda^{(1)}_i-\lambda^{(2)}_i)\boldsymbol{x}_i=0\\
-&\sum^n_{i=1}(\lambda^{(1)}_i-\lambda^{(2)}_i)=0\\
-&\ C=\lambda^{(1)}_i+\lambda^{(3)}_i\\
-&\ C=\lambda^{(2)}_i+\lambda^{(4)}_i
-\end{aligned}\right.\\
-&原问题可行性\ \ \left\{\begin{aligned}
-&\ f(\boldsymbol{x}_i)-y_i\leqslant\varepsilon+\xi^{(1)}_i\\
-&\ y_i-f(\boldsymbol{x}_i)\leqslant\varepsilon+\xi^{(2)}_i\\
-&\ \xi^{(1)}_i\geqslant0\\
-&\ \xi^{(2)}_i\geqslant0
-\end{aligned}
-\right.
-\\
-&对偶问题可行性\ \ \left\{\begin{aligned}
-&\ \lambda^{(1)}_i\geqslant0\\
-&\ \lambda^{(2)}_i\geqslant0\\
-&\ \lambda^{(3)}_i\geqslant0\\
-&\ \lambda^{(4)}_i\geqslant0
-\end{aligned}\right.\\
-&互相松弛条件\ \ \left\{\begin{aligned}
-&\ \lambda^{(1)}_i\left(f(\boldsymbol{x}_i)-y_i-\varepsilon-\xi^{(1)}_i\right)=0\\
-&\ \lambda^{(2)}_i\left(y_i-f(\boldsymbol{x}_i)-\varepsilon-\xi^{(2)}_i\right)=0\\
-&\ \lambda^{(1)}_i\lambda^{(2)}_i=0\\
-&\ \xi^{(1)}_i\xi^{(2)}_i=0\\
-&\ (C-\lambda^{(1)}_i)\xi^{(1)}_i=0\\
-&\ (C-\lambda^{(2)}_i)\xi^{(2)}_i=0
-\end{aligned}\right.
-\end{aligned}
-\right.
-\end{equation}
-\tag{16}</script><h3 id="参数-boldsymbol-w-与-b-的解-1"><a href="#参数-boldsymbol-w-与-b-的解-1" class="headerlink" title="参数$\boldsymbol{w}$与$b$的解"></a>参数$\boldsymbol{w}$与$b$的解</h3><p>​        同样地我们只用到了一部分样本，而不是全部样本，这与线性回归不同。</p>
-<p>​        在通过优化方法解得全部的拉格朗日乘子后，我们首先由$(16)$的稳定性条件$1$直接导出$\boldsymbol{w}$的解</p>
-<script type="math/tex; mode=display">
-\boldsymbol{w}=\sum^n_{i=1}(\lambda^{(1)}_i-\lambda^{(2)}_i)\boldsymbol{x}_i</script><p>​        接着我们导出$b$的解，注意到$C=\lambda^{(1)}_i+\lambda^{(3)}_i$、$\lambda^{(1)}_i,\lambda^{(3)}_i\geqslant0$，因此一定有$0\leqslant\lambda^{(1)}_i\leqslant C$，再由$(16)$的互相松弛条件能得出，对于任意一个样本$\boldsymbol{x}_i$，有</p>
-<script type="math/tex; mode=display">
-\begin{cases}
-\lambda^{(1)}_i\left(f(\boldsymbol{x}_i)-y_i-\varepsilon-\xi^{(1)}_i\right)=0\\
-(C-\lambda^{(1)}_i)\xi^{(1)}_i=0
-\end{cases}</script><p>​        故而一旦$0\leqslant\lambda^{(1)}_i\textless C$，则必有$\xi^{(1)}_i=0$；如果还有$\lambda^{(1)}_i\ne0$，进一步有</p>
-<script type="math/tex; mode=display">
-\begin{equation}
-\begin{aligned}
-\lambda^{(1)}_i\left(f(\boldsymbol{x}_i)-y_i-\varepsilon-\xi^{(1)}_i\right)=0\ \Leftrightarrow&\ f(\boldsymbol{x}_i)-y_i-\varepsilon=0\\
-&\ \boldsymbol{w}^T\boldsymbol{x}_i+b-y_i-\varepsilon=0\\
-&\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)\boldsymbol{x}^T_j\boldsymbol{x}_i+b-y_i-\varepsilon=0\\
-&\ b=y_i+\varepsilon-\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)\boldsymbol{x}^T_j\boldsymbol{x}_i
-\end{aligned}
-\end{equation}</script><p>​        为了尽可能多利用样本，利用更多的信息以减小噪声、误差等因素的影响，可以利用所有满足$0\textless\lambda^{(1)}_i\textless C$样本点计算$b$值后取其算术平均值</p>
-<script type="math/tex; mode=display">
-b=\frac{1}{\vert \{i:0\textless\lambda^{(1)}_i\textless C\}\vert}\sum_{0\textless\lambda^{(1)}_i\textless C}\left(y_i+\varepsilon-\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)\boldsymbol{x}^T_j\boldsymbol{x}_i\right)</script><p>​        因此，我们可以写出分割超平面$f(\boldsymbol{x})$的解</p>
-<script type="math/tex; mode=display">
-f(\boldsymbol{x})=\boldsymbol{w}^T\boldsymbol{x}+b=\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)\boldsymbol{x}^T_j\boldsymbol{x}+b</script><p>​        考虑映射到高维的变换与核函数，则</p>
-<script type="math/tex; mode=display">
-f(\boldsymbol{x})=\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)k(\boldsymbol{x}_j,\boldsymbol{x})+b</script><p><img src="C:\Users\asheo\AppData\Roaming\Typora\typora-user-images\image-20230103033724860.png" alt="GPR、Kernel Ridge与SVR回归效果对比"  /></p>
-<p>​        上图中Kernel Ridge Regression便是我们再熟悉不过的核化岭估计，在我的另一篇$\LaTeX$文档中，这是一篇关于回归分析（线性模型）的文档，如果以后有机会我会同样地把他转写成Markdown。这里的GPR为高斯过程回归，一种非参数模型。</p>
-<p>​        可以看出，如果样本点有一段存在缺失，那么SVR的效果并不算太好。</p>
-<h1 id="核方法的广泛运用场景"><a href="#核方法的广泛运用场景" class="headerlink" title="核方法的广泛运用场景"></a>核方法的广泛运用场景</h1><p>​        在SVM中我们通过核方法使得我们可以处理非线性可分的场景，那么我们可以把这个方法推广至其他应用场景，比如岭估计吗？</p>
-<p>​        答案是可以的，首先我们需要一个被称为表示定理的定理。表示定理于2002年首次被证明，考虑利用Mercer定理构造，鉴于过程过于繁琐且复杂，证明略过。</p>
-<p>​        表示定理：设$\mathcal{H}$是核函数$k$对应的再生核希尔伯特空间，$\Vert f\Vert<em>\mathcal{H}$是$f$在$\mathcal{H}$上的范数。$\forall$单调递增函数$\Omega$：$\left[0,\infty\right]\mapsto\mathbb{R}$和$\forall$损失函数$\ell$：$(\mathcal{H}\times\mathbb{R}^2)^n\mapsto\mathbb{R}\cup\left{\infty\right}$，则问题$\min\limits</em>{f\in\mathcal{H}}F(f)=\Omega(\Vert f\Vert<em>\mathcal{H})+\ell\left((\boldsymbol{x}_1,y_1,f(\boldsymbol{x}_1)),\ldots,(\boldsymbol{x}_n,y_n,f(\boldsymbol{x}_n))\right)$的解一定可以表示成$f^*(\boldsymbol{x})=\sum\limits^n</em>{i=1}\alpha_ik(\boldsymbol{x}_i,\boldsymbol{x})$的形式。</p>
-<p>​        表示定理虽然证明需要一定的数学与统计基础，但他揭示了一个简单且强大的结论：只要正则化项单调递增，那么任何符合形式$(12)$的优化问题的解一定可以写成核函数$k(\boldsymbol{x}_i,\boldsymbol{x})$的线性组合的形式。由此可见，核方法并不是专属于SVM的特殊技巧，而是可以推而广之到LDA、OLS、岭估计等许多场景的。</p>
-<h1 id="LS-SVR"><a href="#LS-SVR" class="headerlink" title="LS-SVR"></a>LS-SVR</h1><h1 id="推广至多分类问题的SVM"><a href="#推广至多分类问题的SVM" class="headerlink" title="推广至多分类问题的SVM"></a>推广至多分类问题的SVM</h1><h1 id="支持向量聚类分析"><a href="#支持向量聚类分析" class="headerlink" title="支持向量聚类分析"></a>支持向量聚类分析</h1><h1 id="R的e1071包与Python的sklearn库中的SVC-amp-SVR"><a href="#R的e1071包与Python的sklearn库中的SVC-amp-SVR" class="headerlink" title="R的e1071包与Python的sklearn库中的SVC&amp;SVR"></a>R的e1071包与Python的sklearn库中的SVC&amp;SVR</h1>
+          <p>  支持向量机的一些并不算深入的基本数理理论，包含SVM、SVR与LS-SVR。支持向量机具有非常强的数学与统计理论支持，我认为研究SVM的数理理论对加深对SVM的理解是大有裨益的。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/12/31/SVM%E7%90%86%E8%AE%BA/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -818,6 +370,7 @@ f(\boldsymbol{x})=\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)k(\boldsymbol{x}_
 
       
           
+
       
     </div>
 
@@ -875,6 +428,7 @@ f(\boldsymbol{x})=\sum^n_{j=1}(\lambda^{(1)}_j-\lambda^{(2)}_j)k(\boldsymbol{x}_
 
       
           
+
       
     </div>
 
