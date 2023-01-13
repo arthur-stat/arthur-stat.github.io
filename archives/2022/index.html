@@ -499,6 +499,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
   if (typeof MathJax === 'undefined') {
     window.MathJax = {
       loader: {
+          load: ['[tex]/mhchem'],
         source: {
           '[tex]/amsCd': '[tex]/amscd',
           '[tex]/AMScd': '[tex]/amscd'
@@ -506,6 +507,7 @@ document.querySelectorAll('.pdfobject-container').forEach(element => {
       },
       tex: {
         inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
         tags: 'ams'
       },
       options: {
