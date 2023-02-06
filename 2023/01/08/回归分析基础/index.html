@@ -48,7 +48,7 @@
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-2.png">
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-3.png">
 <meta property="article:published_time" content="2023-01-08T10:11:25.000Z">
-<meta property="article:modified_time" content="2023-02-06T09:44:37.064Z">
+<meta property="article:modified_time" content="2023-02-06T20:48:52.303Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="回归分析">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-06 17:44:37" itemprop="dateModified" datetime="2023-02-06T17:44:37+08:00">2023-02-06</time>
+                <time title="Modified: 2023-02-07 04:48:52" itemprop="dateModified" datetime="2023-02-07T04:48:52+08:00">2023-02-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -250,6 +250,15 @@
       
         <p>  本文原仅作为《回归分析》课程考试的复习与归纳，所以深度略浅，不曾想却应了一句“温故而知新”，复习这些相对基础、相对熟悉的“旧”理论时竟也产生了不少新体会。</p>
 <span id="more"></span>
+<script>
+    MathJax = {
+    tex: {
+      tags: 'all'  // should be 'ams', 'none', or 'all'
+    }
+  };
+  </script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+</script>
 <p>  题外话：本文严格按复习课提到到考点考纲进行整理、归纳，所以这些内容对早已透彻回归分析的读者来说应该是浅显的；我会在文章末尾嵌入另一篇PDF文档，这篇文档扩充了一些期末考试考纲、考点以外的内容，相比之下较之本文更加全面，相对更深入一些，但也更冗长。有些本文没有提到或证明的地方，或许可以在这里找到答案。如果两篇文章内容有部分冲突，以本文为准。</p>
 <hr>
 <p>方便起见，用<span class="math inline">\(\Vert\cdot\Vert^2\)</span>代表<span class="math inline">\(\Vert\cdot\Vert_2^2\)</span>，其中<span class="math inline">\(\Vert\cdot\Vert_2\)</span>是<span class="math inline">\(l^2\)</span>或<span class="math inline">\(L^2\)</span>范数，用RSS、SSE表示残差平方和，用SSR表示回归平方和，用SST表示总平方和。</p>
@@ -263,29 +272,29 @@ Y=\beta_0+\beta_1X_1+\cdots+\beta_{p-1}X_{p-1}+e
 <hr>
 <h2 id="线性模型的经验回归方程hat-yhatbeta_0hatbeta_1x_1hatbeta_2x_2解读">★ 线性模型的经验回归方程<span class="math inline">\(\hat Y=\hat\beta_0+\hat\beta_1X_1+\hat\beta_2X_2\)</span>解读</h2>
 <p>由于<span class="math inline">\(\hat Y_{X_1+1}-\hat Y_{X_1}=\big(\hat\beta_0+\hat\beta_1(X_1+1)+\hat\beta_2X_2\big)-\big(\hat\beta_0+\hat\beta_1X_1+\hat\beta_2X_2\big)=\hat\beta_1\)</span>，所以在<span class="math inline">\(X_2\)</span>保持不变的情况下，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\)</span>个单位，则<span class="math inline">\(\hat Y\)</span>增加<span class="math inline">\(\hat\beta_1\)</span>个单位；</p>
-<p>由于在高斯-马尔可夫定理条件下有<span class="math inline">\(\mathbb{E}\hat Y=Y\)</span>，所以：<font color="red"><strong><span class="math inline">\(X_2\)</span>不变，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\)</span>个单位，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(\hat\beta_1\)</span>个单位</strong></font>。</p>
-<p><span class="math inline">\(\star\)</span> <span class="math inline">\(\beta_2\)</span>同理，实际上<span class="math inline">\(X_2\)</span>不变、<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(k\)</span>个单位、<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(k\hat\beta_1\)</span>个单位，如果时间充足还可以解释一下<span class="math inline">\(\beta_0\)</span>，注意到截距项代表当回归系数都为<span class="math inline">\(0\)</span>时<span class="math inline">\(\hat Y\)</span>取值 <span class="math inline">\(\star\)</span></p>
+<p>进一步de在高斯-马尔可夫定理条件下有<span class="math inline">\(\mathbb{E}\hat Y=Y\)</span>，因此：<font color="red"><strong><span class="math inline">\(X_2\)</span>不变，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\)</span>个单位，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(\hat\beta_1\)</span>个单位</strong></font>。</p>
+<p><span class="math inline">\(\star\)</span> <span class="math inline">\(\hat\beta_2\)</span>同理，实际上当<span class="math inline">\(X_2\)</span>不变、<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(k\)</span>个单位，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(k\hat\beta_1\)</span>个单位；此外还可以解释一下<span class="math inline">\(\beta_0\)</span>，只需观察到截距项代表当回归系数都为<span class="math inline">\(0\)</span>时<span class="math inline">\(\hat Y\)</span>的取值 <span class="math inline">\(\star\)</span></p>
 <hr>
 <h2 id="半对数模型ⅰ的经验回归方程loghat-yhatbeta_0hatbeta_1x_1hatbeta_2x_2解读">★ 半对数模型(<em>Ⅰ</em>)的经验回归方程<span class="math inline">\(\log\hat Y=\hat\beta_0+\hat\beta_1X_1+\hat\beta_2X_2\)</span>解读</h2>
 <p>等价于对因变量做<span class="math inline">\(\lambda=0\)</span>的Box-Cox变换的线性模型（能降低原线性模型“异方差”程度），我们有 <span class="math display">\[
 \hat\beta_1=\frac{\partial\log\hat Y}{\partial X_1}=\frac{\frac{\partial\hat Y}{\hat Y}}{\partial X_1}
 \]</span> 此式意味着在<span class="math inline">\(X_2\)</span>保持不变的情况下，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\)</span>个单位，则<span class="math inline">\(\hat Y\)</span>增加<span class="math inline">\(\hat\beta_1\cdot100\%\)</span>；</p>
 <p>由于在高斯-马尔可夫定理的条件下有<span class="math inline">\(\mathbb{E}\hat Y=Y\)</span>，所以：<font color="red"><strong><span class="math inline">\(X_2\)</span>不变，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\)</span>个单位，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(\hat\beta_1\cdot100\%\)</span></strong></font>。</p>
-<p><span class="math inline">\(\star\)</span> <span class="math inline">\(\beta_2\)</span>同理 <span class="math inline">\(\star\)</span></p>
+<p><span class="math inline">\(\star\)</span> 对于<span class="math inline">\(\hat\beta_2\)</span>同理 <span class="math inline">\(\star\)</span></p>
 <hr>
 <h2 id="半对数模型ⅱ的经验回归方程hat-yhatbeta_0hatbeta_1log-x_1hatbeta_2log-x_2解读">★ 半对数模型(<em>Ⅱ</em>)的经验回归方程<span class="math inline">\(\hat Y=\hat\beta_0+\hat\beta_1\log X_1+\hat\beta_2\log X_2\)</span>解读</h2>
 <p>等价于对因变量做<span class="math inline">\(\lambda=0\)</span>的Box-Cox变换的线性模型（能降低原线性模型“异方差”程度），我们有 <span class="math display">\[
 \hat\beta_1=\frac{\partial\hat Y}{\partial\log X_1}=\frac{\partial\hat Y}{\frac{\partial X_1}{X_1}}
 \]</span> 此式意味着在<span class="math inline">\(X_2\)</span>保持不变的情况下，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(100\%\)</span>，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(\hat\beta_1\)</span>个单位；</p>
 <p>由于在高斯-马尔可夫定理的条件下有<span class="math inline">\(\mathbb{E}\hat Y=Y\)</span>，所以：<font color="red"><strong><span class="math inline">\(X_2\)</span>不变，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(100\%\)</span>，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(\hat\beta_1\)</span>个单位</strong></font>。</p>
-<p><span class="math inline">\(\star\)</span> <span class="math inline">\(\beta_2\)</span>同理 <span class="math inline">\(\star\)</span></p>
+<p><span class="math inline">\(\star\)</span> 对于<span class="math inline">\(\hat\beta_2\)</span>同理 <span class="math inline">\(\star\)</span></p>
 <hr>
 <h2 id="双对数模型的经验回归方程loghat-yhatbeta_0hatbeta_1log-x_1hatbeta_2log-x_2解读">★ 双对数模型的经验回归方程<span class="math inline">\(\log\hat Y=\hat\beta_0+\hat\beta_1\log X_1+\hat\beta_2\log X_2\)</span>解读</h2>
 <p>等价于“不仅对因变量做<span class="math inline">\(\lambda=0\)</span>的Box-Cox变换同时对自变量取对数的线性模型”，此举能大幅降低原线性模型“异方差”程度，我们有 <span class="math display">\[
 \hat\beta_1=\frac{\partial\log\hat Y}{\partial\log X_1}=\frac{\frac{\partial\hat Y}{\hat Y}}{\frac{\partial X_1}{X_1}}
 \]</span> 此式意味着在<span class="math inline">\(X_2\)</span>保持不变的情况下，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\%\)</span>，则<span class="math inline">\(\hat Y\)</span>增加<span class="math inline">\(\hat\beta_1\%\)</span>；</p>
 <p>由于在高斯-马尔可夫定理的条件下有<span class="math inline">\(\mathbb{E}\hat Y=Y\)</span>，所以：<font color="red"><strong><span class="math inline">\(X_2\)</span>不变，<span class="math inline">\(X_1\)</span>每增加<span class="math inline">\(1\%\)</span>，<span class="math inline">\(Y\)</span>平均增加<span class="math inline">\(\hat\beta_1\%\)</span></strong></font>。</p>
-<p><span class="math inline">\(\star\)</span> <span class="math inline">\(\beta_2\)</span>同理 <span class="math inline">\(\star\)</span></p>
+<p><span class="math inline">\(\star\)</span> 对于<span class="math inline">\(\hat\beta_2\)</span>同理 <span class="math inline">\(\star\)</span></p>
 <hr>
 <h2 id="多项式回归">★ 多项式回归</h2>
 <p>p8 例1.1.4：单个变量的多项式回归仍属于线性回归模型，假设<span class="math inline">\(Y\)</span>与<span class="math inline">\(X\)</span>之间有<span class="math inline">\(Y=\beta_0+\beta_1X+\beta_2X^2+\beta_3X^3+e\)</span>的关系，令<span class="math inline">\(X_1=X\)</span>，<span class="math inline">\(X_2=X^2\)</span>，<span class="math inline">\(X_3=X^3\)</span>，于是 <span class="math display">\[
