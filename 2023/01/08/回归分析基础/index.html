@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
 <meta name="generator" content="Hexo 5.4.2">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/apple-touch-icon.png" color="#222">
 
 <link rel="stylesheet" href="/css/main.css">
 
@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="本文原仅作为《回归分析》课程考试的复习与归纳，所以深度略浅，不曾想却应了一句“温故而知新”，复习这些相对基础、相对熟悉的“旧”理论时竟也产生了不少新体会。">
@@ -48,7 +48,7 @@
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-2.png">
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-3.png">
 <meta property="article:published_time" content="2023-01-08T10:11:25.000Z">
-<meta property="article:modified_time" content="2023-02-06T20:48:52.303Z">
+<meta property="article:modified_time" content="2023-02-06T21:11:42.688Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="回归分析">
 <meta name="twitter:card" content="summary">
@@ -127,6 +127,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -166,11 +167,38 @@
     <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>Friends</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -225,7 +253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-07 04:48:52" itemprop="dateModified" datetime="2023-02-07T04:48:52+08:00">2023-02-07</time>
+                <time title="Modified: 2023-02-07 05:11:42" itemprop="dateModified" datetime="2023-02-07T05:11:42+08:00">2023-02-07</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -348,17 +376,15 @@ Y=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+e
 \end{align}
 \]</span> 注意到 <span class="math display">\[
 \left\{
-\begin{aligned}
-&amp;\begin{align}
+\begin{align}
 \mathbb{E}\big(\boldsymbol\mu^T\boldsymbol A(\boldsymbol x-\boldsymbol\mu)\big)&amp;=\mathbb{E}(\boldsymbol\mu^T\boldsymbol A\boldsymbol x)-\boldsymbol\mu^T\boldsymbol A\boldsymbol\mu\\
 &amp;=\boldsymbol\mu^T\boldsymbol A\mathbb{E}(\boldsymbol x)-\boldsymbol\mu^T\boldsymbol A\boldsymbol\mu\\
 &amp;=0
-\end{align}\\
-\\&amp;\begin{aligned}
+\\
+\\
 \mathbb{E}\big((\boldsymbol x-\boldsymbol\mu)^T\boldsymbol{A\mu}\big)&amp;=\Big(\mathbb{E}\big(\boldsymbol\mu^T\boldsymbol A(\boldsymbol x-\boldsymbol\mu)\big)\Big)^T\\
 &amp;=0
-\end{aligned}
-\end{aligned}
+\end{align}
 \right.
 \]</span> 因此 <span class="math display">\[
 \begin{align}
@@ -568,9 +594,7 @@ R^2_{adjusted}=1-\frac{\frac{SSE}{n-(p-1)-1}}{\frac{SST}{n-1}}
 <p>值得一提的是，对于问题(3)可以改检验中的标准误为异方差稳健标准误以继续进行假设检验，但对于问题(2)，Alexander Aitken证明了这时BLUE应是WLS而非OLS。</p>
 <p>继续减弱条件至不同的随机误差间可能相关，但我们提前知道样本点的随机误差间的相关阵<span class="math inline">\(\sigma^2\boldsymbol\Sigma\)</span>，则这时GLS才是<span class="math inline">\(\boldsymbol\beta\)</span>的BLUE，因此可以说WLS是OLS的推广，GLS是WLS的推广，三者对于“同方差”、“不相关”的依赖在逐渐递减，但后者可能不太实用，因为估计一个矩阵<span class="math inline">\(\sigma^2\boldsymbol\Sigma\)</span>以今天的方法和算力都是极其困难的。</p>
 <p>通过画<span class="math inline">\(Y\)</span>-<span class="math inline">\(X\)</span>图加以说明“异方差”的表现，如</p>
-<figure>
-<img src="/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/Y-X图.png" alt="Y-X图.png"><figcaption aria-hidden="true">Y-X图.png</figcaption>
-</figure>
+<p><img src="/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/Y-X图.png" alt="Y-X图"></p>
 <h3 id="残差图与学生化残差图">◆ 残差图与学生化残差图</h3>
 <p>不考察学生化残差图。</p>
 <p>在高斯-马尔可夫定理条件下<span class="math inline">\(\hat{\boldsymbol y}\)</span>与<span class="math inline">\(\hat{\boldsymbol e}\)</span>独立，因此以<span class="math inline">\(\hat{\boldsymbol y}\)</span>为横坐标、<span class="math inline">\(\hat{\boldsymbol e}\)</span>为纵坐标的散点图应不会呈现任何趋势，称这个散点图为残差图。</p>
@@ -680,22 +704,20 @@ X_j=\alpha_0+\alpha_1X_1+\cdots+\alpha_{j-1}X_{j-1}+\alpha_{j+1}X_{j+1}+\cdots+\
 \right.
 \end{equation}
 \]</span> 其广义拉格朗日函数为<span class="math inline">\(\mathcal{L}=RSS+k\Vert\boldsymbol\beta\Vert^2=(\boldsymbol y-\boldsymbol{\beta X})^T(\boldsymbol y-\boldsymbol{\beta X})+k\boldsymbol\beta^T\boldsymbol\beta\)</span>，当<span class="math inline">\(\boldsymbol X\)</span>可逆时令<span class="math inline">\(\mathcal{L}\)</span>对<span class="math inline">\(\boldsymbol\beta\)</span>偏导为<span class="math inline">\(0\)</span>， <span class="math display">\[
-\begin{aligned}
 &amp;\begin{align}
 \frac{\partial\mathcal{L}}{\partial\boldsymbol\beta}&amp;=\frac{\partial}{\partial\boldsymbol\beta}\big(\boldsymbol y^T\boldsymbol y-2\boldsymbol y^T\boldsymbol{X\beta}+\boldsymbol\beta^T\boldsymbol X^T\boldsymbol{X\beta}+\lambda\boldsymbol\beta^T\boldsymbol\beta\big)\\
 &amp;=-2\boldsymbol X^T\boldsymbol y+2\boldsymbol X^T\boldsymbol X\boldsymbol{\beta}+2\lambda\boldsymbol\beta\\
 &amp;=\boldsymbol0
-\end{align}\\
+\\
 \\
 &amp;\Rightarrow\hat{\boldsymbol\beta}=(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol y
-\end{aligned}
+\end{align}
 \]</span> 至多考察验证岭估计为何有偏。</p>
-<p>证明思路：已知岭估计的解析解为<span class="math inline">\(\hat{\boldsymbol\beta}(\lambda)=(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol y\)</span>，在高斯-马尔可夫定理中随机误差的“零均值”、“同方差”、“不相关”假设下有<span class="math inline">\(\mathbb E(\boldsymbol y)=\boldsymbol{X\beta}\)</span>，则 $$ <span class="math display">\[\begin{align}
+<p>证明思路：已知岭估计的解析解为<span class="math inline">\(\hat{\boldsymbol\beta}(\lambda)=(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol y\)</span>，在高斯-马尔可夫定理中随机误差的“零均值”、“同方差”、“不相关”假设下有<span class="math inline">\(\mathbb E(\boldsymbol y)=\boldsymbol{X\beta}\)</span>，则 <span class="math display">\[
+\begin{align}
 \mathbb E\big(\hat{\boldsymbol\beta}(\lambda)\big)&amp;=\mathbb E\big((\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol y\big)\\
-&amp;=(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol{X\beta}\\
-
-
-\end{align}\]</span> $$</p>
+&amp;=(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol{X\beta}\end{align}
+\]</span></p>
 <p>我们知道，任何一个可逆方阵的逆是唯一的，既然<span class="math inline">\(\boldsymbol X^T\boldsymbol X\)</span>的逆是<span class="math inline">\((\boldsymbol X^T\boldsymbol X)^{-1}\)</span>，那么对于<span class="math inline">\(\forall\lambda\neq0\)</span>，一定有<span class="math inline">\((\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\neq(\boldsymbol X^T\boldsymbol X)^{-1}\)</span>，否则<span class="math inline">\(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I=\boldsymbol X^T\boldsymbol X\)</span>。因此，<span class="math inline">\((\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\)</span>必然不是<span class="math inline">\(\boldsymbol X^T\boldsymbol X\)</span>的逆，然而当且仅当<span class="math inline">\(\boldsymbol X^T\boldsymbol X\)</span>左乘其逆<span class="math inline">\((\boldsymbol X^T\boldsymbol X)^{-1}\)</span>时结果为单位阵<span class="math inline">\(\boldsymbol I\)</span>，也只有此时有 <span class="math display">\[
 (\boldsymbol X^T\boldsymbol X)^{-1}\boldsymbol X^T\boldsymbol{X\beta}=\boldsymbol{I\beta}=\boldsymbol\beta
 \]</span> 所以，对于任何非<span class="math inline">\(0\)</span>的<span class="math inline">\(\lambda\)</span>，必定有<span class="math inline">\(\mathbb E\big(\hat{\boldsymbol\beta}(\lambda)\big)=(\boldsymbol X^T\boldsymbol X+\lambda\boldsymbol I)^{-1}\boldsymbol X^T\boldsymbol{X\beta}\neq\boldsymbol\beta\)</span>成立。</p>
@@ -719,8 +741,7 @@ X_j=\alpha_0+\alpha_1X_1+\cdots+\alpha_{j-1}X_{j-1}+\alpha_{j+1}X_{j+1}+\cdots+\
 <p><img src="/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-2.png" alt="PCR-2" style="zoom:80%;"></p>
 <p><img src="/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-3.png" alt="PCR-3" style="zoom:80%;"></p>
 <h1 id="附录多元统计分析部分理论的证明">附录：多元统计分析部分理论的证明</h1>
-<p>研究统计学，首先一定要具备充分的线性代数能力。</p>
-<p>作为工具书，太过基础的内容恕不记叙。</p>
+<p>研究统计学，首先一定要具备充分的线性代数能力；作为工具书、课程复习总结，太过基础的内容恕不记叙。</p>
 <h2 id="矩阵行列式引理">矩阵行列式引理</h2>
 <p>矩阵行列式引理（Matrix determinant lemma）：设<span class="math inline">\(\boldsymbol A\)</span>是可逆方阵，<span class="math inline">\(\boldsymbol a\)</span>、<span class="math inline">\(\boldsymbol b\)</span>是列向量，则： <span class="math display">\[
 \det(\boldsymbol A+\boldsymbol{ab}^T)=(1+\boldsymbol{b}^T\boldsymbol{Aa})\cdot\det(\boldsymbol A)
@@ -1093,6 +1114,10 @@ window.addEventListener('pjax:success', () => {
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
