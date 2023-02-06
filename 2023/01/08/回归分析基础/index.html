@@ -48,7 +48,7 @@
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-2.png">
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-3.png">
 <meta property="article:published_time" content="2023-01-08T10:11:25.000Z">
-<meta property="article:modified_time" content="2023-02-05T15:37:26.688Z">
+<meta property="article:modified_time" content="2023-02-06T09:44:37.064Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="回归分析">
 <meta name="twitter:card" content="summary">
@@ -225,7 +225,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-05 23:37:26" itemprop="dateModified" datetime="2023-02-05T23:37:26+08:00">2023-02-05</time>
+                <time title="Modified: 2023-02-06 17:44:37" itemprop="dateModified" datetime="2023-02-06T17:44:37+08:00">2023-02-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -374,12 +374,14 @@ Y=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+e
 \Rightarrow\,&amp;\hat{\boldsymbol\beta}=(\boldsymbol X^T\boldsymbol X)^{-1}\boldsymbol X^T\boldsymbol y
 \end{align}
 \]</span> 在此我们得到<span class="math inline">\(\hat{\boldsymbol\beta}\)</span>了的解析解，称<span class="math inline">\(\boldsymbol X(\boldsymbol X^T\boldsymbol X)^{-1}\boldsymbol X^T\)</span>为帽子矩阵，记为<span class="math inline">\(\boldsymbol H\)</span>；称<span class="math inline">\(\boldsymbol I-\boldsymbol H\)</span>为Annihilator矩阵（消灭矩阵），二者可以视为对<span class="math inline">\(\boldsymbol y\)</span>的线性变换，分别将<span class="math inline">\(\boldsymbol y\)</span>映射到观测向量空间与残差向量空间。对于训练集<span class="math inline">\(\boldsymbol X\)</span>而言有 <span class="math display">\[
+\begin{equation}
 \left\{
-\begin{align}
+\begin{aligned}
 观测向量\hat{\boldsymbol y}&amp;=\boldsymbol X\hat{\boldsymbol\beta}=\boldsymbol X(\boldsymbol X^T\boldsymbol X)^{-1}\boldsymbol X^T\boldsymbol y=\boldsymbol{Hy}\\
 残差向量\hat{\boldsymbol e}&amp;=\boldsymbol y-\hat{\boldsymbol y}=(\boldsymbol I-\boldsymbol H)\boldsymbol y
-\end{align}
+\end{aligned}
 \right.
+\end{equation}
 \]</span> 而且<span class="math inline">\(\hat{\boldsymbol y}\)</span>与<span class="math inline">\(\hat{\boldsymbol e}\)</span>还是互相正交的（欧氏空间意义下）， <span class="math display">\[
 \begin{align}
 \hat{\boldsymbol y}^T\hat{\boldsymbol e}&amp;=\hat{\boldsymbol y}^T\boldsymbol y-\hat{\boldsymbol y}^T\hat{\boldsymbol y}\\
@@ -404,12 +406,14 @@ Y=\beta_0+\beta_1X_1+\beta_2X_2+\beta_3X_3+e
 \]</span> 得到最终的式子 <span class="math display">\[
 \frac{\partial\mathcal{L}}{\partial\boldsymbol\beta_0}=0\Leftrightarrow\hat{\boldsymbol e}\boldsymbol1^T=0\Leftrightarrow\sum^n_{i=1}(y_i-\hat{y}_i)=0
 \]</span> 最后，我们联合上文已证明的<span class="math inline">\(\hat{\boldsymbol y}\)</span>与<span class="math inline">\(\hat{\boldsymbol e}\)</span>互相正交，可以总结出： <span class="math display">\[
+\begin{equation}
 \left\{
-\begin{align}
+\begin{aligned}
 &amp;\sum^n_{i=1}(y_i-\hat{y}_i)=0\\
 &amp;\sum^n_{i=1}\hat{y}_i(y_i-\hat{y}_i)=0
-\end{align}
+\end{aligned}
 \right.
+\end{equation}
 \]</span> 题外话：对于需要预测的新数据集<span class="math inline">\(\boldsymbol X_{pre}\)</span>，<span class="math inline">\(\hat{\boldsymbol y}_{pre}=\boldsymbol X_{pre}\hat{\boldsymbol\beta}=\boldsymbol X_{pre}(\boldsymbol X^T\boldsymbol X)^{-1}\boldsymbol X^T\boldsymbol y\)</span>.</p>
 <hr>
 <h2 id="高斯-马尔可夫定理">★★ 高斯-马尔可夫定理</h2>
@@ -486,7 +490,7 @@ RSS&amp;=\hat{\boldsymbol e}^T\hat{\boldsymbol e}\\
 <h3 id="中心化模型">中心化模型</h3>
 <p>由于通常我们只关心回归系数的值，下面将证明这种情况下将模型中心化是可取的操作。</p>
 <p>设原本的回归模型为<span class="math inline">\(y_i=\beta_0+\beta_1x_{i1}+\cdots+\beta_{p-1}x_{i,p-1}+e_i\)</span>，即<span class="math inline">\(\boldsymbol y=\boldsymbol{X\beta}+e\)</span>，现将设计矩阵<span class="math inline">\(\boldsymbol X\)</span>与其第一列分离，转写为<span class="math inline">\(\boldsymbol y=\boldsymbol\beta_0\boldsymbol1+\boldsymbol{X}&#39;&#39;_c\boldsymbol\beta_{coef}+e\)</span>，其中 <span class="math display">\[
-\boldsymbol{X}&#39;&#39;_c=\left(\begin{matrix}x_{11}&amp;x_{12}&amp;\cdots&amp;x_{1,p-1}\\x_{21}&amp;x_{22}&amp;\cdots&amp;x_{2,p-1}\\\vdots&amp;\vdots&amp;&amp;\vdots\\x_{n1}&amp;x_{n2}&amp;\cdots&amp;x_{n,p-1}\\\end{matrix}\right),&amp;\,\;\boldsymbol\beta_{coef}=\left(\begin{matrix}\beta_1\\\beta_2\\\cdots\\\beta_{p-1}\end{matrix}\right)
+\boldsymbol{X}&#39;&#39;_c=\left(\begin{matrix}x_{11}&amp;x_{12}&amp;\cdots&amp;x_{1,p-1}\\x_{21}&amp;x_{22}&amp;\cdots&amp;x_{2,p-1}\\\vdots&amp;\vdots&amp;&amp;\vdots\\x_{n1}&amp;x_{n2}&amp;\cdots&amp;x_{n,p-1}\\\end{matrix}\right),\ \,\,\;\boldsymbol\beta_{coef}=\left(\begin{matrix}\beta_1\\\beta_2\\\cdots\\\beta_{p-1}\end{matrix}\right)
 \]</span> 记<span class="math inline">\(\boldsymbol{X}&#39;&#39;_c\)</span>中心化后为<span class="math inline">\(\boldsymbol{X}_c\)</span>，有 <span class="math display">\[
 \boldsymbol{X}_c=\left(\begin{matrix}x_{11}-\bar x_1&amp;x_{12}-\bar x_2&amp;\cdots&amp;x_{1,p-1}-\bar x_{p-1}\\x_{21}-\bar x_1&amp;x_{22}-\bar x_2&amp;\cdots&amp;x_{2,p-1}-\bar x_{p-1}\\\vdots&amp;\vdots&amp;&amp;\vdots\\x_{n1}-\bar x_1&amp;x_{n2}-\bar x_2&amp;\cdots&amp;x_{n,p-1}-\bar x_{p-1}\\\end{matrix}\right)
 \]</span></p>
@@ -496,12 +500,14 @@ RSS&amp;=\hat{\boldsymbol e}^T\hat{\boldsymbol e}\\
 <p>为保证<span class="math inline">\(\{y_i\}^n_{i=1}\)</span>与<span class="math inline">\(\boldsymbol\beta_{coef}\)</span>不变，令<span class="math inline">\(\alpha=\beta_0+\sum\limits^{p-1}_{i=1}\bar x_i\beta_i\)</span>，于是得到中心化模型 <span class="math display">\[
 \boldsymbol y=\alpha\boldsymbol1+\boldsymbol{X}_c\boldsymbol\beta_{coef}
 \]</span> 这仍然是个线性模型，且若原本的回归模型满足高斯-马尔可夫定理条件，容易知道中心化后的模型仍满足高斯-马尔可夫定理条件，这使得模型中心化后依然有各种优良的统计性质，不难导出中心化模型的OLS： <span class="math display">\[
+\begin{equation}
 \left\{
-\begin{align}
+\begin{aligned}
 &amp;\hat{\alpha}=\hat\beta_0+\sum\limits^{p-1}_{i=1}\bar x_i\hat\beta_i=\bar y\\
 &amp;\hat{\boldsymbol\beta}_{coef}=(\boldsymbol{X}_c^T\boldsymbol{X}_c)^{-1}\boldsymbol{X}_c^T\boldsymbol{y}
-\end{align}
+\end{aligned}
 \right.
+\end{equation}
 \]</span> <span class="math inline">\(\hat{\alpha}\)</span>、<span class="math inline">\(\hat{\boldsymbol\beta}_{coef}\)</span>分别是<span class="math inline">\(\alpha\)</span>、<span class="math inline">\(\boldsymbol\beta\)</span>的无偏估计，注意到<span class="math inline">\(\boldsymbol X_c\cdot(\frac{1}{n},\frac{1}{n},\cdots,\frac{1}{n})^T=\boldsymbol0^T_{p-1}\)</span>，后续不难得到 <span class="math display">\[
 \begin{align}
 \mathrm{Cov}\left(\begin{matrix}\hat{\alpha}\\\hat{\boldsymbol\beta}_{coef}\end{matrix}\right)&amp;=\mathrm{Cov}\left(\left(\begin{matrix}\frac{1}{n}\boldsymbol1_{p-1}^T\\(\boldsymbol{X}_c^T\boldsymbol{X}_c)^{-1}\boldsymbol{X}_c^T\end{matrix}\right)\boldsymbol{y}\right)\\
@@ -574,10 +580,10 @@ LM=nR^2_{\sigma^2}\overset{L}{\sim}\chi^2(p-1)
 <p>注意到如果拒绝原假设，则一定有“异方差”存在，但由于BP检验所假设的辅助模型是一次线性回归（特殊的线性回归，方差分析），这只能表明原模型必然不满足“同方差”假设，而不能说明<span class="math inline">\(\sigma^2_i\)</span>与<span class="math inline">\(\{x_{ij}\}^p_{j=2}\)</span>间一定存在某个线性关系。</p>
 <figure class="highlight r"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">library<span class="punctuation">(</span>lmtest<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">fit <span class="operator">&lt;-</span> lm<span class="punctuation">(</span>hwy <span class="operator">~</span> displ <span class="operator">+</span> <span class="built_in">class</span><span class="punctuation">,</span> data <span class="operator">=</span> mpg<span class="punctuation">)</span></span><br><span class="line">bptest<span class="punctuation">(</span>fit<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
 <p><img src="/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/BP检验结果.png" alt="BP检验结果"></p>
-<p>譬如上图的结果，由于<span class="math inline">\(p\mathrm{-}value=0.06185\textgreater0.05\)</span>，因此没有<span class="math inline">\(95\%\)</span>的把握拒绝原假设，模型可能是满足“同方差”假设的。</p>
+<p>譬如上图的结果，由于<span class="math inline">\(p\mathrm{-}value=0.06185&gt;0.05\)</span>，因此没有<span class="math inline">\(95\%\)</span>的把握拒绝原假设，模型可能是满足“同方差”假设的。</p>
 <h3 id="white检验">◆ White检验</h3>
 <p>White检验可以认为是“BP检验 Plus”，原理是对每个可能的<span class="math inline">\(\sigma^2_i\)</span>进行二次回归并考虑交叉项（自由度过小的话我们常常去掉交叉项），构造如下辅助回归方程 <span class="math display">\[
-\sigma^2_i=\alpha_0+\sum^{p}_{j=2}\gamma_jx_{ij}+\sum^{p}_{k=2}\lambda_kx^2_{ik}+\sum_{u\textless v}\zeta_{u,v}x_{iu}x_{iv}+\mu_i
+\sigma^2_i=\alpha_0+\sum^{p}_{j=2}\gamma_jx_{ij}+\sum^{p}_{k=2}\lambda_kx^2_{ik}+\sum_{u&lt;s v}\zeta_{u,v}x_{iu}x_{iv}+\mu_i
 \]</span> 原假设<span class="math inline">\(H_0\)</span>为<span class="math inline">\(\forall i,\ \ \alpha_i,\lambda_i,\zeta_i=0\)</span>，检验原理为在原假设成立时 <span class="math display">\[
 w=nR^2_{\sigma^2}\overset{L}{\sim}\chi^2(2p+C^{p-1}_{2})
 \]</span> 一般在不能拒绝原假设（<span class="math inline">\(p\)</span>值较大）时，可以认为原回归模型满足“同方差”假设。</p>
@@ -592,13 +598,14 @@ D_i=\frac{1}{p}\frac{\Vert\boldsymbol X\hat{\boldsymbol\beta}-\boldsymbol X\hat{
 <h2 id="box-cox变换">◆ Box-Cox变换</h2>
 <p>只考察名词解释。</p>
 <p>Box-Cox是对因变量的变换，定义为 <span class="math display">\[
-Y^{(\lambda)}=
-\left\{
-\begin{align}
+\begin{equation}
+Y^{(\lambda)}=\left\{
+\begin{aligned}
 &amp;\frac{Y^\lambda-1}{\lambda},&amp; &amp;\lambda\neq0\\
 &amp;\log Y,&amp; &amp;\lambda=0
-\end{align}
+\end{aligned}
 \right.
+\end{equation}
 \]</span> 常用的Box-Cox变换有<span class="math inline">\(\log Y\)</span>、<span class="math inline">\(\sqrt Y\)</span>与<span class="math inline">\(\frac{1}{Y}\)</span>，注意Box-Cox变换直接作用于因变量。</p>
 <h2 id="wls加权最小二乘估计">★★ WLS（加权最小二乘估计）</h2>
 <p>一般WLS我们取权重矩阵<span class="math inline">\(\boldsymbol W\)</span>为对角阵<span class="math inline">\(\mathbf{\Omega}=\mathrm{diag}\big(\mathrm{Var}(e_1),\mathrm{Var}(e_2),\cdots,\mathrm{Var}(e_n)\big)\)</span>的逆，此处视二者相等。</p>
@@ -619,13 +626,15 @@ Y^{(\lambda)}=
 <p>记OLS为<span class="math inline">\(\hat{\boldsymbol\beta}\)</span>，则任何情况下都有<span class="math inline">\(\mathrm{Var}(\hat{\boldsymbol\beta}^\ast)\leqslant\mathrm{Var}(\hat{\boldsymbol\beta})\)</span>。</p>
 <h3 id="题外话gls的导出">题外话：GLS的导出</h3>
 <p>思路是将<span class="math inline">\(\boldsymbol\Sigma\)</span>对角化再运用OLS。设<span class="math inline">\(\mathrm{Cov}(\boldsymbol e)=\sigma^2\boldsymbol\Sigma\)</span>且<span class="math inline">\(\boldsymbol\Sigma\)</span>正定并已知，记<span class="math inline">\(\boldsymbol Z=\boldsymbol\Sigma^{-\frac{1}{2}}\boldsymbol y\)</span>，<span class="math inline">\(\boldsymbol U=\boldsymbol\Sigma^{-\frac{1}{2}}\boldsymbol X\)</span>，<span class="math inline">\(\boldsymbol\epsilon=\boldsymbol\Sigma^{-\frac{1}{2}}\boldsymbol e\)</span>，则有 <span class="math display">\[
+\begin{equation}
 \left\{
-\begin{align}
+\begin{aligned}
 &amp;\boldsymbol Z=\boldsymbol U\boldsymbol\beta_\boldsymbol Z+\boldsymbol\epsilon\\
 &amp;\mathbb{E}(\boldsymbol\epsilon)=\boldsymbol0\\
 &amp;\mathrm{Cov}(\boldsymbol\epsilon)=\sigma^2\boldsymbol I
-\end{align}
+\end{aligned}
 \right.
+\end{equation}
 \]</span> 因此可以得到OLS：<span class="math inline">\(\hat{\boldsymbol\beta}_\boldsymbol Z\)</span>，对于模型<span class="math inline">\(\boldsymbol Z=\boldsymbol U\boldsymbol\beta_\boldsymbol Z+\boldsymbol\epsilon\)</span>与模型参数<span class="math inline">\(\boldsymbol\beta_\boldsymbol Z\)</span>，<span class="math inline">\(\hat{\boldsymbol\beta}_\boldsymbol Z\)</span>具有高斯-马尔可夫定理条件下一切性质，再者 <span class="math display">\[
 \hat{\boldsymbol\beta}^\ast=(\boldsymbol U^T\boldsymbol U)^{-1}\boldsymbol U^T\boldsymbol z=(\boldsymbol X^T\boldsymbol\Sigma^{-1}\boldsymbol X)^{-1}\boldsymbol X^T\boldsymbol\Sigma^{-1}\boldsymbol y
 \]</span> 于是<span class="math inline">\(\hat{\boldsymbol\beta}^\ast\)</span>对于模型<span class="math inline">\(\boldsymbol Y=\boldsymbol X\boldsymbol\beta+\boldsymbol e\)</span>与模型的参数<span class="math inline">\(\boldsymbol\beta\)</span>也是无偏的，且<span class="math inline">\(\mathrm{Cov}(\hat{\boldsymbol\beta}^\ast)=\sigma^2(\boldsymbol X^T\boldsymbol\Sigma^{-1}\boldsymbol X)^{-1}\)</span>。</p>
@@ -649,16 +658,18 @@ Y^{(\lambda)}=
 <p>原理：将每个<span class="math inline">\(X_j\)</span>对剩余的<span class="math inline">\(p-2\)</span>个自变量建立回归模型 <span class="math display">\[
 X_j=\alpha_0+\alpha_1X_1+\cdots+\alpha_{j-1}X_{j-1}+\alpha_{j+1}X_{j+1}+\cdots+\alpha_{p-1}X_{p-1}+e_j
 \]</span> 使用OLS估计参数，记<span class="math inline">\(X_j\)</span>作因变量回归模型的拟合优度为<span class="math inline">\(R^2_j\)</span>，称<span class="math inline">\({VIF}_j=\frac{1}{1-R^2_j}\)</span>为<span class="math inline">\(X_j\)</span>的方差膨胀因子。</p>
-<p>容易看出，如果<span class="math inline">\(R^2_j\)</span>较大说明自变量间的线性关系的确存在，等价于<span class="math inline">\(VIF\)</span>较大，因此经验上认为<span class="math inline">\(VIF\textgreater5\)</span>则存在较强的复共线性；自变量较多时，认为<span class="math inline">\(VIF\textgreater10\)</span>则存在较强的复共线性。</p>
+<p>容易看出，如果<span class="math inline">\(R^2_j\)</span>较大说明自变量间的线性关系的确存在，等价于<span class="math inline">\(VIF\)</span>较大，因此经验上认为<span class="math inline">\(VIF&gt;5\)</span>则存在较强的复共线性；自变量较多时，认为<span class="math inline">\(VIF&gt;10\)</span>则存在较强的复共线性。</p>
 <h2 id="岭回归">★ 岭回归</h2>
 <p>可能考察岭估计的推导。</p>
-<p>证明思路：从岭回归模型出发， <span class="math display">\[
+<p>证明思路：从岭回归（Ridge Regression）模型出发， <span class="math display">\[
+\begin{equation}
 \left\{
-\begin{align}
+\begin{aligned}
 &amp;Y=\beta_0+\beta_1X_1+\cdots+\beta_{p-1}X_{p-1}+\varepsilon\\
 &amp;\beta_1^2+\beta_2^2+\cdots+\beta_{p-1}^2\le k
-\end{align}
+\end{aligned}
 \right.
+\end{equation}
 \]</span> 其广义拉格朗日函数为<span class="math inline">\(\mathcal{L}=RSS+k\Vert\boldsymbol\beta\Vert^2=(\boldsymbol y-\boldsymbol{\beta X})^T(\boldsymbol y-\boldsymbol{\beta X})+k\boldsymbol\beta^T\boldsymbol\beta\)</span>，当<span class="math inline">\(\boldsymbol X\)</span>可逆时令<span class="math inline">\(\mathcal{L}\)</span>对<span class="math inline">\(\boldsymbol\beta\)</span>偏导为<span class="math inline">\(0\)</span>， <span class="math display">\[
 \begin{aligned}
 &amp;\begin{align}
