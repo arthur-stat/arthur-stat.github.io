@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
+"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<!-- Created with Sodipodi ("http://www.sodipodi.com/") -->
+<svg
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   width="600"
+   height="480"
+   viewBox="0 0 600 480"
+   id="svg677"
+   sodipodi:version="0.34">
+
+  <title>Gammafunction</title>
+  <desc>
+     Gammafunction
+     from Wikimedia Commons
+     created with gnuplot
+     plotcurve manually adjusted, because gnuplot makes too big roundoff errors
+
+     about: http://commons.wikimedia.org/wiki/Image:Gamma plot.svg
+     source: http://commons.wikimedia.org/
+     rights: GNU Free Documentation license,
+             Creative Commons Attribution ShareAlike license
+  </desc>
+
+  <defs
+     id="defs679">
+    <circle
+       id="gpDot"
+       r="1" />
+    <path
+       id="gpPt0"
+       style="stroke-width:0.222"
+       d="M-1,0 h2 M0,-1 v2" />
+    <path
+       id="gpPt1"
+       style="stroke-width:0.222"
+       d="M-1,-1 L1,1 M1,-1 L-1,1" />
+    <path
+       id="gpPt2"
+       style="stroke-width:0.222"
+       d="M-1,0 L1,0 M0,-1 L0,1 M-1,-1 L1,1 M-1,1 L1,-1" />
+    <rect
+       id="gpPt3"
+       style="stroke-width:0.222"
+       x="-1"
+       y="-1"
+       width="2"
+       height="2" />
+    <use
+       xlink:href="#gpPt3"
+       id="gpPt4"
+       style="fill:currentColor; stroke:none" />
+    <circle
+       id="gpPt5"
+       style="stroke-width:0.222"
+       cx="0"
+       cy="0"
+       r="1" />
+    <use
+       xlink:href="#gpPt5"
+       id="gpPt6"
+       style="fill:currentColor; stroke:none" />
+    <path
+       id="gpPt7"
+       style="stroke-width:0.222"
+       d="M0,-1.33 L-1.33,0.67 L1.33,0.67 z" />
+    <use
+       xlink:href="#gpPt7"
+       id="gpPt8"
+       style="fill:currentColor; stroke:none" />
+    <use
+       xlink:href="#gpPt7"
+       id="gpPt9"
+       transform="rotate(180)" />
+    <use
+       xlink:href="#gpPt9"
+       id="gpPt10"
+       style="fill:currentColor; stroke:none" />
+    <use
+       xlink:href="#gpPt3"
+       id="gpPt11"
+       transform="rotate(45)" />
+    <use
+       xlink:href="#gpPt11"
+       id="gpPt12"
+       style="fill:currentColor; stroke:none" />
+  </defs>
+  <g
+     style="fill:none; stroke:black; stroke-width:1.00"
+     id="g694">
+    <path
+       d="M300,423 L291,423 M300,423 L309,423 "
+       id="path695" />
+    <g
+       transform="translate(292,427)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:end"
+       id="g696">
+      <text
+         id="text697">-4</text>
+    </g>
+    <path
+       d="M300,341 L291,341 M300,341 L309,341 "
+       id="path699" />
+    <g
+       transform="translate(292,345)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:end"
+       id="g700">
+      <text
+         id="text701">-2</text>
+    </g>
+    <path
+       d="M300,259 L291,259 M300,259 L309,259 "
+       id="path703" />
+    <g
+       transform="translate(292,263)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:end"
+       id="g704">
+      <text
+         id="text705"> 0</text>
+    </g>
+    <path
+       d="M300,177 L291,177 M300,177 L309,177 "
+       id="path707" />
+    <g
+       transform="translate(292,181)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:end"
+       id="g708">
+      <text
+         id="text709"> 2</text>
+    </g>
+    <path
+       d="M300,95 L291,95 M300,95 L309,95 "
+       id="path711" />
+    <g
+       transform="translate(292,99)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:end"
+       id="g712">
+      <text
+         id="text713"> 4</text>
+    </g>
+    <path
+       d="M80,259 L80,268 M80,259 L80,250 "
+       id="path715" />
+    <g
+       transform="translate(80,290)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:middle"
+       id="g716">
+      <text
+         id="text717">-4</text>
+    </g>
+    <path
+       d="M190,259 L190,268 M190,259 L190,250 "
+       id="path719" />
+    <g
+       transform="translate(190,290)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:middle"
+       id="g720">
+      <text
+         id="text721">-2</text>
+    </g>
+    <path
+       d="M300,259 L300,268 M300,259 L300,250 "
+       id="path723" />
+    <g
+       transform="translate(300,290)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:middle"
+       id="g724">
+      <text
+         id="text725"> 0</text>
+    </g>
+    <path
+       d="M410,259 L410,268 M410,259 L410,250 "
+       id="path727" />
+    <g
+       transform="translate(410,290)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:middle"
+       id="g728">
+      <text
+         id="text729"> 2</text>
+    </g>
+    <path
+       d="M520,259 L520,268 M520,259 L520,250 "
+       id="path731" />
+    <g
+       transform="translate(520,290)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:middle"
+       id="g732">
+      <text
+         id="text733"> 4</text>
+    </g>
+  </g>
+  <g
+     style="fill:none; stroke:black; stroke-width:0.50"
+     id="g735">
+    <path
+       d="M25,259 L575,259 M300,464 L300,54 "
+       id="path736" />
+  </g>
+  <g
+     style="fill:none; stroke:black; stroke-width:1.00"
+     id="g737">
+    <path
+       d="M25,464 L575,464 L575,54 L25,54 L25,464 "
+       id="path738" />
+    <g
+       transform="translate(300,31)"
+       style="stroke:none; fill:black; font-family:Arial; font-size:12.00; text-anchor:middle"
+       id="g739">
+      <text
+         id="text740">Gamma function</text>
+    </g>
+  </g>
+  <g
+     style="fill:none; stroke:black; stroke-width:3.00"
+     id="g742" />
+  <g
+     style="fill:none;stroke:red;stroke-width:2;stroke-dasharray:none;"
+     id="g743">
+    <path
+       d="M 25.092,464 L 25.115,423 L 25.154,382 L 25.231,341 L 25.465,300 L 26, 278.394 L 27,269.018 L 28,265.907 L 29,264.363 L 30,263.446 L 31,262.843 L 32,262.421 L 33,262.112 L 34,261.879 L 35,261.699 L 36,261.559 L 37,261.45 L 38,261.364 L 39,261.297 L 40,261.246 L 41,261.209 L 42,261.184 L 43,261.169 L 44,261.164 L 45,261.168 L 46,261.18 L 47,261.2 L 48,261.229 L 49,261.265 L 50,261.31 L 51,261.364 L 52,261.426 L 53,261.498 L 54,261.581 L 55,261.674 L 56,261.781 L 57,261.901 L 58,262.037 L 59,262.19 L 60,262.364 L 61,262.56 L 62,262.784 L 63,263.04 L 64,263.333 L 65,263.671 L 66,264.065 L 67,264.526 L 68,265.072 L 69,265.727 L 70,266.522 L 71,267.505 L 72,268.748 L 73,270.362 L 74,272.533 L 75,275.597 L 76,280.224 L 77,287.982 L 78,303.566 L 78.888,341 L 79,350.467 L 79.251,382 L 79.436,423 L 79.547, 464
+M 80.464,54 L 80.582,95 L 80.781,136 L 81,162.384 L 81.185,177 L 82,209.275 L 83,224.843 L 84,232.577 L 85,237.175 L 86,240.203 L 87,242.33 L 88,243.893 L 89,245.077 L 90,245.994 L 91,246.715 L 92,247.286 L 93,247.74 L 94,248.099 L 95,248.381 L 96,248.597 L 97,248.755 L 98,248.864 L 99,248.928 L 100,248.95 L 101,248.933 L 102,248.879 L 103,248.789 L 104,248.662 L 105,248.5 L 106,248.3 L 107,248.061 L 108,247.781 L 109,247.458 L 110,247.087 L 111,246.664 L 112,246.183 L 113,245.638 L 114,245.022 L 115,244.322 L 116,243.528 L 117,242.625 L 118,241.592 L 119,240.408 L 120,239.04 L 121,237.451 L 122,235.589 L 123,233.386 L 124,230.749 L 125,227.545 L 126,223.587 L 127,218.59 L 128,212.106 L 129,203.391 L 130,191.104 L 131,172.559 L 132,141.493 L 132.815,95 L 133,79.1163 L 133.236,54
+M 136.919,464 L 137,456.091 L 137.43,423 L 138,393.764 L 139,362.769 L 140,344.315 L 141,332.139 L 142,323.558 L 143,317.231 L 144,312.413 L 145,308.658 L 146,305.683 L 147,303.299 L 148,301.378 L 149,299.827 L 150,298.58 L 151,297.587 L 152,296.812 L 153,296.227 L 154,295.81 L 155,295.547 L 156,295.425 L 157,295.436 L 158,295.576 L 159,295.84 L 160,296.229 L 161,296.743 L 162,297.386 L 163,298.164 L 164,299.084 L 165,300.156 L 166,301.393 L 167,302.811 L 168,304.429 L 169,306.273 L 170,308.371 L 171,310.76 L 172,313.485 L 173,316.603 L 174,320.186 L 175,324.323 L 176,329.131 L 177,334.765 L 178,341.429 L 179,349.404 L 180,359.083 L 181,371.033 L 182,386.108 L 183,405.649 L 184,431.892 L 184.888, 464
+M 196.219,54 L 197,73.5419 L 198,92.7774 L 199,107.502 L 200,119.055 L 201,128.288 L 202,135.767 L 203,141.882 L 204,146.91 L 205,151.054 L 206,154.463 L 207,157.251 L 208,159.504 L 209,161.286 L 210,162.65 L 211,163.634 L 212,164.266 L 213,164.569 L 214,164.556 L 215,164.236 L 216,163.614 L 217,162.686 L 218,161.447 L 219,159.884 L 220,157.982 L 221,155.716 L 222,153.058 L 223,149.97 L 224,146.405 L 225,142.306 L 226,137.6 L 227,132.198 L 228,125.989 L 229,118.829 L 230,110.539 L 231,100.886 L 232,89.5616 L 233,76.157 L 234,60.111 L 234.336,54
+M 258.132,464 L 259,454.648 L 260,445.452 L 261,437.662 L 262,431.048 L 263,425.43 L 264,420.672 L 265,416.664 L 266,413.32 L 267,410.574 L 268,408.373 L 269,406.676 L 270,405.453 L 271,404.681 L 272,404.347 L 273,404.443 L 274,404.97 L 275,405.936 L 276,407.353 L 277,409.245 L 278,411.642 L 279,414.586 L 280,418.128 L 281,422.338 L 282,427.3 L 283,433.124 L 284,439.948 L 285,447.95 L 286,457.361 L 286.617,464
+M 310.147,54 L 311,70.7754 L 312,87.3294 L 313,101.268 L 314,113.154 L 315,123.398 L 316,132.312 L 317,140.131 L 318,147.038 L 319,153.178 L 320,158.669 L 321,163.602 L 322,168.055 L 323,172.092 L 324,175.764 L 325,179.117 L 326,182.186 L 327,185.005 L 328,187.601 L 329,189.996 L 330,192.211 L 331,194.264 L 332,196.17 L 333,197.943 L 334,199.595 L 335,201.135 L 336,202.574 L 337,203.92 L 338,205.18 L 339,206.361 L 340,207.468 L 341,208.508 L 342,209.485 L 343,210.403 L 344,211.267 L 345,212.079 L 346,212.844 L 347,213.564 L 348,214.242 L 349,214.881 L 350,215.482 L 351,216.049 L 352,216.582 L 353,217.084 L 354,217.556 L 356, 218.417 L 357,218.809 L 358,219.176 L 359,219.52 L 360,219.842 L 361,220.142 L 362,220.422 L 363,220.683 L 364,220.925 L 365,221.149 L 366,221.355 L 367,221.545 L 368,221.718 L 369,221.875 L 370,222.018 L 371,222.145 L 372,222.259 L 373,222.358 L 374,222.443 L 375,222.516 L 376,222.575 L 377,222.622 L 378,222.657 L 379,222.679 L 380,222.689 L 381,222.688 L 382,222.675 L 383,222.651 L 384,222.616 L 385,222.57 L 386,222.512 L 387,222.445 L 388,222.366 L 389,222.277 L 390,222.177 L 391,222.067 L 392,221.946 L 393,221.815 L 394,221.674 L 395,221.522 L 396,221.361 L 397,221.188 L 398,221.006 L 399,220.813 L 400,220.61 L 401,220.397 L 402,220.173 L 403,219.939 L 404,219.694 L 405,219.439 L 406,219.173 L 407,218.896 L 408,218.608 L 409,218.31 L 411, 217.679 L 412,217.347 L 413,217.004 L 414,216.649 L 415,216.282 L 416,215.903 L 417,215.513 L 418,215.11 L 419,214.695 L 420,214.267 L 421,213.826 L 422,213.373 L 423,212.906 L 424,212.426 L 425,211.932 L 426,211.424 L 427,210.902 L 428,210.366 L 429,209.815 L 430,209.249 L 431,208.668 L 432,208.071 L 433,207.459 L 434,206.83 L 435,206.185 L 436,205.522 L 437,204.843 L 438,204.146 L 439,203.432 L 440,202.699 L 441,201.947 L 442,201.176 L 443,200.385 L 444,199.575 L 445,198.744 L 446,197.892 L 447,197.019 L 448,196.124 L 449,195.206 L 450,194.266 L 451,193.302 L 452,192.314 L 453,191.302 L 454,190.264 L 455,189.2 L 456,188.111 L 457,186.994 L 458,185.849 L 459,184.676 L 460,183.474 L 461,182.242 L 462,180.979 L 463,179.685 L 464,178.359 L 466, 175.607 L 467,174.18 L 468,172.717 L 469,171.217 L 470,169.68 L 471,168.105 L 472,166.49 L 473,164.835 L 474,163.139 L 475,161.4 L 476,159.617 L 477,157.79 L 478,155.916 L 479,153.996 L 480,152.027 L 481,150.008 L 482,147.938 L 483,145.815 L 484,143.638 L 485,141.407 L 486,139.118 L 487,136.771 L 488,134.363 L 489,131.894 L 490,129.362 L 491,126.765 L 492,124.1 L 493,121.367 L 494,118.564 L 495,115.687 L 496,112.736 L 497,109.709 L 498,106.602 L 499,103.414 L 500,100.143 L 501,96.786 L 502,93.3415 L 503,89.806 L 504,86.177 L 505,82.452 L 506,78.629 L 507,74.704 L 508,70.675 L 509,66.539 L 510,62.292 L 511,57.932 L 511.88,54"
+       id="gamma_curve"
+       style="stroke-width:2.5;stroke:#ff0000" />
+  </g>
+  <g
+     style="fill:none; color:red; stroke:currentColor; stroke-width:1.00"
+     id="g745" />
+  <g
+     style="fill:none; stroke:black; stroke-width:1.00"
+     id="g746">
+    <path
+       d="M25,464 L575,464 L575,54 L25,54 L25,464 "
+       id="path747" />
+  </g>
+  <path
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:2.2483;stroke-opacity:1;stroke-dasharray:4.496694,4.496694;stroke-dashoffset:0;"
+     d="M 134.9827 54.69649 L 135.2202 465.6717 "
+     id="path750" />
+  <path
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:2.2483;stroke-opacity:1;stroke-dasharray:4.496694,4.496694;stroke-dashoffset:0;"
+     d="M 299.7589 53.80091 L 299.9964 464.7762 "
+     id="path751" />
+  <path
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:2.2483;stroke-opacity:1;stroke-dasharray:4.496694,4.496694;stroke-dashoffset:0;"
+     d="M 189.6096 54.69646 L 189.8471 465.6716 "
+     id="path752" />
+  <path
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:2.2483;stroke-opacity:1;stroke-dasharray:4.496694,4.496694;stroke-dashoffset:0;"
+     d="M 244.2366 53.80091 L 244.4741 464.7761 "
+     id="path753" />
+  <path
+     style="font-size:12;fill:none;fill-rule:evenodd;stroke:#0000ff;stroke-width:2.2483;stroke-opacity:1;stroke-dasharray:4.496694,4.496694;stroke-dashoffset:0;"
+     d="M 79.46038 54.69645 L 79.69788 465.6717 "
+     id="path754" />
+</svg>
+
