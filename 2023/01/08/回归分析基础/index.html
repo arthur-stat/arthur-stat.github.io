@@ -48,7 +48,7 @@
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-2.png">
 <meta property="og:image" content="http://example.com/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/PCR-3.png">
 <meta property="article:published_time" content="2023-01-08T10:11:25.000Z">
-<meta property="article:modified_time" content="2023-02-13T15:17:10.182Z">
+<meta property="article:modified_time" content="2023-02-13T16:52:00.930Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="回归分析">
 <meta name="twitter:card" content="summary">
@@ -253,7 +253,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2023-02-13 23:17:10" itemprop="dateModified" datetime="2023-02-13T23:17:10+08:00">2023-02-13</time>
+                <time title="Modified: 2023-02-14 00:52:00" itemprop="dateModified" datetime="2023-02-14T00:52:00+08:00">2023-02-14</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -568,6 +568,15 @@ RSS&amp;=\hat{\boldsymbol e}^T\hat{\boldsymbol e}\\
 <h2 id="模型解读">▲▲▲ 模型解读</h2>
 <p>以下图为例</p>
 <p><img src="/2023/01/08/%E5%9B%9E%E5%BD%92%E5%88%86%E6%9E%90%E5%9F%BA%E7%A1%80/R回归结果解读.png" alt="R回归结果解读" style="zoom:150%;"></p>
+<p>有必要解释一下图中在“Residual standard error”注释中“参数个数”的意思：暂只考虑向量<span class="math inline">\(\boldsymbol X\)</span>代表一组无序的名义数据的情况，例如我们所选取的“class”自变量，它包含了<span class="math inline">\(7\)</span>种树的种类，作为分类数据（属性数据）在回归中我们需要用一个具有七种取值的向量<span class="math inline">\(\boldsymbol X\)</span>分别对应这七个类别，这时<span class="math inline">\(\boldsymbol X\)</span>分量个数通常选择六或七个。如若选用六个分量构造<span class="math inline">\(\boldsymbol X\)</span>，则取七个向量作为<span class="math inline">\(\boldsymbol X\)</span>所有可能的且不同的取值，一般选择<span class="math inline">\((0,0,0,0,0,0)\)</span>、<span class="math inline">\((1,0,0,0,0,0)\)</span>、<span class="math inline">\((0,1,0,0,0,0)\)</span>、<span class="math inline">\(\cdots\)</span>、<span class="math inline">\((0,0,0,0,0,1)\)</span>（必须注意到，虽然我们一共仅使用了六个分量，却用六个分量表示了七个线性无关的向量，这实际上对应了七个品种），记<span class="math inline">\(\boldsymbol X=(X_1,X_2,\cdots,X_6)\)</span>，则<span class="math inline">\(\forall i,X_i=0\,or\,1\)</span>，且<span class="math inline">\((X_1,X_2,\cdots,X_6)\)</span>中至多有一个值取<span class="math inline">\(1\)</span>（再次强调，<span class="math inline">\(\boldsymbol X\)</span>只能有七种不同的取值）；此时回归模型为： <span class="math display">\[
+\begin{align}hwy=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_6X_6\end{align}
+\]</span> 模型中我们有<span class="math inline">\(6\)</span>个自变量<span class="math inline">\(\{X_i\}^6_{i=1}\)</span>与回归系数<span class="math inline">\(\{\beta_i\}^6_{i=1}\)</span>，但自由度却并不为<span class="math inline">\(n-6\)</span>：由于我们在回归中实质上使用到了样本均值，故残差标准误自由度为<span class="math inline">\(n-6-1=227\)</span>（也可以认为<span class="math inline">\(\beta_0\)</span>亦“占用”了一个自由度）；当然还可以用七个变量表示七种种类，记<span class="math inline">\(\boldsymbol X=(X_1,X_2,\cdots,X_7)\)</span>，取所有可能的取值为<span class="math inline">\((1,0,0,0,0,0,0)\)</span>、<span class="math inline">\((0,1,0,0,0,0,0)\)</span>、<span class="math inline">\(\cdots\)</span>、<span class="math inline">\((0,0,0,0,0,0,1)\)</span>即可。</p>
+<p>再考虑“displ”自变量，这是一个连续取值的自变量，是一个实际数据，因此用一个随机变量<span class="math inline">\(X_7\)</span>表示即可，此时回归模型为： <span class="math display">\[
+\begin{align}hwy=\beta_0+\beta_1X_1+\beta_2X_2+\cdots+\beta_6X_6+\beta_7X_7\end{align}
+\]</span> 其中，当<span class="math inline">\(i&lt;7,X_i=0\,or\,1\)</span>，且<span class="math inline">\((X_1,X_2,\cdots,X_6)\)</span>至多有一个分量取<span class="math inline">\(1\)</span>，而<span class="math inline">\(X_7\)</span>理论上可能取到任何非负值（当然在这个问题中它具有现实意义，取值有一个范围），这时残差标准误自由度为<span class="math inline">\(n-6-1-1=226\)</span>。因此，“参数个数”指模型回归系数与截距项个数之和，等价于模型自变量个数加<span class="math inline">\(1\)</span>。</p>
+<hr>
+<p>题外话：对于有序的名义数据，仍然可以只使用一个变量<span class="math inline">\(X\)</span>表示，譬如考虑调查者的学历水平，取小学及以下学历<span class="math inline">\(X=0\)</span>，初中学历<span class="math inline">\(X=1\)</span>，高中学历<span class="math inline">\(X=2\)</span>，并以此类推。那么，为什么在刚才的例子中“class”自变量我们使用了一个六维向量来表示，而不是只是用一个标量，令其取值分别为<span class="math inline">\(0\)</span>、<span class="math inline">\(1\)</span>、<span class="math inline">\(\cdots\)</span>、<span class="math inline">\(6\)</span>来表示“class”的这七种种类呢？</p>
+<p>答案是学历水平在简单实验中可以粗糙地认为是有序数据，而树的种类必然是无序的、线性无关的，否则会出现“用<span class="math inline">\(X\)</span>表示树的种类，对樱桃树取<span class="math inline">\(X=2\)</span>，对柠檬树取<span class="math inline">\(X=4\)</span>，所以柠檬树的种类是樱桃树的两倍”这样错误且荒谬的推论。</p>
 <h2 id="cls线性约束的最小二乘估计">▲▲▲ CLS（线性约束的最小二乘估计）</h2>
 <p>考试时会给出公式。</p>
 <p>设有线性约束<span class="math inline">\(\boldsymbol{A\beta}=\boldsymbol b\)</span>，则利用Lagrange乘子法可以导出线性约束下的最小二乘估计： <span class="math display">\[
