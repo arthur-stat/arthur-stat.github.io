@@ -230,65 +230,72 @@
 
     <div id="friends">
         <style>
-
-            #links{
-               margin-top: 5rem;
+            #links {
+                margin-top: 5rem;
             }
 
-            .links-content{
-                margin-top:1rem;
+            .links-content {
+                margin-top: 1rem;
             }
 
-            .link-navigation::after {
-                content: " ";
-                display: block;
-                clear: both;
+            .link-navigation {
+                display: flex;
+                flex-direction: column;
             }
 
             .card {
-                width: 80em;
+                display: flex;
+                align-items: center;
+                width: inherit;
                 font-size: 1rem;
                 padding: 10px 20px;
                 border-radius: 4px;
                 transition-duration: 0.15s;
                 margin-bottom: 1rem;
-                display:flex;
-                float: left;
             }
+
             .card:hover {
                 transform: scale(1.1);
                 box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12), 0 0 6px 0 rgba(0, 0, 0, 0.04);
             }
-            .card a {
-                border:none;
-            }
-            .card .ava {
-                width: 3rem!important;
-                height: 3rem!important;
-                margin:0!important;
-                margin-right: 1em!important;
-                border-radius:4px;
 
+            .card a {
+                border: none;
             }
+
+            .card .ava {
+                width: 3rem !important;
+                height: 3rem !important;
+                margin: 0 !important;
+                margin-right: 1em !important;
+                border-radius: 4px;
+            }
+
             .card .card-header {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
                 font-style: italic;
                 overflow: hidden;
-                width: 750em;
+                width: inherit;
             }
+
             .card .card-header a {
                 font-style: normal;
                 color: #2bbc8a;
                 font-weight: bold;
                 text-decoration: none;
             }
+
             .card .card-header a:hover {
                 color: #d480aa;
                 text-decoration: none;
             }
+
             .card .card-header .info {
-                font-style:normal;
-                color:#a3a3a3;
-                font-size:14px;
+                font-style: normal;
+                color: #a3a3a3;
+                font-size: 14px;
                 min-width: 0;
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -297,74 +304,62 @@
         </style>
         <div class="links-content">
             <div class="link-navigation">
-
                 
-
                     <div class="card">
                         <img class="ava" src="https://tsingshui.art/img/icon.png"/>
                         <div class="card-header">
-                           <div>
-                              <a href="https://tsingshui.art/" target="_blank"> 清水</a>
-                           </div>
-                           <div class="info">水子哥，某互联网大厂安全在职（有点癔症，自称黑客）</div>
+                            <div>
+                                <a href="https://tsingshui.art/" target="_blank"> 清水</a>
+                            </div>
+                            <div class="info">水子哥，某互联网大厂安全在职（有点癔症，自称黑客）</div>
                         </div>
                     </div>
-
                 
-
                     <div class="card">
                         <img class="ava" src="https://ljjsde.github.io/css/images/mylogo.jpg"/>
                         <div class="card-header">
-                           <div>
-                              <a href="https://ljjsde.github.io/" target="_blank"> 老刘</a>
-                           </div>
-                           <div class="info">重邮吧末代皇帝，985计算机硕士（在考，还没上岸）</div>
+                            <div>
+                                <a href="https://ljjsde.github.io/" target="_blank"> 老刘</a>
+                            </div>
+                            <div class="info">重邮吧末代皇帝，985计算机硕士（在考，还没上岸）</div>
                         </div>
                     </div>
-
                 
-
                     <div class="card">
                         <img class="ava" src="https://avatars.githubusercontent.com/u/92938836?v=4"/>
                         <div class="card-header">
-                           <div>
-                              <a href="https://lanlance.cn/" target="_blank"> 老袁</a>
-                           </div>
-                           <div class="info">后端开发，前Bytedance实习生，正实习中</div>
+                            <div>
+                                <a href="https://lanlance.cn/" target="_blank"> 老袁</a>
+                            </div>
+                            <div class="info">后端开发，前Bytedance实习生，正实习中</div>
                         </div>
                     </div>
-
                 
-
                     <div class="card">
                         <img class="ava" src="https://creohsia.top/profile.jpg"/>
                         <div class="card-header">
-                           <div>
-                              <a href="https://creohsia.top/" target="_blank"> Creohsia夏</a>
-                           </div>
-                           <div class="info">西财生物统计硕士在读，考普斯会长奖获得者的学生的学生，预计转直博</div>
+                            <div>
+                                <a href="https://creohsia.top/" target="_blank"> Creohsia夏</a>
+                            </div>
+                            <div class="info">西财生物统计硕士在读，考普斯会长奖获得者的学生的学生，预计转直博</div>
                         </div>
                     </div>
-
                 
-
                     <div class="card">
                         <img class="ava" src="https://img1.baidu.com/it/u=439652842,3098756981&fm=253&fmt=auto&app=120&f=JPEG?w=800&h=800"/>
                         <div class="card-header">
-                           <div>
-                              <a href="https://www.baidu.com/" target="_blank"> Peanut</a>
-                           </div>
-                           <div class="info">嵌入式测试厂狗，马上辞职跑路去澳洲读研</div>
+                            <div>
+                                <a href="https://www.baidu.com/" target="_blank"> Peanut</a>
+                            </div>
+                            <div class="info">嵌入式测试厂狗，马上辞职跑路去澳洲读研</div>
                         </div>
                     </div>
-
                 
-
             </div>
             
 
-            </div>
         </div>
+    </div>
 
   
   
