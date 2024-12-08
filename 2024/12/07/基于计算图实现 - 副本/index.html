@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/apple-touch-icon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="首先实现计算图，然后利用计算图实现反向传播算法以计算梯度，再由此基于numpy搭建一个可训练的MLP，用以在MNIST上识别手写数字。整个过程不需要Pytorch等任何其他第三方库所提供的任何接口。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于计算图实现一个支持反向传播算法的MLP">
+<meta property="og:url" content="http://example.com/2024/12/07/%E5%9F%BA%E4%BA%8E%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%AE%9E%E7%8E%B0%20-%20%E5%89%AF%E6%9C%AC/index.html">
+<meta property="og:site_name" content="二三事">
+<meta property="og:description" content="首先实现计算图，然后利用计算图实现反向传播算法以计算梯度，再由此基于numpy搭建一个可训练的MLP，用以在MNIST上识别手写数字。整个过程不需要Pytorch等任何其他第三方库所提供的任何接口。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2024-12-07T15:16:50.000Z">
+<meta property="article:modified_time" content="2024-12-07T16:50:14.274Z">
+<meta property="article:author" content="Arthurstat">
+<meta property="article:tag" content="强化学习">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2024/12/07/%E5%9F%BA%E4%BA%8E%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%AE%9E%E7%8E%B0%20-%20%E5%89%AF%E6%9C%AC/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>基于计算图实现一个支持反向传播算法的MLP | 二三事</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="二三事" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">二三事</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Knock knock?</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fas fa-book fa-fw"></i>Docs</a>
+
+  </li>
+        <li class="menu-item menu-item-tools-download">
+
+    <a href="/tools%20download/" rel="section"><i class="fa fa-tools fa-fw"></i>Tools Download</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>Friends</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/07/%E5%9F%BA%E4%BA%8E%E8%AE%A1%E7%AE%97%E5%9B%BE%E5%AE%9E%E7%8E%B0%20-%20%E5%89%AF%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/arthurstat.png">
+      <meta itemprop="name" content="Arthurstat">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二三事">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基于计算图实现一个支持反向传播算法的MLP
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2024-12-07 23:16:50" itemprop="dateCreated datePublished" datetime="2024-12-07T23:16:50+08:00">2024-12-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2024-12-08 00:50:14" itemprop="dateModified" datetime="2024-12-08T00:50:14+08:00">2024-12-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index"><span itemprop="name">算法</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">　　首先实现计算图，然后利用计算图实现反向传播算法以计算梯度，再由此基于numpy搭建一个可训练的MLP，用以在MNIST上识别手写数字。整个过程不需要Pytorch等任何其他第三方库所提供的任何接口。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>数据集来源：<a target="_blank" rel="noopener" href="https://www.kaggle.com/datasets/oddrationale/mnist-in-csv?resource=download">MNIST
+in CSV</a>, Kaggle</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br></pre></td></tr></table></figure>
+<h1 id="实现计算图">实现计算图</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ComputationGraph</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, value, grad=<span class="literal">None</span></span>):  <span class="comment"># node</span></span><br><span class="line">        <span class="variable language_">self</span>.value = value  <span class="comment"># value in this node</span></span><br><span class="line">        <span class="variable language_">self</span>.grad = grad <span class="keyword">if</span> grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">else</span> np.zeros_like(value)  <span class="comment"># gradient in this </span></span><br><span class="line">        <span class="variable language_">self</span>._backward = <span class="keyword">lambda</span>: <span class="literal">None</span>  <span class="comment"># function &amp; operators</span></span><br><span class="line">        <span class="variable language_">self</span>.dependencies = []  <span class="comment"># last node</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">backward</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="variable language_">self</span>._backward()</span><br><span class="line">        <span class="keyword">for</span> dep <span class="keyword">in</span> <span class="variable language_">self</span>.dependencies:</span><br><span class="line">            dep.backward()</span><br></pre></td></tr></table></figure>
+<h1 id="实现mlp">实现MLP</h1>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MLP</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, actFunc=<span class="string">'sigmoid'</span>, seed=<span class="literal">None</span>, bias=<span class="number">0.5</span>, hidden1size=<span class="number">128</span>, hidden2size=<span class="number">32</span></span>):</span><br><span class="line">        <span class="keyword">if</span> actFunc <span class="keyword">in</span> [<span class="string">'sigmoid'</span>, <span class="string">'Sigmoid'</span>]:</span><br><span class="line">            <span class="variable language_">self</span>.sigma = <span class="variable language_">self</span>.sigmoid</span><br><span class="line">            <span class="variable language_">self</span>.derivative = <span class="variable language_">self</span>.sigmoidDerivative</span><br><span class="line">        <span class="keyword">elif</span> actFunc <span class="keyword">in</span> [<span class="string">'ReLu'</span>, <span class="string">'relu'</span>]:</span><br><span class="line">            <span class="variable language_">self</span>.sigma = <span class="variable language_">self</span>.ReLU</span><br><span class="line">            <span class="variable language_">self</span>.derivative = <span class="variable language_">self</span>.ReLUderivative</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">raise</span> ValueError(<span class="string">'wrong actFunc'</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> seed != <span class="literal">None</span>:</span><br><span class="line">            np.random.seed(seed)</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.seed = seed</span><br><span class="line">        <span class="variable language_">self</span>.bias = bias</span><br><span class="line">        <span class="variable language_">self</span>.hidden1size = hidden1size</span><br><span class="line">        <span class="variable language_">self</span>.hidden2size = hidden2size</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">input</span> = ComputationGraph(np.zeros([<span class="number">28</span> * <span class="number">28</span>, <span class="number">1</span>]))  <span class="comment"># shape: (28^2 * 1)</span></span><br><span class="line">        <span class="variable language_">self</span>.hidden1 = ComputationGraph(np.zeros([hidden1size, <span class="number">1</span>]))  <span class="comment"># shape: (hidden1size, 1)</span></span><br><span class="line">        <span class="variable language_">self</span>.hidden2 = ComputationGraph(np.zeros([hidden2size, <span class="number">1</span>]))  <span class="comment"># shape: (hidden2size, 1)</span></span><br><span class="line">        <span class="variable language_">self</span>.output = ComputationGraph(np.zeros([<span class="number">10</span>, <span class="number">1</span>]))  <span class="comment"># shape: (10, 1)</span></span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.w_input = np.random.rand(hidden1size, <span class="number">28</span> * <span class="number">28</span>)  <span class="comment"># shape: (hidden1size, 28^2)</span></span><br><span class="line">        <span class="variable language_">self</span>.w_hidden1 = np.random.rand(hidden2size, hidden1size)  <span class="comment"># shape: (hidden2size, hidden1size)</span></span><br><span class="line">        <span class="variable language_">self</span>.w_hidden2 = np.random.rand(<span class="number">10</span>, hidden2size)  <span class="comment"># shape: (10, hidden2size)</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ReLU</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> x <span class="keyword">if</span> x &gt;= <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">ReLUderivative</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> <span class="keyword">if</span> x &gt;= <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sigmoid</span>(<span class="params">self, x</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span> / (<span class="number">1</span> + np.exp(-x))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">sigmoidDerivative</span>(<span class="params">self, x</span>):</span><br><span class="line">        a = <span class="variable language_">self</span>.sigmoid(x)</span><br><span class="line">        <span class="keyword">return</span> a * (<span class="number">1</span> - a)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">softmax</span>(<span class="params">self, x</span>):</span><br><span class="line">        e_x = np.exp(x - np.<span class="built_in">max</span>(x))</span><br><span class="line">        <span class="keyword">return</span> e_x / e_x.<span class="built_in">sum</span>(axis=<span class="number">0</span>, keepdims=<span class="literal">True</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">crossEntropyLoss</span>(<span class="params">self, predictions, trueLabels</span>):</span><br><span class="line">        epsilon = <span class="number">1e-12</span>  <span class="comment"># avoid log(0)</span></span><br><span class="line">        predictions = np.clip(predictions, epsilon, <span class="number">1.</span> - epsilon)</span><br><span class="line">        <span class="keyword">return</span> -np.<span class="built_in">sum</span>(trueLabels * np.log(predictions))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">returnLloss</span>(<span class="params">self, trueLabels</span>):</span><br><span class="line">        <span class="keyword">return</span> <span class="variable language_">self</span>.cross_entropy_loss(<span class="variable language_">self</span>.output.value, trueLabels)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, <span class="built_in">input</span></span>):</span><br><span class="line">        <span class="variable language_">self</span>.<span class="built_in">input</span> = ComputationGraph(<span class="built_in">input</span>)</span><br><span class="line"></span><br><span class="line">        z1 = ComputationGraph(<span class="variable language_">self</span>.w_input @ <span class="variable language_">self</span>.<span class="built_in">input</span>.value + <span class="variable language_">self</span>.bias)</span><br><span class="line">        <span class="variable language_">self</span>.hidden1 = ComputationGraph(<span class="variable language_">self</span>.sigma(z1.value))</span><br><span class="line">        z1._backward = <span class="keyword">lambda</span>: <span class="built_in">setattr</span>(z1, <span class="string">'grad'</span>, z1.grad + <span class="variable language_">self</span>.hidden1.grad * <span class="variable language_">self</span>.derivative(z1.value))</span><br><span class="line">        <span class="variable language_">self</span>.hidden1.dependencies.append(z1)</span><br><span class="line"></span><br><span class="line">        z2 = ComputationGraph(<span class="variable language_">self</span>.w_hidden1 @ <span class="variable language_">self</span>.hidden1.value + <span class="variable language_">self</span>.bias)</span><br><span class="line">        <span class="variable language_">self</span>.hidden2 = ComputationGraph(<span class="variable language_">self</span>.sigma(z2.value))</span><br><span class="line">        z2._backward = <span class="keyword">lambda</span>: <span class="built_in">setattr</span>(z2, <span class="string">'grad'</span>, z2.grad + <span class="variable language_">self</span>.hidden2.grad * <span class="variable language_">self</span>.derivative(z2.value))</span><br><span class="line">        <span class="variable language_">self</span>.hidden2.dependencies.append(z2)</span><br><span class="line"></span><br><span class="line">        z3 = ComputationGraph(<span class="variable language_">self</span>.w_hidden2 @ <span class="variable language_">self</span>.hidden2.value + <span class="variable language_">self</span>.bias)</span><br><span class="line">        <span class="variable language_">self</span>.output = ComputationGraph(<span class="variable language_">self</span>.softmax(z3.value))</span><br><span class="line">        z3._backward = <span class="keyword">lambda</span>: <span class="built_in">setattr</span>(z3, <span class="string">'grad'</span>, z3.grad + <span class="variable language_">self</span>.output.grad * <span class="variable language_">self</span>.derivative(z3.value))</span><br><span class="line">        <span class="variable language_">self</span>.output.dependencies.append(z3)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">backward</span>(<span class="params">self, trueLabels</span>):</span><br><span class="line">        <span class="variable language_">self</span>.output.grad = <span class="variable language_">self</span>.output.value - trueLabels</span><br><span class="line">        <span class="variable language_">self</span>.output.backward()</span><br><span class="line">        </span><br><span class="line">        gradients2 = <span class="variable language_">self</span>.output.grad @ <span class="variable language_">self</span>.hidden2.value.T</span><br><span class="line">        gradients1 = <span class="variable language_">self</span>.hidden2.grad @ <span class="variable language_">self</span>.hidden1.value.T</span><br><span class="line">        gradients0 = <span class="variable language_">self</span>.hidden1.grad @ <span class="variable language_">self</span>.<span class="built_in">input</span>.value.T</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> gradients2, gradients1, gradients0</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">gradientDescent</span>(<span class="params">self, trueLabels, alpha=<span class="number">0.01</span></span>):</span><br><span class="line">        g2, g1, g0 = <span class="variable language_">self</span>.backward(trueLabels)</span><br><span class="line">        <span class="variable language_">self</span>.w_hidden2 -= alpha * g2</span><br><span class="line">        <span class="variable language_">self</span>.w_hidden1 -= alpha * g1</span><br><span class="line">        <span class="variable language_">self</span>.w_input -= alpha * g0</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">classify</span>(<span class="params">self, <span class="built_in">input</span></span>):</span><br><span class="line">        <span class="built_in">input</span> = <span class="built_in">input</span>.reshape(<span class="number">28</span> * <span class="number">28</span>, <span class="number">1</span>)</span><br><span class="line">        <span class="variable language_">self</span>.forward(<span class="built_in">input</span>)</span><br><span class="line">        <span class="keyword">return</span> np.argmax(<span class="variable language_">self</span>.output.value)</span><br></pre></td></tr></table></figure>
+<h1 id="训练mlp">训练MLP</h1>
+<h1 id="结构可视化与测试结果">结构可视化与测试结果</h1>
+<p>计算图节点可视化的代码来自于<a target="_blank" rel="noopener" href="https://github.com/GenTang/regression2chatgpt/blob/zh/video/autograd_part_one.ipynb">唐亘先生的实现</a>，这是在唐亘先生的一部<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV12b421v7qq">教学向视频</a>中偶然发现的。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> graphviz <span class="keyword">import</span> Digraph</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">_trace</span>(<span class="params">root</span>):</span><br><span class="line">    <span class="comment"># 遍历计算图中的所有点和边</span></span><br><span class="line">    nodes, edges = <span class="built_in">set</span>(), <span class="built_in">set</span>()</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">_build</span>(<span class="params">v</span>):</span><br><span class="line">        <span class="keyword">if</span> v <span class="keyword">not</span> <span class="keyword">in</span> nodes:</span><br><span class="line">            nodes.add(v)</span><br><span class="line">            <span class="keyword">for</span> prev <span class="keyword">in</span> v.prevs:</span><br><span class="line">                edges.add((prev, v))</span><br><span class="line">                _build(prev)</span><br><span class="line">    _build(root)</span><br><span class="line">    <span class="keyword">return</span> nodes, edges</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">draw_graph</span>(<span class="params">root, direction=<span class="string">'forward'</span></span>):</span><br><span class="line">    nodes, edges = _trace(root)</span><br><span class="line">    rankdir = <span class="string">'BT'</span> <span class="keyword">if</span> direction == <span class="string">'forward'</span> <span class="keyword">else</span> <span class="string">'TB'</span></span><br><span class="line">    graph = Digraph(<span class="built_in">format</span>=<span class="string">'svg'</span>, graph_attr={<span class="string">'rankdir'</span>: rankdir})</span><br><span class="line">    <span class="comment"># 画点</span></span><br><span class="line">    <span class="keyword">for</span> node <span class="keyword">in</span> nodes:</span><br><span class="line">        label = node.label <span class="keyword">if</span> node.op <span class="keyword">is</span> <span class="literal">None</span> <span class="keyword">else</span> node.op</span><br><span class="line">        node_attr = <span class="string">f'{{ grad=<span class="subst">{node.grad:<span class="number">.2</span>f}</span> | value=<span class="subst">{node.value:<span class="number">.2</span>f}</span> | <span class="subst">{label}</span>}}'</span></span><br><span class="line">        uid = <span class="built_in">str</span>(<span class="built_in">id</span>(node))</span><br><span class="line">        graph.node(name=uid, label=node_attr, shape=<span class="string">'record'</span>)</span><br><span class="line">    <span class="comment"># 画边</span></span><br><span class="line">    <span class="keyword">for</span> edge <span class="keyword">in</span> edges:</span><br><span class="line">        id1 = <span class="built_in">str</span>(<span class="built_in">id</span>(edge[<span class="number">0</span>]))</span><br><span class="line">        id2 = <span class="built_in">str</span>(<span class="built_in">id</span>(edge[<span class="number">1</span>]))</span><br><span class="line">        graph.edge(id1, id2)</span><br><span class="line">    <span class="keyword">return</span> graph</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0/" rel="tag"># 强化学习</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/12/01/Notes%20of%20Reinforcement%20Learning/" rel="prev" title="Notes of Reinforcement Learning">
+      <i class="fa fa-chevron-left"></i> Notes of Reinforcement Learning
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/12/08/computational_graphs_and_mlp/" rel="next" title="基于计算图方法构造一个支持反向传播算法的MLP">
+      基于计算图方法构造一个支持反向传播算法的MLP <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0%E8%AE%A1%E7%AE%97%E5%9B%BE"><span class="nav-text">实现计算图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0mlp"><span class="nav-text">实现MLP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%AE%AD%E7%BB%83mlp"><span class="nav-text">训练MLP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E5%8F%AF%E8%A7%86%E5%8C%96%E4%B8%8E%E6%B5%8B%E8%AF%95%E7%BB%93%E6%9E%9C"><span class="nav-text">结构可视化与测试结果</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Arthurstat"
+      src="/images/arthurstat.png">
+  <p class="site-author-name" itemprop="name">Arthurstat</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/arthur-stat" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;arthur-stat" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:swu3469@email.swu.edu.cn" title="E-Mail → mailto:swu3469@email.swu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arthurstat</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="true"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
