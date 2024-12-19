@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://example.com/2024/12/08/computational_graphs_and_mlp/hyperplane.svg">
 <meta property="og:image" content="http://example.com/2024/12/08/computational_graphs_and_mlp/optimism.jpg">
 <meta property="article:published_time" content="2024-12-07T22:10:23.000Z">
-<meta property="article:modified_time" content="2024-12-09T15:53:15.835Z">
+<meta property="article:modified_time" content="2024-12-19T16:52:24.247Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="计算图">
 <meta name="twitter:card" content="summary">
@@ -355,7 +355,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2024-12-09 23:53:15" itemprop="dateModified" datetime="2024-12-09T23:53:15+08:00">2024-12-09</time>
+                <time title="Modified: 2024-12-20 00:52:24" itemprop="dateModified" datetime="2024-12-20T00:52:24+08:00">2024-12-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -380,6 +380,9 @@ mjx-container[display="true"] + br {
 
       
         <p>关于自动微分机制的数学证明放在文末，首先给出自动微分的程序实现。因为是我笔算进行推导的，可能存在谬误。</p>
+<pre><div><font style="font-family:Consolas">Python version: 3.12.4
+numpy version: 1.26.4
+sklearn version: 1.3.0</font></div></pre>
 <h1 id="计算图定义">计算图定义</h1>
 <p>计算图（computational
 graph）是一种被用于<code>pytorch</code>与<code>tensorflow</code>中进行自动微分以实现误差的反向传播、进而计算各参数梯度的技术，这使得我们可以方便地使用梯度更新神经网络的参数。其中，<code>pytorch</code>使用动态计算图设计，<code>tensorflow</code>使用静态计算图设计。</p>
