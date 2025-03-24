@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/apple-touch-icon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="如题所述。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web后端要点整理：Spring、Spring MVC、MyBatis与Spring Boot">
+<meta property="og:url" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9ASpring%E3%80%81Spring%20MVC%E3%80%81MyBatis%E4%B8%8ESpring%20Boot/index.html">
+<meta property="og:site_name" content="二三事">
+<meta property="og:description" content="如题所述。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-22T05:36:15.000Z">
+<meta property="article:modified_time" content="2025-03-24T10:06:42.804Z">
+<meta property="article:author" content="Arthurstat">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9ASpring%E3%80%81Spring%20MVC%E3%80%81MyBatis%E4%B8%8ESpring%20Boot/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java Web后端要点整理：Spring、Spring MVC、MyBatis与Spring Boot | 二三事</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="二三事" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">二三事</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">“みんなみんな大好き！”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-id-card fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fas fa-book fa-fw"></i>Docs</a>
+
+  </li>
+        <li class="menu-item menu-item-application">
+
+    <a href="/application/" rel="section"><i class="fa fa-download fa-fw"></i>Application</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>Friends</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9ASpring%E3%80%81Spring%20MVC%E3%80%81MyBatis%E4%B8%8ESpring%20Boot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/arthurstat.png">
+      <meta itemprop="name" content="Arthurstat">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二三事">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web后端要点整理：Spring、Spring MVC、MyBatis与Spring Boot
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-22 13:36:15" itemprop="dateCreated datePublished" datetime="2025-03-22T13:36:15+08:00">2025-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-24 18:06:42" itemprop="dateModified" datetime="2025-03-24T18:06:42+08:00">2025-03-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">　　如题所述。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!-- https://www.bilibili.com/video/BV1m84y1w7Tb：黑马程序员JavaWeb开发教程，实现javaweb企业开发全流程（涵盖Spring+MyBatis+SpringMVC+SpringBoot等） -->
+<p>数据库的要点记录在另一篇文章：<a href="/2025/03/13/%E4%BB%8EMySQL%E5%88%B0Redis%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF%E8%A7%A3%E6%9E%90%E4%B8%8ESpring%E7%94%9F%E6%80%81%E5%AE%9E%E6%88%98/">从MySQL到Redis：数据库核心技术解析与Spring生态实战</a></p>
+<h1 id="web前端">Web前端</h1>
+<h2 id="html与css">HTML与CSS</h2>
+<p>HTML标签语义可以查阅<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/HTML/Element">HTML
+元素参考</a>。</p>
+<p>CSS样式与排版可以查阅<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Learn_web_development/Core/Text_styling/Fundamentals">基本文本和字体样式</a>。</p>
+<details>
+<summary style="color: #ff6347; font-weight: bold;">
+HTML与CSS部分要点
+</summary>
+<p>HTML对大小写不敏感，甚至可以混写。</p>
+<p>CSS有三种引入方式：</p>
+<ul>
+<li><p>行内样式：在HTML标签的<code>style</code>属性中指定，作用于此标签。不易维护。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"color: #FFDD44; font-weight: bold;"</span>&gt;</span>天馬咲希<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>内嵌样式：在页面的<code>style</code>标签中指定，作用于页面。通常在<code>head</code>标签中引入，但放在页面的任何地方均可。例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    miku {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">color</span>: <span class="number">#33CCBB</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">miku</span>&gt;</span>初音ミク<span class="tag">&lt;/<span class="name">miku</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>外联样式：在单独的css文件中指定。需要页面通过<code>link</code>标签引入（通常引入在<code>head</code>标签中）。例如：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ick {</span><br><span class="line">    <span class="attribute">color</span>: <span class="number">#33AAEE</span>;</span><br><span class="line">    <span class="attribute">font-weight</span>: bold;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>引入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">"stylesheet"</span> <span class="attr">href</span>=<span class="string">"./ick.css"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">ick</span>&gt;</span>星乃一歌<span class="tag">&lt;/<span class="name">ick</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<hr>
+<p>CSS有三种选择器，分别为</p>
+<ul>
+<li><p>元素选择器：根据标签名称选择样式，例如上文设置的ick标签样式</p></li>
+<li><p>id选择器：根据id属性选择样式，在一个页面中id不可重复。例如</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-id">#shiho</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">color</span>: <span class="number">#EE6666</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">"shiho"</span>&gt;</span>望月穂波<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>类选择器：根据class属性选择样式，在一个页面中class可重复。例如</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-class">.hnm</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">color</span>: <span class="number">#BBDD22</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">font-weight</span>: bold;</span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">span</span> <span class="attr">class</span>=<span class="string">"hnm"</span>&gt;</span>日野森志歩<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>优先级：1. id选择器；2. 类选择器；3. 元素选择器</p>
+<hr>
+<div style="text-align: center">
+页面布局的盒子模型
+</div>
+<div style="background: #f0f0f0; padding:20px; margin:30px auto; width:400px;">
+<!-- margin 标签-->
+<div style="color:#666; text-align:center; margin-bottom:10px;">
+Margin（外边距）
+</div>
+<!-- border 区域-->
+<div style="padding:30px; background:#e3f2fd;">
+<!-- border 标签-->
+<div style="color:#4a90e2; padding:10px">
+Border（边框）
+</div>
+<!-- padding 区域-->
+<div style="padding:40px; background:#fff8e1; position:relative;">
+<!-- padding 标签-->
+<div style="color:#ff9800; margin-bottom:10px;">
+Padding（内边距）
+</div>
+<!-- content 区域-->
+<div style="background:white; padding:20px; border:1px dashed #666; position:relative;">
+<div style="color:#333;">
+Content（内容区域）
+</div>
+<!-- height 标注-->
+<div style="position:absolute; right:-40px; top:50%; transform:translateY(-50%); color:#333; white-space:nowrap; font-size:12px;">
+height
+</div>
+<!-- width 标注-->
+<div style="position:absolute; bottom:-18px; left:50%; transform:translateX(-50%); color:#333; white-space:nowrap; font-size:12px;">
+width
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>两个没有语义的标签：</p>
+<ul>
+<li><p>div标签</p>
+<ul>
+<li><p>一行仅显示一个div块，即独占一行，后续内容会从下一行开始</p></li>
+<li><p>宽度默认为父元素的宽度，高度默认由内容撑开</p></li>
+<li><p>可以设置width与height</p></li>
+</ul>
+<p>可以设置盒子的所有参数：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">    <span class="selector-tag">div</span> {</span></span><br><span class="line"><span class="language-css">        <span class="attribute">width</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">height</span>: <span class="number">200px</span>;</span></span><br><span class="line"><span class="language-css">        <span class="attribute">box-sizing</span>: border-box;  <span class="comment">/* 指定width、height为盒子的宽与高 */</span></span></span><br><span class="line"><span class="language-css">        <span class="attribute">padding</span>: <span class="number">20px</span> <span class="number">20px</span> <span class="number">20px</span> <span class="number">20px</span>;       <span class="comment">/* 分别为上、右、下、左 */</span></span></span><br><span class="line"><span class="language-css">        <span class="attribute">border</span>: <span class="number">10px</span> solid red;             <span class="comment">/* 宽度，线条类型，颜色 */</span></span></span><br><span class="line"><span class="language-css">        <span class="attribute">margin</span>: <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span> <span class="number">30px</span>;                     <span class="comment">/* 同上 */</span></span></span><br><span class="line"><span class="language-css">    }</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>要实现所有文本全部居中显示，可以用大div块将正文全部纳入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">"widthh: 65%;margin: 0 auto"</span>&gt;</span></span><br><span class="line">    仅指定了两个值，分别对应上下外边距与左右外边距，这里上下外边距为0，让浏览器自动计算左右外边距，即各一半<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    如果指定三个值，则分别对应上外边距、右外边距、下外边距<span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    如果制定一个值，则该值同时作为上外边距、右外边距、下外边距与左外边距</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>span标签</p>
+<ul>
+<li>一行可以显示多个，即不会独占一行，后续内容会从span块后开始</li>
+<li>宽度与高度默认由内容撑开</li>
+<li>不可设置width与height</li>
+</ul></li>
+</ul>
+<hr>
+<p>表格标签<code>&lt;table&gt;</code>可以包裹多个表格的行<code>&lt;tr&gt;</code>：具有表格边框宽度属性<code>border</code>，表格宽度属性<code>width</code>，单元之间的空间<code>cellspacing</code></p>
+<ul>
+<li>表格的行<code>&lt;tr&gt;</code>可以包裹多个普通表格单元格<code>&lt;td&gt;</code>
+<ul>
+<li>普通表格单元格<code>&lt;td&gt;</code>：如果是表头单元格，可以替换为<code>&lt;th&gt;</code>，默认带有加粗、居中效果</li>
+</ul></li>
+</ul>
+<hr>
+<p>表单标签<code>&lt;from&gt;</code>，有若干属性：</p>
+<ul>
+<li><code>action</code>：规定当提交表单时向何处发送表单数据（URL，uniform
+resource locator，统一资源定位系统）</li>
+<li><code>method</code>：规定用何种方式发送表单数据（常见GET、POST），默认为GET</li>
+</ul>
+<p>表单中又有不同的表单项，分别由几个不同的标签代表</p>
+<ul>
+<li><p><code>&lt;input&gt;</code>：定义表单项，通过<code>type</code>属性控制输入形式（默认值<code>text</code>单行输入字段，<code>password</code>密码字段、<code>radio</code>单选按钮（添加<code>check</code>默认选择）、<code>checkbox</code>复选框、<code>file</code>文件上传按钮、<code>date</code>/<code>time</code>/<code>datetime-local</code>日期/时间/日期时间，<code>number</code>数字输入框，<code>email</code>邮件输入框，<code>hidden</code>隐藏域，<code>submit</code>/<code>reset</code>/<code>button</code>提交按钮/重置按钮/可点击按钮），通过<code>name</code>属性命名（必须要有该属性才能提交），通过<code>placeholder</code>属性指定默认文本，通过<code>value</code>属性指定表单提交时的值。</p>
+<p>给按钮加上<code>&lt;label&gt;</code>标签，点击按钮标签内的文字时也会选上按钮。</p></li>
+<li><p><code>&lt;select&gt;</code>：定义下拉列表，通过<code>potion</code>属性定义列表项，通过<code>value</code>属性指定表单提交时的值。</p></li>
+<li><p><code>&lt;textarea&gt;</code>：定义文本域</p></li>
+</ul>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">""</span> <span class="attr">method</span>=<span class="string">"get"</span>&gt;</span></span><br><span class="line">    姓名：<span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"name"</span> <span class="attr">placeholder</span>=<span class="string">"天馬咲希"</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    性别：<span class="tag">&lt;<span class="name">label</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">value</span>=<span class="string">"0"</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">label</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">value</span>=<span class="string">"1"</span> <span class="attr">checked</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">label</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"radio"</span> <span class="attr">name</span>=<span class="string">"gender"</span> <span class="attr">value</span>=<span class="string">"2"</span>&gt;</span>？<span class="tag">&lt;/<span class="name">label</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    就读学校：<span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"school"</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span>宮益坂女子学園<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">option</span> <span class="attr">value</span>=<span class="string">""</span>&gt;</span>神山高校<span class="tag">&lt;/<span class="name">option</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">select</span>&gt;</span><span class="tag">&lt;<span class="name">br</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"reset"</span> <span class="attr">value</span>=<span class="string">"重置"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>GET的内容紧随URL之后，以<code>?</code>起始，以<code>&amp;</code>连结，长度被浏览器限制；POST在消息体（请求体）中传递，在Chrome中可通过F12
+-&gt; Network -&gt; Payload（载荷）查看。</p>
+<form action method="get">
+姓名：<input type="text" name="name" placeholder="天馬咲希"><br>
+性别：<label><input type="radio" name="gender" value="0">男</label>
+<label><input type="radio" name="gender" value="1" checked>女</label>
+<label><input type="radio" name="gender" value="2">？</label><br>
+就读学校：<select name="school">
+<option value>宮益坂女子学園</option>
+<option value>神山高校</option> </select><br>
+<input type="reset" value="重置"> <input type="submit" value="提交">
+</form>
+</details>
+<h2 id="javascript">JavaScript</h2>
+<p>JavaScript是一门跨平台、面向对象的脚本语言，可以在前端控制网页行为，定义交互。JavaScript遵守了ECMAScript标准。</p>
+<p>不同浏览器内核使用不同的JavaScript引擎实现，这导致部分API行为存在差异。例如Chrome采用的V8引擎遵循了更严格的ECMAScript标准，<code>parseInt("")</code>返回<code>NaN</code>，而Firefox采用的SpiderMonkey引擎在旧版本中<code>parseInt("")</code>返回<code>0</code>，不过在新版本中已修复。</p>
+<div style="font-weight: bold; font-size: 1.2em">
+引入方式
+</div>
+<div style="font-weight: bold">
+内部脚本（Inline Script）
+</div>
+<ul>
+<li>JavaScript代码必须位于<code>&lt;script&gt;</code>与<code>&lt;/script&gt;</code>标签对之间</li>
+<li>脚本可置于文档任意位置且可置于文件任意次数，但最佳实践为：
+<ul>
+<li>放置于<code>&lt;body&gt;</code>结束标签（<code>&lt;/body&gt;</code>）之前</li>
+<li><strong>优化原理</strong>：传统同步脚本会阻塞DOM解析与渲染（现代浏览器支持<code>async/defer</code>属性优化）</li>
+<li><strong>例外场景</strong>：需提前执行的脚本可置于<code>&lt;head&gt;</code>，但必须配合<code>defer</code>属性</li>
+</ul></li>
+</ul>
+<div style="font-weight: bold">
+外部脚本（External Script）
+</div>
+<ul>
+<li><p>外部文件需满足：</p>
+<ul>
+<li>扩展名为 <code>.js</code></li>
+<li>仅包含纯JavaScript代码（不含HTML标签）</li>
+</ul></li>
+<li><p>引入语法：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 标准引入方式 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"path/to/script.js"</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 特别注意：错误示范（自闭标签无效） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"error.js"</span> /&gt;</span><span class="language-handlebars"><span class="language-xml"> <span class="comment">&lt;!-- XHTML语法不适用常规HTML --&gt;</span></span></span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>模块化规范</strong>：ES6+
+推荐使用<code>type="module"</code>声明模块脚本</p></li>
+</ul>
+<div style="font-weight: bold; font-size: 1.2em">
+语法基础规范
+</div>
+<ul>
+<li><p><strong>设计影响</strong>：JavaScript初期语法设计受Java启发（实则碰瓷Java，与Java天差地别）</p></li>
+<li><p><strong>本质差异</strong>：</p>
+<ul>
+<li>动态弱类型 vs 静态强类型</li>
+<li>基于原型的继承 vs 基于类的继承</li>
+<li>解释执行 vs 编译执行</li>
+</ul></li>
+</ul>
+<p><strong>语句终止符（“；”）</strong></p>
+<ol type="1">
+<li><p><strong>显式分号</strong>：推荐始终使用<code>;</code>作为语句终止符</p></li>
+<li><p><strong>ASI机制</strong>（Automatic Semicolon Insertion）：</p>
+<ul>
+<li><p>换行符可能触发自动分号插入</p></li>
+<li><p><strong>高危场景</strong>：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> </span><br><span class="line">{ <span class="attr">prop</span>: <span class="string">'value'</span> };  <span class="comment">// 解析为 return; { ... }</span></span><br></pre></td></tr></table></figure></li>
+</ul></li>
+<li><p><strong>与Go语言差异</strong>：</p>
+<ul>
+<li>Go采用严格词法分析，分号插入规则无歧义</li>
+</ul></li>
+</ol>
+<ul>
+<li>JavaScript ASI存在语义解析风险，因此更推荐以显式分号结束语句</li>
+</ul>
+<p><strong>注释规范</strong></p>
+<ol type="1">
+<li><p><strong>单行注释</strong>：<code>// 注释内容</code></p></li>
+<li><p><strong>多行注释</strong>：<code>/* 注释内容 */</code></p></li>
+<li><p><strong>文档注释</strong>（JSDoc）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 函数功能描述</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> {<span class="type">type</span>} paramName 参数说明</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> {<span class="type">returnType</span>} 返回值说明</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>代码块界定</strong></p>
+<ul>
+<li>使用花括号<code>{}</code>定义代码块作用域</li>
+<li><strong>注意</strong>：无块级作用域的<code>var</code>声明存在变量提升(Hoisting)</li>
+</ul>
+<div style="font-weight: bold">
+严格模式
+</div>
+<p>在ECMAScript
+5中引入了一个JavaScript特性——严格模式，旨在通过更严格的语法规则和错误检查机制以消除代码中的潜在风险。严格模式的主要内容有变量必须显式声明、禁止删除不可删除的属性、严格语法（禁止重复的函数参数名、八进制数字必须规范使用<code>0o...</code>表示等）、全局作用域下<code>this</code>指向<code>undefined</code>而非非严格模式下的<code>window</code>、禁用<code>with</code>语句等等。</p>
+<p>要全局启用严格模式，在内部脚本或外部脚本第一行添加<code>"use strict";</code>指令即可；在函数体的第一行添加<code>"use strict";</code>则可以仅在函数内部启用严格模式。MAScript
+6模块（例如使用<code>import</code>、<code>export</code>语法）自动启用严格模式。</p>
+<div style="font-weight: bold; font-size: 1.2em">
+标准输出方法
+</div>
+<table>
+<colgroup>
+<col style="width: 53%">
+<col style="width: 10%">
+<col style="width: 10%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">方法</th>
+<th style="text-align: center;">作用域</th>
+<th style="text-align: center;">输出目标</th>
+<th style="text-align: center;">使用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>window.alert(message)</code><br>可简写为<code>alert(message)</code></td>
+<td style="text-align: center;">浏览器窗口</td>
+<td style="text-align: center;">模态警告框</td>
+<td style="text-align: center;">调试警告信息</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>document.write(content)</code></td>
+<td style="text-align: center;">DOM流</td>
+<td style="text-align: center;">HTML文档体</td>
+<td style="text-align: center;"><strong>已弃用</strong>（破坏DOM结构）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>console.log(message)</code></td>
+<td style="text-align: center;">DevTools</td>
+<td style="text-align: center;">控制台</td>
+<td style="text-align: center;">调试日志</td>
+</tr>
+</tbody>
+</table>
+<p>在ECMAScript
+6标准中，推荐使用模板字符串进行字符串插值，支持自然格式书写（无需使用换行符，类似HTML中<code>&lt;pre&gt;</code>标签的效果），语法为以<code>`</code>起始、以<code>`</code>结束、在内部通过<code>${expression}</code>语法标识需要嵌入的变量或表达式。例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">'天馬咲希'</span>;</span><br><span class="line"><span class="keyword">var</span> birthday = <span class="string">'5月9日'</span>;</span><br><span class="line"><span class="keyword">var</span> interest = <span class="string">'观看时尚、化妆类视频，制作串珠饰品'</span>;</span><br><span class="line"><span class="keyword">var</span> favoriteFood = <span class="string">'零食与糖果'</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`姓名：<span class="subst">${name}</span></span></span><br><span class="line"><span class="string">生日：<span class="subst">${birthday}</span></span></span><br><span class="line"><span class="string">身高：<span class="subst">${<span class="number">159</span>+<span class="number">1</span>}</span>cm</span></span><br><span class="line"><span class="string">兴趣：<span class="subst">${interest}</span></span></span><br><span class="line"><span class="string">喜欢的食物：<span class="subst">${favoriteFood}</span></span></span><br><span class="line"><span class="string">`</span>);</span><br></pre></td></tr></table></figure>
+<div style="font-weight: bold; font-size: 1.2em">
+变量声明机制
+</div>
+<p>JavaScript不需要显式指明变量的数据类型，JavaScript解释器会自行推导，这一点类似Python。</p>
+<p><strong><code>var</code>声明（ES5）</strong></p>
+<ul>
+<li><p><strong>作用域</strong>：函数作用域或全局作用域</p></li>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li><p>允许重复声明（导致变量覆盖）</p></li>
+<li><p>存在变量提升（声明提升至作用域顶端）</p></li>
+<li><p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(a);  <span class="comment">// undefined（变量提升）</span></span><br><span class="line"><span class="keyword">var</span> a = <span class="number">10</span>;</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<p><strong><code>let</code>声明（ES6+）</strong></p>
+<ul>
+<li><p><strong>作用域</strong>：严格块级作用域（<code>{}</code>内有效）</p></li>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li><p>禁止重复声明（SyntaxError）</p></li>
+<li><p>暂时性死区（TDZ）限制</p></li>
+<li><p>示例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="literal">true</span>) {</span><br><span class="line">    <span class="keyword">let</span> b = <span class="number">20</span>;</span><br><span class="line">}</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(b);  <span class="comment">// ReferenceError</span></span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ul>
+<p><strong><code>const</code>声明（ES6+）</strong></p>
+<ul>
+<li><p><strong>作用域</strong>：块级作用域</p></li>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li><p>必须立即初始化</p></li>
+<li><p>禁止重复赋值（原始类型不可变）</p></li>
+<li><p>对象类型可修改内容（内存地址不变）：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> obj = { <span class="attr">prop</span>: <span class="number">1</span> };</span><br><span class="line">obj.<span class="property">prop</span> = <span class="number">2</span>;  <span class="comment">// 允许</span></span><br><span class="line">obj = {};      <span class="comment">// TypeError</span></span><br></pre></td></tr></table></figure></li>
+<li><p><strong>深度冻结</strong>：<code>Object.freeze(obj)</code></p></li>
+</ul></li>
+</ul>
+<div style="font-weight: bold; font-size: 1.2em">
+数据类型
+</div>
+<p>JavaScript可以通过<code>typeof</code>关键字获取数据类型，例如<code>alert(typeof 3.14);</code>、<code>alert(typeof '天馬咲希')</code>。</p>
+<p><strong>原始类型（Primitive Types）</strong></p>
+<table>
+<colgroup>
+<col style="width: 13%">
+<col style="width: 24%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">类型</th>
+<th style="text-align: center;">示例</th>
+<th style="text-align: center;">特性</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><code>number</code></td>
+<td style="text-align: center;"><code>3.14</code>, <code>NaN</code>,
+<code>Inf</code></td>
+<td style="text-align: center;">双精度浮点数（IEEE
+754标准），<code>NaN</code>意为Not-a-Number</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>string</code></td>
+<td style="text-align: center;"><code>"text"</code>,
+<code>'text'</code></td>
+<td style="text-align: center;">UTF-16编码，不可变序列</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>boolean</code></td>
+<td style="text-align: center;"><code>true</code>,
+<code>false</code></td>
+<td style="text-align: center;">严格布尔逻辑</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>null</code></td>
+<td style="text-align: center;"><code>null</code></td>
+<td style="text-align: center;">表示空对象引用（typeof为<code>Object</code>）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>undefined</code></td>
+<td style="text-align: center;"><code>undefined</code></td>
+<td style="text-align: center;">未初始化变量默认值</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>symbol</code></td>
+<td style="text-align: center;"><code>Symbol('desc')</code></td>
+<td style="text-align: center;">ES6+唯一标识符</td>
+</tr>
+</tbody>
+</table>
+<p>在ECMAScript标准中，<code>null</code>本应是一种原始类型，但<code>typeof null</code>返回的却不是<code>Null</code>而是<code>Object</code>。实际上，这是JavaScript早期的一个漏洞，但被ECMAScript沿用了，因此便一直保留在了JavaScript。现在<code>null</code>也可以被解释为对象的占位符，但就技术标准而言，<code>Null</code>才是原始类型。</p>
+<p><strong>对象类型（Object Types）</strong></p>
+<ul>
+<li><p>对象（Object）及其派生类型，包括<code>Array</code>,
+<code>Function</code>, <code>Date</code>, <code>RegExp</code>等</p></li>
+<li><p><strong>存储特性</strong>：变量存储内存地址引用</p></li>
+</ul>
+<p><strong>类型转换</strong></p>
+<table>
+<colgroup>
+<col style="width: 11%">
+<col style="width: 5%">
+<col style="width: 27%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">函数/方法</th>
+<th style="text-align: center;">转换目标类型</th>
+<th style="text-align: left;">处理机制</th>
+<th style="text-align: left;">示例</th>
+<th style="text-align: left;">注意事项</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>parseInt(string, radix)</code></td>
+<td style="text-align: center;"><code>number</code></td>
+<td style="text-align: left;">1.
+原始类型直接转为字符串后解析整数部分<br>2.
+对象类型调用<code>toString()</code>后再视为原始类型解析</td>
+<td style="text-align: left;"><code>parseInt("123px") → 123</code><br><code>parseInt({}) → NaN</code>（<code>{}</code>转字符串为<code>[object Object]</code>）</td>
+<td style="text-align: left;"><code>parseInt</code>会从字符串首字符开始匹配直至首个非数字位停止，如果首字符非数字则解析失败并返回<code>NaN</code>，空字符串可能返回<code>NaN</code>（部分浏览器返回<code>0</code>）</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Number(value)</code></td>
+<td style="text-align: center;"><code>number</code></td>
+<td style="text-align: left;">1. 原始类型按规则转换<br>2.
+对象类型先调用<code>valueOf()</code>，失败则调用<code>toString()</code></td>
+<td style="text-align: left;"><code>Number("3.14") → 3.14</code><br><code>Number([1]) → 1</code>（数组转字符串后解析）</td>
+<td style="text-align: left;"><code>null</code>转<code>0</code>，<code>undefined</code>转<code>NaN</code>，空数组转<code>0</code>（<code>[]</code>转字符串为
+<code>""</code>→ <code>0</code>）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>String(value)</code></td>
+<td style="text-align: center;"><code>string</code></td>
+<td style="text-align: left;">1. 原始类型直接转为字符串<br>2.
+对象类型调用<code>toString()</code></td>
+<td style="text-align: left;"><code>String(42) → "42"</code><br><code>String({}) → "[object Object]"</code></td>
+<td style="text-align: left;"><code>null</code>转<code>"null"</code>，<code>undefined</code>转<code>"undefined"</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Boolean(value)</code></td>
+<td style="text-align: center;"><code>boolean</code></td>
+<td style="text-align: left;">1. 原始类型按假值规则转换<br>2.
+对象类型始终转<code>true</code>（包括空对象/数组）</td>
+<td style="text-align: left;"><code>Boolean("") → false</code><br><code>Boolean([]) → true</code></td>
+<td style="text-align: left;">假值包括：<code>0</code>、<code>NaN</code>、<code>""</code>、<code>null</code>、<code>undefined</code>，非空字符串恒为真值，除<code>0</code>与<code>NaN</code>的数字恒为真值；<code>if()</code>会隐式调用<code>Boolean()</code>将非布尔值转换为布尔值</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>parseFloat(string)</code></td>
+<td style="text-align: center;"><code>number</code></td>
+<td style="text-align: left;">1. 原始类型转为字符串后解析浮点数<br>2.
+对象类型调用<code>toString()</code>后解析</td>
+<td style="text-align: left;"><code>parseFloat("3.14px") → 3.14</code><br><code>parseFloat([2.5]) → 2.5</code></td>
+<td style="text-align: left;">不支持进制参数，指数形式（如<code>3e5</code>）可解析</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>Object(value)</code></td>
+<td style="text-align: center;"><code>object</code></td>
+<td style="text-align: left;">1. 原始类型转为包装对象（如
+<code>Number</code>、<code>String</code>）<br>2. 对象类型直接返回</td>
+<td style="text-align: left;"><code>Object(42) → Number {42}</code><br><code>Object("text") → String {"text"}</code></td>
+<td style="text-align: left;"><code>null</code>/<code>undefined</code>转空对象（<code>{}</code>）</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>Symbol.description</code></td>
+<td style="text-align: center;"><code>string</code></td>
+<td style="text-align: left;">仅限<code>Symbol</code>类型，返回符号描述字符串</td>
+<td style="text-align: left;"><code>Symbol('desc').description → "desc"</code></td>
+<td style="text-align: left;">非<code>Symbol</code>类型调用会报错</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>toString()</code></td>
+<td style="text-align: center;"><code>string</code></td>
+<td style="text-align: left;">1.
+原始类型转为字符串（<code>null</code>/<code>undefined</code>无此方法）<br>2.
+对象类型返回实现定义值</td>
+<td style="text-align: left;"><code>(123).toString() → "123"</code><br><code>[1,2].toString() → "1,2"</code></td>
+<td style="text-align: left;">对象默认返回<code>[object Object]</code>，数组以逗号拼接元素</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>valueOf()</code></td>
+<td style="text-align: center;">原始值</td>
+<td style="text-align: left;">1. 原始类型返回自身<br>2.
+对象类型尝试返回原始值（失败则返回对象本身）</td>
+<td style="text-align: left;"><code>new Date().valueOf() → 时间戳</code><br><code>{}.valueOf() → {}</code></td>
+<td style="text-align: left;">参与运算时优先调用此方法（如<code>obj + 1</code>）</td>
+</tr>
+</tbody>
+</table>
+<div style="font-weight: bold; font-size: 1.2em">
+运算符
+</div>
+<p>除了<code>===</code>与<code>!==</code>以外，JavaScript运算符的语法与作用均和Java同名运算符相同。</p>
+<ul>
+<li>算术运算符：<code>+</code>，<code>-</code>，<code>*</code>，<code>/</code>，<code>%</code>，<code>++</code>，<code>--</code></li>
+<li>赋值运算符：<code>=</code>，<code>+=</code>，<code>-=</code>，<code>*=</code>，<code>/=</code>，<code>%=</code></li>
+<li>比较运算符：<code>&gt;</code>，<code>&lt;</code>，<code>&gt;=</code>，<code>&lt;=</code>，<code>!=</code>，<code>==</code>，<code>===</code>，<code>!==</code></li>
+<li>逻辑运算符：<code>&amp;&amp;</code>，<code>||</code>，<code>!</code></li>
+<li>三元运算符：条件表达式<code>? true_value : false_value</code></li>
+</ul>
+<p>在JavaScript中，<code>===</code>被称为全等运算符，可以粗糙地认为其含义是“判断是否严格相等”。<code>==</code>与<code>===</code>在进行比较两个对象时首先均会查询两者的数据类型，如果数据类型相同则继续判断两者的值是否相等，但如果数据类型不同，<code>==</code>会尝试进行类型转换后再判断两者的值是否相等（例如<code>alert(666 == '666');</code>返回<code>true</code>），而<code>===</code>则会直接返回<code>false</code>。<code>!=</code>与<code>!==</code>的异同同理。</p>
+<div style="font-weight: bold; font-size: 1.2em">
+流程控制
+</div>
+<p>JavaScript的流程控制语句在基础语法结构上与Java无异，均通过<code>if</code>/<code>else if</code>/<code>else</code>与<code>switch</code>进行（多）条件判断，通过<code>for</code>进行计数或遍历循环，通过<code>while</code>与<code>do ... while</code>进行条件循环，通过<code>break</code>与<code>continue</code>控制循环中断或跳过迭代。不过，JavaScript的流程控制语句在底层实现与细节上与Java仍然有一些差别且存在一些独有的特性。</p>
+<ul>
+<li><code>if (x)</code>会隐式调用<code>Boolean(x)</code>，而在Java中条件表达式必须为布尔类型，非布尔值会导致编译错误。</li>
+<li><code>switch (x)</code>使用全等运算符<code>===</code>匹配<code>case</code>值，类型不同视为匹配失败；同时，与Java中<code>switch</code>相同的是两者均存在穿透行为，要避免这一情况需要为<code>case</code>添加<code>break</code>。</li>
+<li>JavaScript的循环支持标签语法以实现在多层循环中精确控制循环跳转，此外JavaScript还提供了两种不同的for循环：<code>for ... of</code>与<code>for ... in</code>。
+<ul>
+<li><code>for ... of</code>的基本语法为<code>for (value or arr)</code>，通常会写为<code>for (const value or arr)</code>以防止值被修改，用于处理可迭代对象（如字符串、数组与集合）直接获取值，对标Java中的增强for循环<code>for (type value : arr)</code>。该语法依赖<code>Symbol.iterator</code>接口，普通对象需手动实现该接口或通过<code>Object.values()</code>转换。</li>
+<li><code>for ... in</code>的基本语法为<code>for (key in obj)</code>，通常会写为<code>for (const key or obj)</code>以防止值被修改，用于遍历对象的键名且遍历顺序并不固定，需配合<code>hasOwnProperty()</code>过滤原型链属性。<code>for ... in</code>虽然也可以遍历数组，但由于索引是字符串而非数字，建议使用<code>for ... of</code>遍历数组。</li>
+</ul></li>
+</ul>
+<div style="font-weight: bold; font-size: 1.2em">
+函数
+</div>
+<p><strong>函数声明</strong></p>
+<p>JavaScript函数有如下三种定义方式：</p>
+<ul>
+<li><p>显式函数声明：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">funcName</span>(<span class="params">arg1, arg2, ...</span>) {</span><br><span class="line">    <span class="comment">// 执行逻辑</span></span><br><span class="line">    <span class="keyword">return</span> result;  <span class="comment">// 如果该函数不需要返回值，省略return即可</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>显式声明支持提升特性（Hoisting），声明和函数体均被提升，可以在声明前的代码中调用。</p>
+<p>同时，显式声明也是构造函数的标准声明方式，具有<code>prototype</code>属性。</p></li>
+<li><p>函数表达式：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> varName = <span class="keyword">function</span> <span class="title function_">funcName</span>(<span class="params">arg1, arg2, ...</span>) {  <span class="comment">// var也可以按需替换为const</span></span><br><span class="line">    <span class="comment">// 执行逻辑</span></span><br><span class="line">    <span class="keyword">return</span> result;  <span class="comment">// 如果该函数不需要返回值，省略return即可</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>其中<code>funcName</code>可以省略，即函数表达式支持定义匿名函数。函数表达式没有提升特性，也就是说变量的声明<code>varName</code>会提升但函数体不会被提升。函数表达式常被用于回调函数、闭包与动态赋值中。</p>
+<p>此外，即使没有省略函数名，<code>funcName</code>也仅在函数体内部可见。因此在以这种方式定义函数时，如果函数不涉及递归调用，则完全可以省略函数名。</p></li>
+<li><p>箭头函数（ES6+）：</p>
+<p>JavaScript箭头函数的使用场景对标Java
+Lambda表达式，完整的基本语法结构为<code>(arg1, arg2, ...) =&gt; { ... }</code>，当只有一个参数时也可以简化为<code>arg =&gt; expression</code>，无参数时应保留括号<code>() =&gt; expression</code>，其中简化写法中的<code>expression</code>等价于完整写法中的<code>{ return expression }</code>。箭头函数无提升特性。</p>
+<p>箭头函数具有一些普通函数所没有的特性：</p>
+<ul>
+<li>无<code>this</code>：箭头函数不会创建自己的<code>this</code>，而是继承自外层作用域（词法作用域）</li>
+<li>没有<code>arguments</code>对象：如果需要捕获多余参数，必须使用剩余参数对象</li>
+<li>不能作为构造函数：没有prototype属性，无法被<code>new</code>调用</li>
+</ul></li>
+</ul>
+<p><strong>函数参数与调用</strong></p>
+<p>函数在被调用时，对原始类型按值传递，对象类型按引用传递。</p>
+<p>JavaScript函数在调用时可传入任意数量参数，可以用<code>arg = defaultValue</code>指定参数的默认值，未传递的参数值将被<code>undefined</code>填充，多余参数默认被忽略，但可通过<code>arguments</code>对象（箭头函数除外）或在形参最后一个被声明的剩余参数<code>...args</code>捕获，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">sum</span>(<span class="params">...numbers</span>) {</span><br><span class="line">    <span class="keyword">return</span> numbers.<span class="title function_">reduce</span>(<span class="function">(<span class="params">acc, num</span>) =&gt;</span> acc + num, <span class="number">0</span>);</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">logArgs</span>(<span class="params"></span>) {</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="variable language_">arguments</span>));  <span class="comment">// 不推荐使用arguments对象</span></span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">add</span>(<span class="params">...numbers</span>) {  <span class="comment">// 剩余参数</span></span><br><span class="line">    <span class="keyword">return</span> numbers.<span class="title function_">reduce</span>(<span class="function">(<span class="params">sum, num</span>) =&gt;</span> sum + num, <span class="number">0</span>);;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>不推荐使用<code>arguments</code>对象，因为<code>arguments</code>只是类数组对象（拥有<code>length</code>属性和数字索引，但不具备数组方法），需要使用<code>Array.from()</code>转换为数组对象，故应优先采用剩余参数。在使用剩余参数时应区分剩余参数形参与展开运算符<code>...</code>（用于将可迭代对象展开为独立元素）。</p>
+<p>在JavaScript中，函数也是一类对象。普通的函数对象拥有<code>prototype</code>属性与<code>[[Construct]]</code>，可以通过<code>new</code>实例化，例如<code>const myFunc = new MyFunc();</code>，此时<code>this</code>指向新实例化的对象，但箭头函数没有<code>prototype</code>属性与<code>[[Construct]]</code>，无法通过<code>new</code>调用。</p>
+<ul>
+<li>对于函数的普通调用<code>func();</code>，如果启用严格模式<code>this</code>指向<code>undefined</code>，否则在浏览器中指向<code>window</code></li>
+<li>对于方法调用<code>obj.method();</code>，<code>this</code>指向调用对象<code>obj</code></li>
+<li>对于构造函数调用<code>new Obj();</code>，<code>this</code>指向新创建的实例</li>
+<li>对于间接调用，视指定对象而定</li>
+</ul>
+<p>JavaScript函数可以通过<code>.call()</code>与<code>.apply()</code>进行临时的间接调用，使用方法分别为<code>func.call(thisArg, arg1, arg2, ...)</code>和<code>func.apply(thisArg, [argsArr])</code>，区别仅仅是逐个传递<code>func</code>参数与将<code>func</code>参数通过数组或数组对象整个传递。这两个调用均会立即执行函数，并且<code>this</code>指向调用中被传入的参数<code>thisArg</code>。</p>
+<p>除了<code>.call()</code>与<code>.apply()</code>，JavaScript函数还可以通过<code>.bind()</code>进行永久的绑定，使用方法为<code>func.bind(thisArg, arg1, arg2, ...)</code>。<code>.bind()</code>不会立即执行函数，而是预绑定部分参数，函数在后续被调用时只需要传入剩余参数。然而，<code>.bind()</code>一旦绑定了<code>thisArg</code>，<code>this</code>便永久指向<code>thisArg</code>，无法被<code>.call()</code>与<code>.apply()</code>临时覆盖。</p>
+<p>JavaScript还支持在函数的形参中解构，以<code>{ ... }</code>声明对象解构模式、以<code>[]</code>声明数组解构模式，例如：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">cast</span>(<span class="params">{ oc = <span class="string">"天馬咲希"</span>, cv: characterVoice }</span>) {  <span class="comment">// 解构对象，为oc设定默认值，为cv起别名</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`<span class="subst">${characterVoice}</span> as <span class="subst">${oc}</span>`</span>);</span><br><span class="line">}</span><br><span class="line"><span class="title function_">cast</span>({<span class="attr">cv</span>: <span class="string">"礒部花凜"</span>});  <span class="comment">// 输出：礒部花凜 as 天馬咲希</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> movieData = [</span><br><span class="line">    <span class="string">"プロジェクトセカイ 壊れたセカイと歌えないミク"</span>, </span><br><span class="line">    <span class="string">"2025-1-17"</span>, </span><br><span class="line">    <span class="string">"はじまりの未来"</span>,</span><br><span class="line">    <span class="string">"Animation"</span>, </span><br><span class="line">    <span class="string">"https://sh-anime.shochiku.co.jp/pjsekai-movie/"</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">displayMovieInfo</span>(<span class="params">[title, releaseDate, openingTheme, genre, website]</span>) {  <span class="comment">// 解构数组</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`🎬 Movie: <span class="subst">${title}</span>`</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`📅 Release: <span class="subst">${releaseDate}</span>`</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`🎵 Opening Theme: <span class="subst">${openingTheme}</span>`</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`🎦 Genre: <span class="subst">${genre}</span>`</span>);</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`💻 Website: <span class="subst">${website}</span>`</span>);</span><br><span class="line">}</span><br><span class="line"><span class="title function_">displayMovieInfo</span>(movieData);</span><br></pre></td></tr></table></figure>
+<p><strong>函数的其他特性</strong></p>
+<ul>
+<li>闭包：机制与Python闭包相同</li>
+<li>高阶函数</li>
+<li>IIFE（立即执行函数）</li>
+</ul>
+<h1 id="web后端">Web后端</h1>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag"># 后端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/13/Java%20Web%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AMySQL%E3%80%81Redis%E3%80%81Spring%20Data%E4%B8%8EMyBatis/" rel="prev" title="Java Web数据库与缓存要点整理：MySQL、Redis、Spring Data与MyBatis">
+      <i class="fa fa-chevron-left"></i> Java Web数据库与缓存要点整理：MySQL、Redis、Spring Data与MyBatis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/23/Java%20Web%E5%89%8D%E7%AB%AF%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AHTML%E3%80%81CSS%E3%80%81JavaScript%E3%80%81Vue%E4%B8%8EElement/" rel="next" title="Java Web前端要点整理：HTML、CSS、JavaScript、Vue、HTTP协议与Tomcat">
+      Java Web前端要点整理：HTML、CSS、JavaScript、Vue、HTTP协议与Tomcat <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#web%E5%89%8D%E7%AB%AF"><span class="nav-text">Web前端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#html%E4%B8%8Ecss"><span class="nav-text">HTML与CSS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#javascript"><span class="nav-text">JavaScript</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#web%E5%90%8E%E7%AB%AF"><span class="nav-text">Web后端</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Arthurstat"
+      src="/images/arthurstat.png">
+  <p class="site-author-name" itemprop="name">Arthurstat</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/arthur-stat" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;arthur-stat" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:swu3469@email.swu.edu.cn" title="E-Mail → mailto:swu3469@email.swu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arthurstat</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="true"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
