@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/apple-touch-icon.png" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="作为工具手册，零散记录以便我自己查阅，非完整笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Web后端要点简记：Java &amp; JVM、Spring、Spring MVC与Spring Boot">
+<meta property="og:url" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%A6%81%E7%82%B9%E7%AE%80%E8%AE%B0%EF%BC%9AJava%20&%20JVM%E3%80%81Spring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/index.html">
+<meta property="og:site_name" content="二三事">
+<meta property="og:description" content="作为工具手册，零散记录以便我自己查阅，非完整笔记。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2025-03-22T05:36:15.000Z">
+<meta property="article:modified_time" content="2025-03-25T01:08:17.340Z">
+<meta property="article:author" content="Arthurstat">
+<meta property="article:tag" content="后端">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%A6%81%E7%82%B9%E7%AE%80%E8%AE%B0%EF%BC%9AJava%20&%20JVM%E3%80%81Spring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Java Web后端要点简记：Java & JVM、Spring、Spring MVC与Spring Boot | 二三事</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<style>mjx-container[jax="SVG"] {
+  direction: ltr;
+}
+
+mjx-container[jax="SVG"] > svg {
+  overflow: visible;
+}
+
+mjx-container[jax="SVG"][display="true"] {
+  display: block;
+  text-align: center;
+  margin: 1em 0;
+}
+
+mjx-container[jax="SVG"][justify="left"] {
+  text-align: left;
+}
+
+mjx-container[jax="SVG"][justify="right"] {
+  text-align: right;
+}
+
+g[data-mml-node="merror"] > g {
+  fill: red;
+  stroke: red;
+}
+
+g[data-mml-node="merror"] > rect[data-background] {
+  fill: yellow;
+  stroke: none;
+}
+
+g[data-mml-node="mtable"] > line[data-line] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > rect[data-frame] {
+  stroke-width: 70px;
+  fill: none;
+}
+
+g[data-mml-node="mtable"] > .mjx-dashed {
+  stroke-dasharray: 140;
+}
+
+g[data-mml-node="mtable"] > .mjx-dotted {
+  stroke-linecap: round;
+  stroke-dasharray: 0,140;
+}
+
+g[data-mml-node="mtable"] > svg {
+  overflow: visible;
+}
+
+[jax="SVG"] mjx-tool {
+  display: inline-block;
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+[jax="SVG"] mjx-tool > mjx-tip {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+mjx-tool > mjx-tip {
+  display: inline-block;
+  padding: .2em;
+  border: 1px solid #888;
+  font-size: 70%;
+  background-color: #F8F8F8;
+  color: black;
+  box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+g[data-mml-node="maction"][data-toggle] {
+  cursor: pointer;
+}
+
+mjx-status {
+  display: block;
+  position: fixed;
+  left: 1em;
+  bottom: 1em;
+  min-width: 25%;
+  padding: .2em .4em;
+  border: 1px solid #888;
+  font-size: 90%;
+  background-color: #F8F8F8;
+  color: black;
+}
+
+foreignObject[data-mjx-xml] {
+  font-family: initial;
+  line-height: normal;
+  overflow: visible;
+}
+
+.MathJax path {
+  stroke-width: 3;
+}
+
+mjx-container[display="true"] {
+  overflow: auto hidden;
+}
+
+mjx-container[display="true"] + br {
+  display: none;
+}
+</style><link rel="alternate" href="/atom.xml" title="二三事" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">二三事</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">“みんなみんな大好き！”</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-id-card fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fas fa-book fa-fw"></i>Docs</a>
+
+  </li>
+        <li class="menu-item menu-item-application">
+
+    <a href="/application/" rel="section"><i class="fa fa-download fa-fw"></i>Application</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-friends">
+
+    <a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>Friends</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%A6%81%E7%82%B9%E7%AE%80%E8%AE%B0%EF%BC%9AJava%20&%20JVM%E3%80%81Spring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/arthurstat.png">
+      <meta itemprop="name" content="Arthurstat">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="二三事">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java Web后端要点简记：Java & JVM、Spring、Spring MVC与Spring Boot
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2025-03-22 13:36:15" itemprop="dateCreated datePublished" datetime="2025-03-22T13:36:15+08:00">2025-03-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2025-03-25 09:08:17" itemprop="dateModified" datetime="2025-03-25T09:08:17+08:00">2025-03-25</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%BC%80%E5%8F%91/" itemprop="url" rel="index"><span itemprop="name">开发</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">　　作为工具手册，零散记录以便我自己查阅，非完整笔记。</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <!--
+
+总学习路线：https://www.codefather.cn/course/1789189862986850306/section/1789190431398928386，鱼皮
+
+学习视频 1：https://www.bilibili.com/video/BV1m84y1w7Tb，黑马程序员JavaWeb开发教程
+
+-->
+<p><strong>后端内容仅碎片化记录本人学习过程中碰到的问题，并没有前端与数据库部分那么完整的整理。</strong></p>
+<p>前端：<a href="/2025/03/23/Java%20Web%E5%89%8D%E7%AB%AF%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AHTML%E3%80%81CSS%E3%80%81JavaScript%E3%80%81Vue%E4%B8%8EElement/">Java
+Web前端要点整理：HTML、CSS、JavaScript、Vue、HTTP协议与Tomcat</a></p>
+<p>数据库与缓存：<a href="/2025/03/13/Java%20Web%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AMySQL%E3%80%81Redis%E3%80%81Spring%20Data%E4%B8%8EMyBatis/">Java
+Web数据库与缓存要点整理：MySQL、Redis、Spring Data与MyBatis</a></p>
+<h1 id="java-jvm">Java &amp; JVM</h1>
+<p>Java这注解跟踏马魔法一样啊。。。</p>
+<p>以下是 Java
+中类的加载、实例化流程及生命周期的详细解析，以及类加载器的核心作用：</p>
+<hr>
+<h3 id="一类的生命周期">一、类的生命周期</h3>
+<p>Java 类的生命周期分为 <strong>7 个阶段</strong>，按顺序触发：</p>
+<ol type="1">
+<li><strong>加载（Loading）</strong>
+<ul>
+<li><strong>作用</strong>：将 <code>.class</code> 字节码文件加载到 JVM
+内存。</li>
+<li><strong>触发条件</strong>：首次使用类时（如
+<code>new</code>、调用静态方法、访问静态字段等）。</li>
+<li><strong>关键产物</strong>：生成一个 <code>Class</code>
+对象（存储在方法区）。</li>
+</ul></li>
+<li><strong>验证（Verification）</strong>
+<ul>
+<li><strong>作用</strong>：检查字节码是否符合 JVM
+规范（防止恶意代码）。</li>
+<li><strong>检查内容</strong>：文件格式、元数据、字节码逻辑等。</li>
+</ul></li>
+<li><strong>准备（Preparation）</strong>
+<ul>
+<li><strong>作用</strong>：为
+<strong>类变量</strong>（静态变量）分配内存，并赋予初始值（零值）。</li>
+<li><strong>示例</strong>：<code>static int x</code> 初始化为
+<code>0</code>，<code>static Object obj</code> 初始化为
+<code>null</code>。</li>
+</ul></li>
+<li><strong>解析（Resolution）</strong>
+<ul>
+<li><strong>作用</strong>：将符号引用（如类名、方法名）转换为直接引用（内存地址）。</li>
+</ul></li>
+<li><strong>初始化（Initialization）</strong>
+<ul>
+<li><strong>作用</strong>：执行类构造器
+<code>&lt;clinit&gt;()</code>，为静态变量赋真实值，执行静态代码块。</li>
+<li><strong>触发条件</strong>：首次主动使用类时（如
+<code>new</code>、访问静态字段）。</li>
+<li><strong>线程安全</strong>：<code>&lt;clinit&gt;()</code> 由 JVM
+保证同步执行。</li>
+</ul></li>
+<li><strong>使用（Using）</strong>
+<ul>
+<li><strong>作用</strong>：通过实例化、调用方法等操作使用类。</li>
+</ul></li>
+<li><strong>卸载（Unloading）</strong>
+<ul>
+<li><strong>作用</strong>：从内存中移除类的 <code>Class</code>
+对象。</li>
+<li><strong>触发条件</strong>：类的所有实例被回收，且类加载器被回收（通常只有自定义类加载器加载的类可卸载）。</li>
+</ul></li>
+</ol>
+<hr>
+<h3 id="二类加载器classloader的核心作用">二、类加载器（ClassLoader）的核心作用</h3>
+<p>类加载器负责 <strong>将字节码加载到
+JVM</strong>，并决定类的唯一性（同一类由不同加载器加载视为不同类）。</p>
+<h4 id="类加载器的层次结构">1. 类加载器的层次结构</h4>
+<p>Java 采用 <strong>双亲委派模型（Parent Delegation
+Model）</strong>，包含三层核心加载器：</p>
+<table>
+<colgroup>
+<col style="width: 21%">
+<col style="width: 48%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>加载器</th>
+<th>作用</th>
+<th>加载路径示例</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bootstrap ClassLoader</strong></td>
+<td>加载核心 JDK 类（如 <code>java.lang.*</code>），由 C++ 实现，无 Java
+对象</td>
+<td><code>jre/lib/rt.jar</code></td>
+</tr>
+<tr class="even">
+<td><strong>Extension ClassLoader</strong></td>
+<td>加载扩展类（如 <code>javax.*</code>）</td>
+<td><code>jre/lib/ext/*.jar</code></td>
+</tr>
+<tr class="odd">
+<td><strong>Application ClassLoader</strong></td>
+<td>加载应用类（用户编写的类，或第三方库）</td>
+<td><code>CLASSPATH</code> 或 <code>-classpath</code> 指定的路径</td>
+</tr>
+</tbody>
+</table>
+<h4 id="双亲委派模型的工作流程">2. 双亲委派模型的工作流程</h4>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用户请求加载类 → 由子加载器逐级向上委派 → 父加载器尝试加载 → 若父加载器无法加载，子加载器自行加载</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>优势</strong>：
+<ul>
+<li>避免重复加载（父加载器已加载的类，子加载器不再加载）。</li>
+<li>安全性（防止用户伪造核心类，如
+<code>java.lang.String</code>）。</li>
+</ul></li>
+</ul>
+<h4 id="自定义类加载器">3. 自定义类加载器</h4>
+<p>通过继承 <code>ClassLoader</code> 并重写 <code>findClass()</code>
+实现，常见用途： - 热部署（如 Tomcat 的 WebApp 类加载器）。 -
+加载非标准来源的类（如网络、加密字节码）。 -
+模块化隔离（不同模块使用独立加载器）。</p>
+<hr>
+<h3 id="三类的实例化流程">三、类的实例化流程</h3>
+<p>当通过 <code>new</code> 关键字实例化对象时，流程如下：</p>
+<ol type="1">
+<li><strong>检查类是否已加载</strong>
+<ul>
+<li>若未加载，触发类加载流程（加载 → 验证 → 准备 → 解析 →
+初始化）。</li>
+</ul></li>
+<li><strong>分配内存</strong>
+<ul>
+<li>在堆中为对象分配连续内存空间（具体大小由类结构决定）。</li>
+</ul></li>
+<li><strong>初始化零值</strong>
+<ul>
+<li>为对象的实例变量赋予默认值（如 <code>int</code> 初始化为
+<code>0</code>，引用类型初始化为 <code>null</code>）。</li>
+</ul></li>
+<li><strong>设置对象头（Object Header）</strong>
+<ul>
+<li>存储对象的元数据（如哈希码、GC
+分代年龄、锁状态、类元数据指针等）。</li>
+</ul></li>
+<li><strong>执行构造方法 <code>&lt;init&gt;()</code></strong>
+<ul>
+<li>按代码顺序执行实例变量初始化代码和构造方法。</li>
+<li><strong>示例</strong>： <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClass</span> {</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;     <span class="comment">// 实例变量初始化</span></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyClass</span><span class="params">()</span> {      <span class="comment">// 构造方法</span></span><br><span class="line">        a = <span class="number">20</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure></li>
+</ul></li>
+</ol>
+<hr>
+<h3 id="四关键问题与示例">四、关键问题与示例</h3>
+<h4 id="类初始化触发的场景">1. 类初始化触发的场景</h4>
+<ul>
+<li>直接 <code>new</code> 对象。</li>
+<li>访问类的静态变量或静态方法。</li>
+<li>反射调用（如
+<code>Class.forName("com.example.MyClass")</code>）。</li>
+<li>子类初始化时，若父类未初始化，会先触发父类初始化。</li>
+</ul>
+<h4 id="类加载器的核心作用总结">2. 类加载器的核心作用总结</h4>
+<ul>
+<li><strong>定位资源</strong>：通过类加载器查找 <code>.class</code>
+文件或资源（如 <code>getResource()</code>）。</li>
+<li><strong>隔离性</strong>：不同加载器加载的类互相不可见（如 Tomcat
+隔离 Web 应用）。</li>
+<li><strong>安全性</strong>：防止恶意代码替换核心类。</li>
+</ul>
+<h4 id="常见异常">3. 常见异常</h4>
+<ul>
+<li><code>ClassNotFoundException</code>：类加载器找不到指定类。</li>
+<li><code>NoClassDefFoundError</code>：类加载成功，但初始化失败（如静态代码块抛出异常）。</li>
+</ul>
+<hr>
+<h3 id="五完整流程示例">五、完整流程示例</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyClass</span> {</span><br><span class="line">    <span class="keyword">static</span> {</span><br><span class="line">        System.out.println(<span class="string">"类初始化：静态代码块"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MyClass</span><span class="params">()</span> {</span><br><span class="line">        System.out.println(<span class="string">"对象实例化：构造方法"</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception {</span><br><span class="line">        <span class="comment">// 触发类加载、初始化</span></span><br><span class="line">        <span class="type">MyClass</span> <span class="variable">obj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MyClass</span>();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p><strong>输出</strong>： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">类初始化：静态代码块</span><br><span class="line">对象实例化：构造方法</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>通过理解类的生命周期和类加载器的作用，可以更好地解决类冲突、资源加载、热部署等实际问题。</p>
+<h1 id="spring">Spring</h1>
+<h2 id="常用注解">常用注解</h2>
+<p>Spring常用注解：</p>
+<ul>
+<li><p><code>@RestController</code>：等价于<code>@Controller</code>与<code>@ResponseBody</code>的组合，置于Controller前</p></li>
+<li><p><code>@ResponseBody</code>：将返回值作为响应体，置于方法或Controller前</p></li>
+<li><p><code>@RequestMapping(URL)</code>：路由请求，置于方法前</p></li>
+<li><p><code>@RequestParam</code>：多请求参数单Controller形参默认封装至数组，形参前加上该注解将封装至集合，如ArrayList</p></li>
+<li><p><code>@RequestParam(name = "请求参数名")</code>：将请求参数绑定到Controller形参；该注解默认属性<code>required=true</code>，要求必须传递目标参数</p></li>
+<li><p><code>@Component</code>：IOC（控制反转）注解，将当前类交给IOC容器管理、注册该类为IOC的Bean的基础注解，可通过<code>value</code>属性为Bean命名，默认名称为类名但首字母小写，置于类定义前</p>
+<ul>
+<li><code>@Controller</code>：标识该类属于Controller组件，专属Controller的Bean注册方式，同样可命名Bean，置于类定义前</li>
+<li><code>@Service</code>：标识该类属于Service组件，专属Service的Bean注册方式，同样可命名Bean，置于类定义前</li>
+<li><code>@Repository</code>：标识该类属于DAO组件，专属DAO的Bean注册方式，同样可命名Bean，置于类定义前，<strong>但是这个用的少，用MyBatis的就行</strong></li>
+</ul>
+<p>Bean注解要生效必须被组件扫描注解<code>@ComponentScan</code>扫描到，启动类<code>src/main/java/com.项目名/utils/SpringBootWebReqRespApplication.java</code>已声明了默认扫描注解<code>@SpringBootApplication</code>，默认组件扫描范围是启动类所在包及其子包，要扫描其他包需要在启动类添加注解<code>@ComponentScan({"包名", "包名"})</code>指定扫描范围，这会覆盖默认扫描范围，但是按规范应该是把<strong>要扫描的类放到启动类所在包下</strong>，可以移动启动类</p></li>
+<li><p><code>@Primary</code>：多个Bean实现同一接口时，优先选择这个Bean，置于Bean声明注解前</p></li>
+<li><p><code>@Qualifier("Bean名")</code>：根据Bean名称选择特定Bean注入，置于<code>@Autowired</code>后、方法前</p></li>
+<li><p><code>@Resource(name="Bean类名")</code>：根据Bean类名选择特定Bean注入，置于方法前但这时注入无需<code>@Autowired</code>，注意该注解不是Spring提供的而是JDK提供的</p></li>
+<li><p><code>@Autowired</code>：DI（依赖注入）注解，根据声明的类型依赖注入Bean，默认不允许多个Bean实现同一接口，但可以利用<code>@Primary</code>、<code>@Qualifier</code>、<code>@Resource</code>避免，置于对象声明前</p></li>
+</ul>
+<h2 id="三层架构">三层架构</h2>
+<p>Spring开发中通常遵循三层架构：Controller、Service与Dao。</p>
+<ul>
+<li>Controller：控制层，接收前端请求，处理请求并响应数据，前端控制器如<code>HttpServletRequest</code>接收响应并传递给Controller，Controller将数据返回给前端控制器如<code>HttpServletResponse</code></li>
+<li>Service：业务逻辑层、服务层，处理具体的业务逻辑</li>
+<li>DAO（Data Access
+Object）：数据访问层、持久层，对数据进行操作（增删查改），常面向接口编程</li>
+</ul>
+<h2 id="ioc-di">IOC &amp; DI</h2>
+<p>把所有的代码和逻辑都写在Controller当然被允许，但是不方便维护。</p>
+<p>控制反转与依赖注入是Spring用来帮助更好地实现分层解耦的。</p>
+<ul>
+<li>控制反转（Inversion of
+Control，IOC）：对象的创建控制权由程序自身转移至外部容器</li>
+<li>依赖注入（Dependency
+Injection，DI）：容器为应用提供运行时所依赖的资源，例如Service的代码不必显式的<code>new</code>特定的Dao对象</li>
+<li>Bean对象：IOC容器中创建、管理的对象</li>
+</ul>
+<p>通过Spring的注解就可以实现。</p>
+<p>解释：一个典型的流程是某个Controller需要某个Service对象，该Service接口被若干不同的ServiceImp实现了不同的逻辑，Spring通过控制反转把ServiceImp放进容器中，Controller从容器中通过依赖注入获取需要的对象，而不必在自身的逻辑中嵌入Service实例化代码，实现高内聚、低耦合</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag"># 后端</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2025/03/13/Java%20Web%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AMySQL%E3%80%81Redis%E3%80%81Spring%20Data%E4%B8%8EMyBatis/" rel="prev" title="Java Web数据库与缓存要点整理：MySQL、Redis、Spring Data与MyBatis">
+      <i class="fa fa-chevron-left"></i> Java Web数据库与缓存要点整理：MySQL、Redis、Spring Data与MyBatis
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2025/03/23/Java%20Web%E5%89%8D%E7%AB%AF%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AHTML%E3%80%81CSS%E3%80%81JavaScript%E3%80%81Vue%E4%B8%8EElement/" rel="next" title="Java Web前端要点整理：HTML、CSS、JavaScript、Vue、HTTP协议与Tomcat">
+      Java Web前端要点整理：HTML、CSS、JavaScript、Vue、HTTP协议与Tomcat <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#java-jvm"><span class="nav-text">Java &amp; JVM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F"><span class="nav-text">一、类的生命周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8classloader%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BD%9C%E7%94%A8"><span class="nav-text">二、类加载器（ClassLoader）的核心作用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="nav-text">1. 类加载器的层次结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-text">2. 双亲委派模型的工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8"><span class="nav-text">3. 自定义类加载器</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E7%B1%BB%E7%9A%84%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%B5%81%E7%A8%8B"><span class="nav-text">三、类的实例化流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E5%85%B3%E9%94%AE%E9%97%AE%E9%A2%98%E4%B8%8E%E7%A4%BA%E4%BE%8B"><span class="nav-text">四、关键问题与示例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%88%9D%E5%A7%8B%E5%8C%96%E8%A7%A6%E5%8F%91%E7%9A%84%E5%9C%BA%E6%99%AF"><span class="nav-text">1. 类初始化触发的场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BD%9C%E7%94%A8%E6%80%BB%E7%BB%93"><span class="nav-text">2. 类加载器的核心作用总结</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%BC%82%E5%B8%B8"><span class="nav-text">3. 常见异常</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%94%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B%E7%A4%BA%E4%BE%8B"><span class="nav-text">五、完整流程示例</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#spring"><span class="nav-text">Spring</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3"><span class="nav-text">常用注解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E5%B1%82%E6%9E%B6%E6%9E%84"><span class="nav-text">三层架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ioc-di"><span class="nav-text">IOC &amp; DI</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Arthurstat"
+      src="/images/arthurstat.png">
+  <p class="site-author-name" itemprop="name">Arthurstat</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/arthur-stat" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;arthur-stat" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:swu3469@email.swu.edu.cn" title="E-Mail → mailto:swu3469@email.swu.edu.cn" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Arthurstat</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="true"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+<script data-pjax>
+document.querySelectorAll('.pdfobject-container').forEach(element => {
+  let url = element.dataset.target;
+  let pdfOpenParams = {
+    navpanes : 0,
+    toolbar  : 0,
+    statusbar: 0,
+    pagemode : 'thumbs',
+    view     : 'FitH'
+  };
+  let pdfOpenFragment = '#' + Object.entries(pdfOpenParams).map(([key, value]) => `${key}=${encodeURIComponent(value)}`).join('&');
+  let fullURL = `/lib/pdf/web/viewer.html?file=${encodeURIComponent(url)}${pdfOpenFragment}`;
+
+  if (NexT.utils.supportsPDFs()) {
+    element.innerHTML = `<embed class="pdfobject" src="${url + pdfOpenFragment}" type="application/pdf" style="height: ${element.dataset.height};">`;
+  } else {
+    element.innerHTML = `<iframe src="${fullURL}" style="height: ${element.dataset.height};" frameborder="0"></iframe>`;
+  }
+});
+</script>
+
+
+
+
+    <div id="pjax">
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+    </div>
+</body>
+</html>
