@@ -1173,7 +1173,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #ff9ad2;
+  background: #d461fc;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -2577,6 +2577,92 @@ mjx-container + br {
   .post-body {
     font-size: 1.125em;
   }
+}
+.main-inner {
+  background: transparent !important;
+}
+.custom-grid-container {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem 0;
+  grid-template-columns: repeat(2, minmax(300px, 1fr));
+  grid-auto-rows: minmax(200px, auto);
+  perspective: 1000px;
+}
+@media (max-width: 768px) {
+  .custom-grid-container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+.custom-grid-item {
+  position: relative;
+  background: rgba(255,255,255,0.3);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px #eee5fe;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  transform-style: preserve-3d;
+}
+.custom-grid-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(187,120,232,0.36) 0%, rgba(241,138,190,0.17) 100%);
+  backdrop-filter: blur(8px);
+  z-index: -1;
+}
+.custom-grid-item:hover {
+  transform: translateY(-6px) rotateX(2deg) rotateY(1deg);
+  box-shadow: 0 8px 30px #e3cefc;
+}
+.custom-grid-item:hover .hover-glow {
+  opacity: 0.3;
+}
+.custom-grid-item .content-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.custom-grid-item a {
+  transition: color 0.3s ease;
+}
+.custom-grid-item a:hover {
+  color: #7b68ee !important;
+  text-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+.hover-glow {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.pagination {
+  display: none !important;
+}
+.welcome-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 40px;
+}
+.welcome-container .nav-cards {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+.welcome-container .nav-cards .nav-card {
+  background: rgba(255,255,255,0.95);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+.welcome-container .nav-cards .nav-card:hover {
+  transform: translateY(-5px);
 }
 p {
   margin: 0 0 0 0;
