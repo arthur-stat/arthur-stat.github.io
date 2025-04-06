@@ -33,7 +33,7 @@
 <meta property="og:image" content="http://example.com/2025/03/13/Java%20Web%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AMySQL%E3%80%81Redis%E3%80%81Spring%20Data%E4%B8%8EMyBatis/clustered_index.jpg">
 <meta property="og:image" content="http://example.com/2025/03/13/Java%20Web%E6%95%B0%E6%8D%AE%E5%BA%93%E4%B8%8E%E7%BC%93%E5%AD%98%E8%A6%81%E7%82%B9%E6%95%B4%E7%90%86%EF%BC%9AMySQL%E3%80%81Redis%E3%80%81Spring%20Data%E4%B8%8EMyBatis/mysql_master-slave_replication.png">
 <meta property="article:published_time" content="2025-03-13T00:58:49.000Z">
-<meta property="article:modified_time" content="2025-04-02T18:00:19.047Z">
+<meta property="article:modified_time" content="2025-04-04T13:53:23.398Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
@@ -361,7 +361,7 @@ mjx-container[display="true"] + br {
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-04-03 02:00:19" itemprop="dateModified" datetime="2025-04-03T02:00:19+08:00">2025-04-03</time>
+                <time title="Modified: 2025-04-04 21:53:23" itemprop="dateModified" datetime="2025-04-04T21:53:23+08:00">2025-04-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -2677,8 +2677,8 @@ Database
 Connectivity，一套统一了数据库操作的接口，由数据库提供实现接口的驱动）代码以及设置参数和获取结果集的工作，大大提高了开发效率。</p>
 <p>可以使用IntelliJ IDEA在一个Spring
 Boot工程中通过图形化交互界面引入MyBatis相关依赖并配置MyBatis，也可以在Spring
-Boot工程的全局配置文件<code>application.properties</code>中自行配置由Spring
-Boot整合的MyBatis：</p>
+Boot工程的全局配置文件自行配置由Spring
+Boot整合的MyBatis，以<code>application.properties</code>为例：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 数据库连接配置</span></span><br><span class="line"><span class="attr">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver  # MySQL驱动器类名</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://localhost:3306/mybatis     # 数据库URL</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">root                               # 用户</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">123456                             # 密码</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># MyBatis配置</span></span><br><span class="line"><span class="attr">mybatis.mapper-locations</span>=<span class="string">classpath:mapper/**/*.xml            # MySQL的Mapper扫描路径</span></span><br><span class="line"><span class="attr">mybatis.configuration.map-underscore-to-camel-case</span>=<span class="string">true       # 驼峰命名规则自动封装</span></span><br><span class="line"><span class="attr">mybatis.configuration.default-fetch-size</span>=<span class="string">100                  # 指定从数据库一次性获取的记录行数</span></span><br><span class="line"><span class="attr">mybatis.configuration.default-statement-timeout</span>=<span class="string">30            # 超时控制</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment"># 可选项</span></span><br><span class="line"><span class="attr">mybatis.configuration.log-impl</span>=<span class="string">org.apache.ibatis.logging.stdout.StdOut  # 将日志输出至控制台</span></span><br></pre></td></tr></table></figure>
 <p>同时在Maven项目的核心配置文件<code>pom.xml</code>中为MySQL添加最新MySQL驱动包依赖：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.mysql<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mysql-connector-j<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- &lt;version&gt;8.0.33&lt;/version&gt; 指定版本号 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">scope</span>&gt;</span>runtime<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -2694,7 +2694,7 @@ Boot整合的MyBatis：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootTest</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">test</span> {</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MemberMapper memberMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">testShowMeMembers</span><span class="params">()</span> {</span><br><span class="line">        List&lt;Member&gt; memberList = memberMapper.showMeMembers();</span><br><span class="line">        memberList.stream().forEach(</span><br><span class="line">            member -&gt; { System.out.println(member); }</span><br><span class="line">        );</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p>为实现资源重用、提升系统响应速度并避免数据库连接遗漏，需要使用数据库连接池。数据库连接池是一个容器，负责分配、管理数据库连接。Java提供了名为DataSource的数据库连接池标准接口，目前已有若干成熟的第三方JDBC组件实现了该接口，例如C3P0、DBCP、Druid与Hikari等，其中Hikari是Spring
 Boot默认的JDBC数据库连接池组件。如果需要切换数据库连接池，以Druid为例，需要按Druid文档所述修改Maven项目的核心配置文件<code>pom.xml</code>以配置依赖，同时将Spring
-Boot全局配置文件<code>application.properties</code>内容中的<code>datasource</code>字符串全部替换为<code>datasource.druid</code>。</p>
+Boot全局配置文件（例如<code>application.properties</code>）内容中的<code>datasource</code>字符串全部替换为<code>datasource.druid</code>。</p>
 <h2 id="mybatis基础用法手册">MyBatis基础用法手册</h2>
 <p><strong>自动封装机制</strong></p>
 <p>默认情况下，当方法返回类型为实体类时，如果实体类属性名与数据库表查询返回的字段名一致，则MyBatis将通过反射机制进行自动封装，否则自动封装机制将不能正常工作、不一致的属性值将被赋为默认值<code>null</code>，例如
@@ -2707,7 +2707,7 @@ Boot全局配置文件<code>application.properties</code>内容中的<code>datas
 <li><p>通过<code>@Results</code>注解与<code>@Result</code>注解进行映射。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MemberMapper</span> {</span><br><span class="line">    <span class="meta">@Select("SELECT * FROM member WHERE name = #{name}")</span></span><br><span class="line">    <span class="meta">@Results({</span></span><br><span class="line"><span class="meta">        @Result(column="group_number", proper="groupNumber")  // , @Result(...) ...</span></span><br><span class="line"><span class="meta">    })</span></span><br><span class="line">    <span class="keyword">public</span> Member <span class="title function_">getMemberByName</span><span class="params">(String name)</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure></li>
 <li><p>在Spring
-Boot工程的全局配置文件<code>application.properties</code>中配置<code>mybatis.configuration.map-underscore-to-camel-case=true</code>以启用驼峰命名规则自动封装，MyBatis将把<code>group_number</code>自动映射到相应的小驼峰命名形式<code>groupNumber</code>。</p></li>
+Boot工程的全局配置文件中配置<code>mybatis.configuration.map-underscore-to-camel-case=true</code>以启用驼峰命名规则自动封装，MyBatis将把<code>group_number</code>自动映射到相应的小驼峰命名形式<code>groupNumber</code>。</p></li>
 </ol>
 <p>对于增删改操作（<code>INSERT</code>/<code>UPDATE</code>/<code>DELETE</code>），<code>@Mapper</code>接口默认以<code>int</code>类型返回受影响记录行数，可以通过将方法声明为<code>void</code>以忽略返回值。</p>
 <p>对于查询操作（<code>SELECT</code>），<code>@Mapper</code>接口需在映射文件中显式声明<code>resultType</code>或<code>resultMap</code>。返回值可为基本类型、自定义JavaBean（属性名与字段名应一致，或能够通过驼峰规则自动映射，如<code>group_number</code>
@@ -2779,6 +2779,13 @@ Boot单独使用MyBatis，由于缺失了Spring Boo
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mapper</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">MemberMapper</span> {</span><br><span class="line">    Member <span class="title function_">getMemberByName</span><span class="params">(String name)</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
 <p>IntelliJ
 IDEA中有一款名为MyBatisX的插件，能够帮助我们快速定位<code>@Mapper</code>接口方法对应的XML映射。</p>
+<hr>
+<p><strong>PageHelper分页插件</strong></p>
+<p>PageHelper是一个由第三方开发的MyBatis分页插件，能够帮助我们快速实现分页查询、避免编写繁琐的分页查询逻辑与SQL语句。在使用该插件前，需要先引入<code>pagehelper-spring-boot-starter</code>依赖。</p>
+<p>使用该插件进行分页查询，只需要在Service实现类的方法中链式调用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PageInfo&lt;Member&gt; pageInfo = PageHelper.startPage(pageNum, pageSize)</span><br><span class="line">                                      .doSelectPageInfo(() -&gt; memberMapper.list());</span><br></pre></td></tr></table></figure>
+<p>然后将<code>pageInfo</code>返回给同前端交互的Controller即可。其中，<code>PageInfo</code>是PageHelper所提供的类，包含<code>pageNum</code>、<code>pageSize</code>、<code>total</code>（总记录数）、<code>list</code>（当前页数据集合）与<code>pages</code>（总页数）等若干前端分页查询所需的常用属性；此外，<code>memberMapper.list()</code>对应Mapper接口方法中的全表查询<code>@Select("SELECT * FROM member")</code>，由DAO层实现。</p>
+<p>通过动态SQL，可以将<code>list</code>方法重载。这样的话，如果传入<code>list</code>的参数不同，则对应查询的<code>WHERE</code>条件不同，于是就可以方便地实现条件分页查询。</p>
 <h2 id="动态sql">动态SQL</h2>
 <p>动态SQL能够实现更复杂的逻辑，所以通常考虑XML映射而非注解。学习MyBatis动态SQL，就是学习MyBatis
 XML映射中的一个个标签。</p>
@@ -2906,20 +2913,20 @@ XML映射中的一个个标签。</p>
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">17</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
