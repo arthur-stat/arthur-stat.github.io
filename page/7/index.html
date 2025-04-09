@@ -20,10 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="Arthurstat&#39;s blog">
+<meta property="og:type" content="website">
 <meta property="og:title" content="二三事">
 <meta property="og:url" content="http://example.com/page/7/index.html">
 <meta property="og:site_name" content="二三事">
+<meta property="og:description" content="Arthurstat&#39;s blog">
 <meta property="og:locale" content="en_US">
 <meta property="article:author" content="Arthurstat">
 <meta name="twitter:card" content="summary">
@@ -318,12 +320,12 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/01/Notes%20of%20Reinforcement%20Learning/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/12/08/computational_graphs_and_mlp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/arthurstat.png">
       <meta itemprop="name" content="Arthurstat">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Arthurstat's blog">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -332,7 +334,7 @@ mjx-container[display="true"] + br {
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2024/12/01/Notes%20of%20Reinforcement%20Learning/" class="post-title-link" itemprop="url">Notes of Reinforcement Learning</a>
+            <a href="/2024/12/08/computational_graphs_and_mlp/" class="post-title-link" itemprop="url">基于计算图方法构造一个支持反向传播算法的MLP</a>
         </h2>
 
         <div class="post-meta">
@@ -343,14 +345,14 @@ mjx-container[display="true"] + br {
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2024-12-01 03:12:00" itemprop="dateCreated datePublished" datetime="2024-12-01T03:12:00+08:00">2024-12-01</time>
+              <time title="Created: 2024-12-08 06:10:23" itemprop="dateCreated datePublished" datetime="2024-12-08T06:10:23+08:00">2024-12-08</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-01-04 21:02:07" itemprop="dateModified" datetime="2025-01-04T21:02:07+08:00">2025-01-04</time>
+                <time title="Modified: 2024-12-29 00:04:24" itemprop="dateModified" datetime="2024-12-29T00:04:24+08:00">2024-12-29</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -373,10 +375,10 @@ mjx-container[display="true"] + br {
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>　　Some brief notes from my study of reinforcement learning theory.</p>
+          <p>　　类似Pytorch中的定义实现一个MLP，该MLP支持通过计算图进行自动微分与反向传播。其中，计算图被以一种相对简化但有效而可行的方式实现。最后，对MLP中的自动微分机制从数学上给出推导证明。</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2024/12/01/Notes%20of%20Reinforcement%20Learning/">
+              <a class="btn" href="/2024/12/08/computational_graphs_and_mlp/">
                 Read more &raquo;
               </a>
             </div>
@@ -399,7 +401,7 @@ mjx-container[display="true"] + br {
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/17/">17</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><span class="space">&hellip;</span><a class="page-number" href="/page/18/">18</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -460,27 +462,27 @@ mjx-container[display="true"] + br {
     <img class="site-author-image" itemprop="image" alt="Arthurstat"
       src="/images/arthurstat.png">
   <p class="site-author-name" itemprop="name">Arthurstat</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">Arthurstat's blog</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

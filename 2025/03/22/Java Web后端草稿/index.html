@@ -23,27 +23,27 @@
   <meta name="description" content="作为工具手册，零散记录以便我自己查阅，非完整笔记。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java Web后端笔记：Java、JVM特性与原理，以及Spring、Spring MVC与Spring Boot">
-<meta property="og:url" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/index.html">
+<meta property="og:url" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/index.html">
 <meta property="og:site_name" content="二三事">
 <meta property="og:description" content="作为工具手册，零散记录以便我自己查阅，非完整笔记。">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT1.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT2.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT3.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/filter1.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/filter2.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/interceptor1.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/interceptor2.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/interceptor3.png">
-<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/exception.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT1.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT2.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT3.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/filter1.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/filter2.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/interceptor1.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/interceptor2.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/interceptor3.png">
+<meta property="og:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/exception.png">
 <meta property="article:published_time" content="2025-03-22T05:36:15.000Z">
 <meta property="article:modified_time" content="2025-04-05T16:41:07.032Z">
 <meta property="article:author" content="Arthurstat">
 <meta property="article:tag" content="后端">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT1.png">
+<meta name="twitter:image" content="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT1.png">
 
-<link rel="canonical" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/">
+<link rel="canonical" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/">
 
 
 <script id="page-configurations">
@@ -334,12 +334,12 @@ mjx-container[display="true"] + br {
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/arthurstat.png">
       <meta itemprop="name" content="Arthurstat">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content="Arthurstat's blog">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -650,19 +650,19 @@ Injection，DI）：容器为应用提供运行时所依赖的资源，例如Ser
 <p>如果要用cokkie / session，则在Controller中应该这样写形参：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SessionController</span> (</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 设置cokkie</span></span><br><span class="line">    <span class="meta">@GetMapping("/c1")</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">cokkie1</span><span class="params">(HttpServletResponse response)</span> {</span><br><span class="line">        response.addCokkie(<span class="keyword">new</span> <span class="title class_">Cokkie</span>(<span class="string">"name"</span>, <span class="string">"value"</span>));</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取cokkie</span></span><br><span class="line">    <span class="meta">@GetMapping("/c2")</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">cokkie2</span><span class="params">(HttpServletRequest request)</span> {</span><br><span class="line">        Cokkie[] cokkies = request.getCokkies();</span><br><span class="line">        <span class="keyword">for</span> (Cokkie cokkie : cokkies) {</span><br><span class="line">            <span class="keyword">if</span>(cokkie.getName().equals(<span class="string">"user_name"</span>)) {;}</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 从HttpSession存储值</span></span><br><span class="line">    <span class="meta">@GetMapping("/s1")</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">session1</span><span class="params">(HttpSession session)</span> {</span><br><span class="line">        session.setAttribute(<span class="keyword">new</span> <span class="title class_">Cokkie</span>(<span class="string">"name"</span>, <span class="string">"value"</span>));</span><br><span class="line">        <span class="keyword">return</span> Result.success();</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 从HttpSession获取值</span></span><br><span class="line">    <span class="meta">@GetMapping("/s2")</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">session2</span><span class="params">(HttpServletRequest request)</span> {</span><br><span class="line">        <span class="type">HttpSession</span> <span class="variable">session</span> <span class="operator">=</span> request.getSession();</span><br><span class="line">        <span class="type">Object</span> <span class="variable">loginUser</span> <span class="operator">=</span> session,getAttribute(<span class="string">"name"</span>);</span><br><span class="line">        <span class="keyword">return</span> Result.success(loginUser);</span><br><span class="line">    }</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
 <p>JWT:</p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT1.png" alt="JWT1"></p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT2.png" alt="JWT2"></p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/JWT3.png" alt="JWT3"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT1.png" alt="JWT1"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT2.png" alt="JWT2"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/JWT3.png" alt="JWT3"></p>
 <p>filter：</p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/filter1.png" alt="filter1"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/filter1.png" alt="filter1"></p>
 <p>过滤器的执行流程是先被过滤器拦截、进入过滤器的逻辑，然后放行后跳转到资源请求，处理完后再回到过滤器。</p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/filter2.png" alt="filter2"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/filter2.png" alt="filter2"></p>
 <p>拦截器interceptor：</p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/interceptor1.png" alt="interceptor1"></p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/interceptor2.png" alt="interceptor2"></p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/interceptor3.png" alt="interceptor3"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/interceptor1.png" alt="interceptor1"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/interceptor2.png" alt="interceptor2"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/interceptor3.png" alt="interceptor3"></p>
 <p>异常处理：</p>
-<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E7%AC%94%E8%AE%B0%EF%BC%9AJava%E3%80%81JVM%E7%89%B9%E6%80%A7%E4%B8%8E%E5%8E%9F%E7%90%86%EF%BC%8C%E4%BB%A5%E5%8F%8ASpring%E3%80%81Spring%20MVC%E4%B8%8ESpring%20Boot/exception.png" alt="exception"></p>
+<p><img src="/2025/03/22/Java%20Web%E5%90%8E%E7%AB%AF%E8%8D%89%E7%A8%BF/exception.png" alt="exception"></p>
 
     </div>
 
@@ -755,27 +755,27 @@ Injection，DI）：容器为应用提供运行时所依赖的资源，例如Ser
     <img class="site-author-image" itemprop="image" alt="Arthurstat"
       src="/images/arthurstat.png">
   <p class="site-author-name" itemprop="name">Arthurstat</p>
-  <div class="site-description" itemprop="description"></div>
+  <div class="site-description" itemprop="description">Arthurstat's blog</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
