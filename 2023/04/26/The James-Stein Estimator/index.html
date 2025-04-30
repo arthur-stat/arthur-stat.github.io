@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="一个任何样本量下比UMVUE还要“好”的有偏估计量！这一颠覆经验认知的反常现象，被称为Stein&#39;s paradox。">
@@ -392,6 +392,9 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
+        <details><summary><span style="color: #7b68ee">展开或收起内嵌目录</span></summary><div class="mobile-toc">
+          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#the-james-stein-estimator"><span class="toc-text">the James-Stein Estimator</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#james-stein%E5%9E%8B%E4%BC%B0%E8%AE%A1%E7%9A%84%E9%A3%8E%E9%99%A9"><span class="toc-text">James-Stein型估计的风险</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96jse%E4%B8%8Emle%E7%9A%84%E4%BC%B0%E8%AE%A1%E6%95%88%E6%9E%9C"><span class="toc-text">可视化JSE与MLE的估计效果</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#shrinkage-estimation%E4%B8%8E%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-text">Shrinkage Estimation与正则化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jse%E7%9A%84%E7%BB%8F%E9%AA%8Cbayes%E6%8E%A8%E5%AF%BC%E4%B8%8E%E8%A7%A3%E9%87%8A"><span class="toc-text">JSE的经验Bayes推导与解释</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%86jse%E6%8E%A8%E5%B9%BF%E8%87%B3%E6%9B%B4%E4%BD%B3%E7%9A%84%E7%9F%A9%E9%98%B5%E5%BD%A2%E5%BC%8F"><span class="toc-text">将JSE推广至更佳的矩阵形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jse%E4%B8%8Eols"><span class="toc-text">JSE与OLS</span></a></li></ol>
+        </div></details>
 
       
         <p>  一个任何样本量下比UMVUE还要“好”的有偏估计量！这一颠覆经验认知的反常现象，被称为Stein's
@@ -821,7 +824,6 @@ improved estimator</a></li>
   <script src="true"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
   <script src="/lib/velocity/velocity.ui.min.js"></script>
-
 <script src="/js/utils.js"></script>
 
 <script src="/js/motion.js"></script>

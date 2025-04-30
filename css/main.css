@@ -3,7 +3,7 @@
   --content-bg-color: #fffafa;
   --card-bg-color: #f7f1ff;
   --text-color: #555;
-  --blockquote-color: #666;
+  --blockquote-color: #8d8d8d;
   --link-color: #555;
   --link-hover-color: #ccf;
   --brand-color: #fff;
@@ -179,7 +179,7 @@ body {
   color: var(--text-color);
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
   font-size: 1em;
-  line-height: 2;
+  line-height: 1.7;
 }
 @media (max-width: 991px) {
   body {
@@ -199,22 +199,22 @@ h6 {
   margin: 20px 0 15px;
 }
 h1 {
-  font-size: 1.5em;
+  font-size: 1.65em;
 }
 h2 {
-  font-size: 1.375em;
+  font-size: 1.4em;
 }
 h3 {
-  font-size: 1.25em;
+  font-size: 1.15em;
 }
 h4 {
-  font-size: 1.125em;
+  font-size: 0.9em;
 }
 h5 {
-  font-size: 1em;
+  font-size: 0.65em;
 }
 h6 {
-  font-size: 0.875em;
+  font-size: 0.4em;
 }
 p {
   margin: 0 0 20px 0;
@@ -394,7 +394,7 @@ code {
   font-family: consolas, Menlo, monospace, "PingFang SC", "Microsoft YaHei";
 }
 code {
-  background: #fff;
+  background: #dcdcdc;
   border-radius: 3px;
   color: #555;
   padding: 2px 4px;
@@ -1173,7 +1173,7 @@ pre .javascript .function {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #d1ffe9;
+  background: #ffa403;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1544,6 +1544,12 @@ pre .javascript .function {
   line-height: 1;
   margin: -20px auto 15px;
   text-align: center;
+}
+.post-body p {
+  margin: 0.7em 0;
+}
+.post-body blockquote {
+  background: rgba(102,0,255,0.05);
 }
 .post-sticky-flag {
   display: inline-block;
@@ -2398,7 +2404,7 @@ mjx-container + br {
 }
 .menu .menu-item a,
 .menu .menu-item span.exturl {
-  padding: 5px 20px;
+  padding: 7px 20px;
   position: relative;
   text-align: left;
   transition-property: background-color;
@@ -2562,6 +2568,7 @@ mjx-container + br {
 }
 .post-toc ol {
   font-size: 13px;
+/* 导航栏字体设置 */
 }
 @media (max-width: 991px) {
   .post-body {
@@ -2625,6 +2632,7 @@ mjx-container + br {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  line-height: 0.6em;
 }
 .custom-grid-item a {
   transition: color 0.3s ease;
@@ -2632,6 +2640,11 @@ mjx-container + br {
 .custom-grid-item a:hover {
   color: #7b68ee !important;
   text-shadow: 0 0 8px rgba(255,255,255,0.3);
+}
+.custom-grid-item h3 {
+  font-size: 1.2em;
+  margin: 0em 0 0.6em !important;
+  padding-top: 0.5rem;
 }
 .hover-glow {
   position: absolute;

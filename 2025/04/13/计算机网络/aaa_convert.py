@@ -3,7 +3,7 @@ from aaa_config import SETTINGS
 from PIL import Image
 from pathlib import Path
 
-def process_screenshots(input_folder, output_folder, input_resolution, output_resolution, compaction_quality, clear_original_files):
+def process_screenshots(input_folder, output_folder, input_resolution, output_resolution, compaction_quality, clear_original_files, exception):
 
     # 创建输出目录
     output_dir = Path(input_folder) / output_folder
@@ -13,7 +13,7 @@ def process_screenshots(input_folder, output_folder, input_resolution, output_re
     scale_factor = output_resolution[0]/input_resolution[0]
 
     for filename in os.listdir(input_folder):
-        if filename.lower().endswith('.png'):
+        if filename.lower().endswith('.png') and filename not in exception:
             input_path = os.path.join(input_folder, filename)
             
             try:
