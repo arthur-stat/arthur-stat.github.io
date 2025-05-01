@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -26,7 +26,7 @@
 <meta property="og:url" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="二三事">
 <meta property="og:description" content="引论 操作系统（Operating System）有四个特征：并发、共享、虚拟与异步。其中，并发与共享是两个最基本的特征，互为条件。 特权、中断与系统调用 处理器内有一个名为PSW（Program Status Word，程序状态字寄存器）的特别寄存器，通过二进制的模式位标识当前程序处于用户态还是内核态（注：PSW不仅包含模式位，还包括条件码、优先级位等其他控制位，在x86处理器中该">
-<meta property="og:locale" content="en_US">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/kernel.jpg">
 <meta property="og:image" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/vmm1.jpg">
 <meta property="og:image" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/vmm2.jpg">
@@ -141,8 +141,8 @@
 <meta property="og:image" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/hdd_9.jpg">
 <meta property="og:image" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/ssd.jpg">
 <meta property="article:published_time" content="2025-04-07T08:28:59.000Z">
-<meta property="article:modified_time" content="2025-04-30T05:58:16.026Z">
-<meta property="article:author" content="Arthurstat">
+<meta property="article:modified_time" content="2025-05-01T23:16:36.870Z">
+<meta property="article:author" content="Arth">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/kernel.jpg">
@@ -156,7 +156,7 @@
     sidebar: "",
     isHome : false,
     isPost : true,
-    lang   : 'en'
+    lang   : 'zh-CN'
   };
 </script>
 
@@ -313,7 +313,7 @@ mjx-container[display="true"] + br {
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
+    <div class="toggle" aria-label="切换导航栏">
       <span class="toggle-line toggle-line-first"></span>
       <span class="toggle-line toggle-line-middle"></span>
       <span class="toggle-line toggle-line-last"></span>
@@ -344,46 +344,36 @@ mjx-container[display="true"] + br {
   <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-docs">
-
-    <a href="/docs/" rel="section"><i class="fas fa-book fa-fw"></i>Docs</a>
-
-  </li>
-        <li class="menu-item menu-item-application">
-
-    <a href="/application/" rel="section"><i class="fa fa-download fa-fw"></i>Application</a>
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
         <li class="menu-item menu-item-about">
 
-    <a href="/about/" rel="section"><i class="fa fa-id-card fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+    <a href="/about/" rel="section"><i class="fa fa-id-card fa-fw"></i>关于我</a>
 
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-docs">
+
+    <a href="/docs/" rel="section"><i class="fa fa-folder-open fa-fw"></i>文档</a>
 
   </li>
         <li class="menu-item menu-item-friends">
 
-    <a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>Friends</a>
+    <a href="/friends/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+        <li class="menu-item menu-item-others">
+
+    <a href="/others/" rel="section"><i class="fa fa-bars fa-fw"></i>其他</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
       </li>
   </ul>
@@ -399,7 +389,7 @@ mjx-container[display="true"] + br {
   </span>
   <div class="search-input-container">
     <input autocomplete="off" autocapitalize="off"
-           placeholder="Searching..." spellcheck="false"
+           placeholder="搜索..." spellcheck="false"
            type="search" class="search-input">
   </div>
   <span class="popup-btn-close">
@@ -437,13 +427,13 @@ mjx-container[display="true"] + br {
     
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/arthurstat.png">
-      <meta itemprop="name" content="Arthurstat">
-      <meta itemprop="description" content="Arthurstat's blog">
+      <meta itemprop="name" content="Arth">
+      <meta itemprop="description" content="Arth's blog">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -460,22 +450,22 @@ mjx-container[display="true"] + br {
               <span class="post-meta-item-icon">
                 <i class="far fa-calendar"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
-              <time title="Created: 2025-04-07 16:28:59" itemprop="dateCreated datePublished" datetime="2025-04-07T16:28:59+08:00">2025-04-07</time>
+              <time title="创建时间：2025-04-07 16:28:59" itemprop="dateCreated datePublished" datetime="2025-04-07T16:28:59+08:00">2025-04-07</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2025-04-30 13:58:16" itemprop="dateModified" datetime="2025-04-30T13:58:16+08:00">2025-04-30</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2025-05-02 07:16:36" itemprop="dateModified" datetime="2025-05-02T07:16:36+08:00">2025-05-02</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
               </span>
-              <span class="post-meta-item-text">In</span>
+              <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
                   <a href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6/" itemprop="url" rel="index"><span itemprop="name">计算机科学</span></a>
                 </span>
@@ -490,9 +480,74 @@ mjx-container[display="true"] + br {
     
     
     <div class="post-body" itemprop="articleBody">
-        <details><summary><span style="color: #7b68ee">展开或收起内嵌目录</span></summary><div class="mobile-toc">
-          <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%95%E8%AE%BA"><span class="toc-text">引论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E6%9D%83%E4%B8%AD%E6%96%AD%E4%B8%8E%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-text">特权、中断与系统调用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E5%BC%95%E5%AF%BC%E4%B8%8E%E8%99%9A%E6%8B%9F%E6%9C%BA"><span class="toc-text">体系结构、引导与虚拟机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B"><span class="toc-text">进程与线程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E4%B8%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E7%8A%B6%E6%80%81"><span class="toc-text">进程与线程的状态</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E9%80%9A%E4%BF%A1%E4%B8%8E%E5%90%8C%E6%AD%A5"><span class="toc-text">进程通信与同步</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B0%83%E5%BA%A6%E4%B8%8E%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">调度与调度算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BF%99%E7%AD%89%E5%BE%85%E4%BA%92%E6%96%A5%E4%B8%8E%E9%94%81"><span class="toc-text">忙等待互斥与锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9C%BA%E5%88%B6"><span class="toc-text">信号量机制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">生产者-消费者问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E8%80%85-%E5%86%99%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-text">读者-写者问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%B2%E5%AD%A6%E5%AE%B6%E8%BF%9B%E9%A4%90%E9%97%AE%E9%A2%98"><span class="toc-text">哲学家进餐问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E7%A8%8B"><span class="toc-text">管程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%BB%E9%94%81"><span class="toc-text">死锁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%B8%8E%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E6%8A%80%E6%9C%AF"><span class="toc-text">内存与内存管理技术</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%9A%84%E6%A6%82%E5%BF%B5%E5%8F%8A%E8%A6%86%E7%9B%96%E4%B8%8E%E4%BA%A4%E6%8D%A2"><span class="toc-text">内存的概念及覆盖与交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%88%86%E9%85%8D%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-text">连续分配管理方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E4%B8%8E%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-text">分页存储管理与多级页表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E5%AD%98%E5%82%A8%E7%9A%84%E5%9C%B0%E5%9D%80%E5%8F%98%E6%8D%A2%E6%9C%BA%E6%9E%84"><span class="toc-text">分页存储的地址变换机构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%AE%B5%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-text">分段存储管理方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E9%A1%B5%E5%BC%8F%E5%AD%98%E5%82%A8%E7%AE%A1%E7%90%86%E6%96%B9%E5%BC%8F"><span class="toc-text">段页式存储管理方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%B8%8E%E9%A1%B5%E9%9D%A2%E7%BD%AE%E6%8D%A2%E7%AE%97%E6%B3%95"><span class="toc-text">虚拟内存与页面置换算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-text">页面分配策略</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="toc-text">内存映射文件</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%87%E4%BB%B6"><span class="toc-text">文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-text">文件的概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E9%80%BB%E8%BE%91%E7%BB%93%E6%9E%84"><span class="toc-text">文件的逻辑结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-text">文件目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">文件的物理结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86"><span class="toc-text">文件存储空间管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%85%B1%E4%BA%AB%E4%B8%8E%E4%BF%9D%E6%8A%A4"><span class="toc-text">文件的共享与保护</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#io"><span class="toc-text">I&#x2F;O</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#io%E6%8E%A7%E5%88%B6%E5%99%A8"><span class="toc-text">I&#x2F;O控制器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#io%E6%8E%A7%E5%88%B6%E6%96%B9%E5%BC%8F"><span class="toc-text">I&#x2F;O控制方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#io%E8%BD%AF%E4%BB%B6%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%8E%E6%8E%A5%E5%8F%A3"><span class="toc-text">I&#x2F;O软件层次结构与接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spooling"><span class="toc-text">SPOOLing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%86%B2%E5%8C%BA%E7%AE%A1%E7%90%86"><span class="toc-text">缓冲区管理</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A3%81%E7%9B%98"><span class="toc-text">磁盘</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hdd"><span class="toc-text">HDD</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdd%E7%A3%81%E7%9B%98%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95"><span class="toc-text">HDD磁盘调度算法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdd%E5%BB%B6%E8%BF%9F%E4%BC%98%E5%8C%96"><span class="toc-text">HDD延迟优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdd%E7%A3%81%E7%9B%98%E7%AE%A1%E7%90%86"><span class="toc-text">HDD磁盘管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ssd"><span class="toc-text">SSD</span></a></li></ol></li></ol>
-        </div></details>
+
+      
+        <div class="mobile-view-helper">
+          <p>
+            文前提示：如果移动端访问时未显示侧栏，可以单击
+            <button 
+              id="forceDesktopBtn" 
+              style="
+                padding: .8em .8em;
+                margin: 8px 0;
+                border: 2px solid rgba(227, 241, 249, 0.71);
+                border-radius: 8px;
+                background: linear-gradient(135deg,rgb(171, 199, 219) 0%,rgb(199, 176, 217) 100%);
+                color: white;
+                font-family: Arial, sans-serif;
+                font-size: .9em;
+                font-weight: 600;
+                letter-spacing: 0.5px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 6px rgba(255, 255, 255, 0.1);
+              "
+              onmouseover="
+                this.style.background = 'linear-gradient(135deg, #7a75b0 0%, #4d4d80 100%)';
+                this.style.transform = 'translateY(-.3em)';
+                this.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+              "
+              onmouseout="
+                this.style.background = 'linear-gradient(135deg, rgb(171, 199, 219) 0%, rgb(199, 176, 217) 100%)';
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+              "
+              onmousedown="
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 2px 4px rgba(0,0,0,0.1)';
+              "
+              onmouseup="
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+              "
+            >
+            切换桌面渲染模式
+            </button>  
+            强制启用桌面端渲染以查看目录。
+          </p>
+        </div>
+
+        
+        <script>
+        (function(){
+          const btnHandler = () => {
+            const targetWidth = 1920;
+            const metaViewport = document.querySelector('meta[name="viewport"]') || 
+              document.createElement('meta');
+            metaViewport.name = "viewport";
+            metaViewport.content = `width=${targetWidth}, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no`;
+            document.head.appendChild(metaViewport);
+
+            document.body.style.width = `${targetWidth}px`;
+            setTimeout(() => {
+              document.body.style.width = "100%";
+              window.dispatchEvent(new Event('resize'));
+            }, 100);
+          }
+          document.getElementById('forceDesktopBtn').addEventListener('click', btnHandler);
+        })();
+        </script>
+        
 
       
         <!--
@@ -1219,6 +1274,29 @@ Modified是如出一辙的。</p>
 <p><img src="/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/clock_algorithm_1.jpg" alt="简单CLOCK算法"></p>
 <p><img src="/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/clock_algorithm_2.jpg" alt="改进的CLOCK算法"></p></li>
 </ol>
+<p>这里给出一个用Java模拟的软件LRU算法，类 <code>LRUCache</code>
+应实现以下要求的方法：</p>
+<ul>
+<li><code>LRUCache(int capacity)</code>：以正整数作为容量
+<code>capacity</code> 初始化LRU缓存；</li>
+<li><code>int get(int key)</code> ：如果关键字 <code>key</code>
+存在于缓存中，则返回关键字的值，否则返回 <code>-1</code> 。</li>
+<li><code>void put(int key, int value)</code>：如果关键字
+<code>key</code> 已经存在，则变更其数据值 <code>value</code>
+；如果不存在，则向缓存中插入该组 <code>key-value</code>
+。如果插入操作导致关键字数量超过 <code>capacity</code>
+，则应该逐出最久未使用的关键字。</li>
+<li>函数 <code>get</code> 和 <code>put</code> 必须以 <span class="math inline"><mjx-container class="MathJax" jax="SVG"><svg style="vertical-align: -0.566ex;" xmlns="http://www.w3.org/2000/svg" width="4.618ex" height="2.262ex" role="img" focusable="false" viewbox="0 -750 2041 1000"><g stroke="currentColor" fill="currentColor" stroke-width="0" transform="scale(1,-1)"><g data-mml-node="math"><g data-mml-node="mi"><path data-c="1D442" d="M740 435Q740 320 676 213T511 42T304 -22Q207 -22 138 35T51 201Q50 209 50 244Q50 346 98 438T227 601Q351 704 476 704Q514 704 524 703Q621 689 680 617T740 435ZM637 476Q637 565 591 615T476 665Q396 665 322 605Q242 542 200 428T157 216Q157 126 200 73T314 19Q404 19 485 98T608 313Q637 408 637 476Z"/></g><g data-mml-node="mo" transform="translate(763,0)"><path data-c="28" d="M94 250Q94 319 104 381T127 488T164 576T202 643T244 695T277 729T302 750H315H319Q333 750 333 741Q333 738 316 720T275 667T226 581T184 443T167 250T184 58T225 -81T274 -167T316 -220T333 -241Q333 -250 318 -250H315H302L274 -226Q180 -141 137 -14T94 250Z"/></g><g data-mml-node="mn" transform="translate(1152,0)"><path data-c="31" d="M213 578L200 573Q186 568 160 563T102 556H83V602H102Q149 604 189 617T245 641T273 663Q275 666 285 666Q294 666 302 660V361L303 61Q310 54 315 52T339 48T401 46H427V0H416Q395 3 257 3Q121 3 100 0H88V46H114Q136 46 152 46T177 47T193 50T201 52T207 57T213 61V578Z"/></g><g data-mml-node="mo" transform="translate(1652,0)"><path data-c="29" d="M60 749L64 750Q69 750 74 750H86L114 726Q208 641 251 514T294 250Q294 182 284 119T261 12T224 -76T186 -143T145 -194T113 -227T90 -246Q87 -249 86 -250H74Q66 -250 63 -250T58 -247T55 -238Q56 -237 66 -225Q221 -64 221 250T66 725Q56 737 55 738Q55 746 60 749Z"/></g></g></g></svg></mjx-container></span> 的平均时间复杂度运行。</li>
+</ul>
+<p>如果只使用现有的哈希表，双向链表的节点由开发者自行维护，则可以这样实现，代码性能非常高：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LRUCache</span> {</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    head &lt;- ... &lt;- prev  &lt;- Entry &lt;- next &lt;- ... &lt;- tail</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> HashMap&lt;Integer, Entry&gt; map;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> capacity;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line">    <span class="keyword">private</span> Entry head;</span><br><span class="line">    <span class="keyword">private</span> Entry tail;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">Entry</span> {</span><br><span class="line">        <span class="type">int</span> key, value;</span><br><span class="line">        Entry prev, next;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">Entry</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value, Entry prev, Entry next)</span> {</span><br><span class="line">            <span class="built_in">this</span>.key = key;</span><br><span class="line">            <span class="built_in">this</span>.value = value;</span><br><span class="line">            <span class="built_in">this</span>.prev = prev;</span><br><span class="line">            <span class="built_in">this</span>.next = next;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LRUCache</span><span class="params">(<span class="type">int</span> capacity)</span> {</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        size = <span class="number">0</span>;</span><br><span class="line">        head = <span class="literal">null</span>;</span><br><span class="line">        tail = <span class="literal">null</span>;</span><br><span class="line">        map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;((<span class="type">int</span>) (capacity / <span class="number">0.75f</span>) + <span class="number">1</span>, <span class="number">1.0f</span>);;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">get</span><span class="params">(<span class="type">int</span> key)</span> {</span><br><span class="line">        <span class="keyword">if</span> (map.containsKey(key)) {</span><br><span class="line">            <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">            <span class="keyword">if</span> (e.next != <span class="literal">null</span> &amp;&amp; e.prev != <span class="literal">null</span>) {</span><br><span class="line">                e.next.prev = e.prev;</span><br><span class="line">                e.prev.next = e.next;</span><br><span class="line">            } <span class="keyword">else</span> <span class="keyword">if</span> (e.next == <span class="literal">null</span> &amp;&amp; e.prev != <span class="literal">null</span>) {</span><br><span class="line">                e.prev.next = <span class="literal">null</span>;</span><br><span class="line">                tail = e.prev;</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">                <span class="keyword">return</span> e.value;</span><br><span class="line">            }</span><br><span class="line">            head.prev = e;</span><br><span class="line">            e.prev = <span class="literal">null</span>;</span><br><span class="line">            e.next = head;</span><br><span class="line">            head = e;</span><br><span class="line">            <span class="keyword">return</span> e.value;</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> {</span><br><span class="line">        <span class="keyword">if</span> (map.containsKey(key)) {</span><br><span class="line">            <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">            e.value = value;</span><br><span class="line">            <span class="keyword">if</span> (e.next != <span class="literal">null</span> &amp;&amp; e.prev != <span class="literal">null</span>) {</span><br><span class="line">                e.next.prev = e.prev;</span><br><span class="line">                e.prev.next = e.next;</span><br><span class="line">            } <span class="keyword">else</span> <span class="keyword">if</span> (e.next == <span class="literal">null</span> &amp;&amp; e.prev != <span class="literal">null</span>) {</span><br><span class="line">                e.prev.next = <span class="literal">null</span>;</span><br><span class="line">                tail = e.prev;</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            head.prev = e;</span><br><span class="line">            e.prev = <span class="literal">null</span>;</span><br><span class="line">            e.next = head;</span><br><span class="line">            head = e;</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">if</span> (size == <span class="number">0</span>) {</span><br><span class="line">                <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Entry</span>(key, value, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">                map.put(key, e);</span><br><span class="line">                head = e;</span><br><span class="line">                tail = e;</span><br><span class="line">                size++;</span><br><span class="line">                <span class="keyword">return</span>;</span><br><span class="line">            }</span><br><span class="line">            <span class="keyword">if</span> (size &lt; capacity) {</span><br><span class="line">                <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Entry</span>(key, value, <span class="literal">null</span>, head);</span><br><span class="line">                map.put(key, e);</span><br><span class="line">                head.prev = e;</span><br><span class="line">                head = e;</span><br><span class="line">                size++;</span><br><span class="line">            } <span class="keyword">else</span> {</span><br><span class="line">                <span class="keyword">if</span> (size != <span class="number">1</span>) {</span><br><span class="line">                    <span class="type">Entry</span> <span class="variable">newTail</span> <span class="operator">=</span> tail.prev;</span><br><span class="line">                    newTail.next = <span class="literal">null</span>;</span><br><span class="line">                    map.remove(tail.key);</span><br><span class="line">                    tail = newTail;</span><br><span class="line">                    <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Entry</span>(key, value, <span class="literal">null</span>, head);</span><br><span class="line">                    map.put(key, e);</span><br><span class="line">                    head.prev = e;</span><br><span class="line">                    head = e;</span><br><span class="line">                } <span class="keyword">else</span> {</span><br><span class="line">                    map.remove(head.key);</span><br><span class="line">                    <span class="type">Entry</span> <span class="variable">e</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Entry</span>(key, value, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">                    map.put(key, e);</span><br><span class="line">                    head = e;</span><br><span class="line">                    tail = e;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>我让AI美化了一下我的代码，结合了哨兵节点的机制，代码更容易理解了：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.HashMap;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LRUCache</span> {</span><br><span class="line">    <span class="keyword">class</span> <span class="title class_">Node</span> {</span><br><span class="line">        <span class="type">int</span> key, val;</span><br><span class="line">        Node prev, next;</span><br><span class="line">        Node(<span class="type">int</span> k, <span class="type">int</span> v) { key=k; val=v; }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HashMap&lt;Integer, Node&gt; map = <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Node</span> <span class="variable">head</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(-<span class="number">1</span>, -<span class="number">1</span>), tail = <span class="keyword">new</span> <span class="title class_">Node</span>(-<span class="number">1</span>, -<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> capacity;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LRUCache</span><span class="params">(<span class="type">int</span> capacity)</span> {</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        head.next = tail;</span><br><span class="line">        tail.prev = head;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">get</span><span class="params">(<span class="type">int</span> key)</span> {</span><br><span class="line">        <span class="keyword">if</span> (!map.containsKey(key)) <span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">        <span class="type">Node</span> <span class="variable">node</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">        moveToHead(node);</span><br><span class="line">        <span class="keyword">return</span> node.val;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> {</span><br><span class="line">        <span class="keyword">if</span> (map.containsKey(key)) {</span><br><span class="line">            <span class="type">Node</span> <span class="variable">node</span> <span class="operator">=</span> map.get(key);</span><br><span class="line">            node.val = value;</span><br><span class="line">            moveToHead(node);</span><br><span class="line">        } <span class="keyword">else</span> {</span><br><span class="line">            <span class="keyword">if</span> (map.size() == capacity) {</span><br><span class="line">                map.remove(tail.prev.key);</span><br><span class="line">                removeNode(tail.prev);</span><br><span class="line">            }</span><br><span class="line">            <span class="type">Node</span> <span class="variable">newNode</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Node</span>(key, value);</span><br><span class="line">            map.put(key, newNode);</span><br><span class="line">            addToHead(newNode);</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">addToHead</span><span class="params">(Node node)</span> {</span><br><span class="line">        node.next = head.next;</span><br><span class="line">        node.prev = head;</span><br><span class="line">        head.next.prev = node;</span><br><span class="line">        head.next = node;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">removeNode</span><span class="params">(Node node)</span> {</span><br><span class="line">        node.prev.next = node.next;</span><br><span class="line">        node.next.prev = node.prev;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">moveToHead</span><span class="params">(Node node)</span> {</span><br><span class="line">        removeNode(node);</span><br><span class="line">        addToHead(node);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>如果允许直接使用Java提供的
+<code>LinkedHashMap</code>，代码能够达到最精简的程度：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.LinkedHashMap;</span><br><span class="line"><span class="keyword">import</span> java.util.Map;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">LRUCache</span> {</span><br><span class="line">    <span class="keyword">private</span> LinkedHashMap&lt;Integer, Integer&gt; map;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">int</span> capacity;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">LRUCache</span><span class="params">(<span class="type">int</span> capacity)</span> {</span><br><span class="line">        <span class="built_in">this</span>.capacity = capacity;</span><br><span class="line">        map = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;Integer, Integer&gt;(capacity, <span class="number">0.75f</span>, <span class="literal">true</span>) {</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> <span class="type">boolean</span> <span class="title function_">removeEldestEntry</span><span class="params">(Map.Entry&lt;Integer, Integer&gt; eldest)</span> {</span><br><span class="line">                <span class="keyword">return</span> size() &gt; LRUCache.<span class="built_in">this</span>.capacity;</span><br><span class="line">            }</span><br><span class="line">        };</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">get</span><span class="params">(<span class="type">int</span> key)</span> {</span><br><span class="line">        <span class="keyword">return</span> map.getOrDefault(key, -<span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">put</span><span class="params">(<span class="type">int</span> key, <span class="type">int</span> value)</span> {</span><br><span class="line">        map.put(key, value);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>以上代码的性能都是十分优秀的，如果要阅读我的源码分析以及我编写的其他代码实现，请访问我在力扣（LeetCode）上公开的笔记：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lru-cache/solutions/3667173/lruhuan-cun-cai-da-keng-linkedhashmapyua-prp3/">LRU缓存踩大坑
++ LinkedHashMap源码研究</a>。</p>
 <h2 id="页面分配策略">页面分配策略</h2>
 <p>根据分配固定还是可变、置换是局部的还是全局的，可以得到三种页面分配策略。</p>
 <p><img src="/2025/04/07/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/three_page_allocation_strategies.jpg" alt="三种页面分配策略"></p>
@@ -1548,10 +1626,10 @@ On-Line），通过软件模拟脱机技术用磁盘替代磁带以实现I/O操�
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
-          Table of Contents
+          文章目录
         </li>
         <li class="sidebar-nav-overview">
-          Overview
+          站点概览
         </li>
       </ul>
 
@@ -1563,10 +1641,10 @@ On-Line），通过软件模拟脱机技术用磁盘替代磁带以实现I/O操�
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="Arthurstat"
+    <img class="site-author-image" itemprop="image" alt="Arth"
       src="/images/arthurstat.png">
-  <p class="site-author-name" itemprop="name">Arthurstat</p>
-  <div class="site-description" itemprop="description">Arthurstat's blog</div>
+  <p class="site-author-name" itemprop="name">Arth</p>
+  <div class="site-description" itemprop="description">Arth's blog</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
@@ -1574,20 +1652,18 @@ On-Line），通过软件模拟脱机技术用磁盘替代磁带以实现I/O操�
           <a href="/archives/">
         
           <span class="site-state-item-count">19</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-          
         <span class="site-state-item-count">8</span>
-        <span class="site-state-item-name">categories</span></a>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-          
         <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">tags</span></a>
+        <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
@@ -1625,7 +1701,7 @@ On-Line），通过软件模拟脱机技术用磁盘替代磁带以实现I/O操�
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Arthurstat</span>
+  <span class="author" itemprop="copyrightHolder">Arth</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
