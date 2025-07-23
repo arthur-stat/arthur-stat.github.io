@@ -20,22 +20,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Charles + 安卓模拟器证书抓包教程 前言 考虑到台服、韩服不支持引继，加之安卓设备 root 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root 的模拟器中可以使用证书解密流量，也可以考虑 eCapture，本文介绍证书解密的方式。  国服存在虚拟机检测，非 root 安卓 &#x2F; 模拟器基">
+  <meta name="description" content="Charles + 安卓模拟器证书抓包教程 前言 考虑到台服、韩服不支持引继，加之安卓设备 root 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root 的模拟器中可以使用证书解密流量，也可以考虑 eCapture（但依赖内核版本），本文介绍证书解密的方式。  国服安卓版本存在虚拟机检测，非 r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PJSK 安卓模拟器证书抓包教程">
 <meta property="og:url" content="http://example.com/2025/07/23/pjskcapture/index.html">
 <meta property="og:site_name" content="二三事">
-<meta property="og:description" content="Charles + 安卓模拟器证书抓包教程 前言 考虑到台服、韩服不支持引继，加之安卓设备 root 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root 的模拟器中可以使用证书解密流量，也可以考虑 eCapture，本文介绍证书解密的方式。  国服存在虚拟机检测，非 root 安卓 &#x2F; 模拟器基">
+<meta property="og:description" content="Charles + 安卓模拟器证书抓包教程 前言 考虑到台服、韩服不支持引继，加之安卓设备 root 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root 的模拟器中可以使用证书解密流量，也可以考虑 eCapture（但依赖内核版本），本文介绍证书解密的方式。  国服安卓版本存在虚拟机检测，非 r">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723011131768.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723052808033.png">
-<meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723054242564.png">
+<meta property="og:image" content="http://example.com/2025/07/23/pjskcapture//image-20250723054242564.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723022428768.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723022753750.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723023834677.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723024316245.png">
 <meta property="article:published_time" content="2025-07-22T22:03:18.000Z">
-<meta property="article:modified_time" content="2025-07-22T22:30:01.767Z">
+<meta property="article:modified_time" content="2025-07-23T14:09:05.977Z">
 <meta property="article:author" content="Arth">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723011131768.png">
@@ -239,7 +239,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2025-07-23 06:03:18 / 修改时间：06:30:01" itemprop="dateCreated datePublished" datetime="2025-07-23T06:03:18+08:00">2025-07-23</time>
+              <time title="创建时间：2025-07-23 06:03:18 / 修改时间：22:09:05" itemprop="dateCreated datePublished" datetime="2025-07-23T06:03:18+08:00">2025-07-23</time>
             </span>
 
           
@@ -327,15 +327,22 @@
 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL
 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root
 的模拟器中可以使用证书解密流量，也可以考虑
-eCapture，本文介绍证书解密的方式。</p>
+eCapture（但依赖内核版本），本文介绍证书解密的方式。</p>
 <ul>
-<li>国服存在虚拟机检测，非 root 安卓 / 模拟器基本无解；</li>
+<li>国服安卓版本存在虚拟机检测，非 root 安卓 / 模拟器基本无解；</li>
+<li>日服、国际服安卓用户可以考虑引继抓包，但也可以模拟器抓包；</li>
 <li>对于苹果用户，建议模块抓包，更加便捷。</li>
 </ul>
+<p>注：截止至 2025 年 7 月，主流安卓模拟器内核版本均低于 5.5，eCapture
+在这些设备上无法正常工作。经研究，可能是在低于 5.5 版本的内核上
+<code>bpf_probe_read_user</code>
+无法读取用户态数据导致的，因此本文介绍证书抓包的方法。如果 MuMu
+模拟器更新了系统版本（安卓 13+），稍后我会尝试 eCapture
+的自动化抓包上传方案。</p>
 <h2 id="准备工作">准备工作</h2>
 <p>软件：</p>
 <ol type="1">
-<li>任意安卓模拟器，推荐 <a target="_blank" rel="noopener" href="https://mumu.163.com/">MuMu模拟器</a></li>
+<li>任意可 root 的安卓模拟器，以 <a target="_blank" rel="noopener" href="https://mumu.163.com/">MuMu模拟器</a> 为例</li>
 <li>任意抓包软件，以 <a target="_blank" rel="noopener" href="https://www.charlesproxy.com/download/">Charles</a> 为例</li>
 <li><a target="_blank" rel="noopener" href="https://developer.android.google.cn/tools/releases/platform-tools?hl=zh-cn">Android
 SDK Platform-Tools</a></li>
@@ -343,7 +350,11 @@ SDK Platform-Tools</a></li>
 Windows</a>（OpenSSL 可以仅下载但暂不安装，稍后按照教程安装）</li>
 </ol>
 <p>以下演示以 Windows 环境为例，Mac 同理。</p>
-<p>你至少应该有知道如何解压压缩文件的常识，否则建议借一台苹果设备或找持有苹果设备的朋友帮忙用模块抓包。</p>
+<p>读者至少应该有知道如何解压压缩文件的常识，否则还是建议借一台苹果设备或找持有苹果设备的朋友帮忙用模块抓包。</p>
+<blockquote>
+<p>如果不是第一次按本文方法流程抓包，则直接移步最后一步 <a target="_blank" rel="noopener" href="https://arthur-stat.github.io/2025/07/23/pjskcapture/#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85">开始抓包</a>
+即可！</p>
+</blockquote>
 <h2 id="charles-设置">Charles 设置</h2>
 <ol type="1">
 <li>在 <code>Proxy</code> → <code>Proxy settings</code> 中勾选
@@ -363,10 +374,7 @@ Android SDK Platform-Tools 路径下。</li>
 <h2 id="模拟器设置">模拟器设置</h2>
 <ol type="1">
 <li><p>从右上角设置处进入 <code>设置中心</code>；</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723011131768.png" alt="image-20250723011131768.png">
-<figcaption aria-hidden="true">image-20250723011131768.png</figcaption>
-</figure></li>
+<p><img src="/2025/07/23/pjskcapture/image-20250723011131768.png" alt="设置中心"></p></li>
 <li><p>点击 <code>其他</code> 选项卡，找到 <code>Root 权限</code>，勾选
 <code>开启手机 Root 权限</code>，并点击 <code>保存设置</code>；</p></li>
 <li><p><code>设置中心</code> → <code>磁盘</code> → <code>磁盘共享</code>
@@ -382,10 +390,7 @@ Android SDK Platform-Tools 路径下。</li>
 <p>下载 <a target="_blank" rel="noopener" href="https://slproweb.com/download/Win64OpenSSL-3_5_1.exe">OpenSSL for
 Windows</a> 然后执行安装即可，基本上一直点击确定 /
 继续即可，只有在下面这一步需要特别注意：</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723052808033.png" alt="image-20250723052808033.png">
-<figcaption aria-hidden="true">image-20250723052808033.png</figcaption>
-</figure>
+<p><img src="/2025/07/23/pjskcapture/image-20250723052808033.png" alt="OpenSSL 安装"></p>
 <p>这里需要手动勾选
 <code>The OpenSSL binaries (/bin) directory</code>。</p>
 <p>最后让我们捐赠的选项可以不选，把默认已选择的
@@ -412,10 +417,7 @@ Platform-Tools
 <p>接着，执行 <code>openssl x509 -subject_hash_old -in 证书文件名</code>
 以获得证书的哈希值，其中 <code>证书文件名</code>
 为你此前保存证书时输入的文件名。如果顺利，将得到下面的输出：</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723054242564.png" alt="image-20250723054242564.png">
-<figcaption aria-hidden="true">image-20250723054242564.png</figcaption>
-</figure>
+<p><img src="/2025/07/23/pjskcapture/\image-20250723054242564.png" alt="获取证书哈希值"></p>
 <p>其中第一行的 <code>c866bff9</code>
 即为证书的哈希值（不同的版本、不同的设备上得到的证书哈希值可能不一样）。</p>
 <p>如果你此前将证书存放到了其他位置，在继续下一步前应首先执行命令
@@ -431,29 +433,59 @@ Platform-Tools
 </ul>
 <p>如果顺利，应该能看到返回 <code>connected to 127.0.0.1:7555</code>
 字样，然后输入命令 <code>adb devices</code>
-再次确认，如果顺利，应该能看到返回</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List of devices attached</span><br><span class="line">127.0.0.1:7555  device</span><br></pre></td></tr></table></figure></li>
+再次确认，如果顺利，应该能看到返回结果：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List of devices attached</span><br><span class="line">127.0.0.1:7555  device</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠ 注意：如果此处列出了多个结果，例如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">List of devices attached</span><br><span class="line">127.0.0.1:7555  device</span><br><span class="line">emulator-5554   device</span><br></pre></td></tr></table></figure>
+<p>则下文中执行的 adb 命令需要通过 <code>-s</code> 参数指定设备！</p>
+</blockquote></li>
 <li><p>将证书文件重命名为
 <code>哈希值.0</code>，例如演示中应当将证书重命名为
-<code>c866bff9.0</code>，如果重命名是在资源管理器中操作的务必注意确保操作时未隐藏后缀名，如果不确定请百度
+<code>c866bff9.0</code>，如果重命名是在资源管理器中操作的，则务必注意确保操作时未隐藏后缀名，如果不确定请百度
 “Windows 资源管理器如何显示后缀”；</p></li>
 <li><p>回到终端，在终端中输入命令 <code>adb root</code>
-并回车执行，此时查看模拟器，模拟器内应当弹出询问是否同意操作的弹窗，选择允许，然后再次回到终端；</p></li>
+并回车执行。如果是第一次执行该命令，此时查看模拟器，模拟器内应当弹出询问是否同意操作的弹窗，选择允许，然后再次回到终端；</p>
+<blockquote>
+<p>⚠ 注意：如果此前 <code>adb devices</code>
+返回了多个结果则命令可能执行失败，此时应改为执行命令
+<code>adb -s 目标设备 root</code>，对于 MuMu 模拟器而言通常是
+<code>adb -s 127.0.0.1:7555 root</code>，对于其他模拟器则自行根据
+<code>adb devices</code> 的结果在 <code>-s</code>
+参数后指定目标设备。</p>
+</blockquote>
+<p>当返回结果 <code>restarting adbd as root</code>
+时表示操作成功。</p></li>
 <li><p>执行命令
-<code>adb push 证书新文件名 /system/etc/security/cacerts</code>;</p></li>
+<code>adb push 证书新文件名 /system/etc/security/cacerts</code>;</p>
+<blockquote>
+<p>⚠ 注意：如果此前 <code>adb devices</code>
+返回了多个结果则命令可能执行失败，此时应改为执行命令
+<code>adb -s 目标设备 push 证书新文件名 /system/etc/security/cacerts</code>，对于
+MuMu 模拟器而言通常是
+<code>adb -s 127.0.0.1:7555 push 证书新文件名 /system/etc/security/cacerts</code>，对于其他模拟器则自行根据
+<code>adb devices</code> 的结果在 <code>-s</code>
+参数后指定目标设备。</p>
+</blockquote></li>
 <li><p>执行命令
-<code>adb shell "chmod 664 /system/etc/security/cacerts/证书新文件名"</code>。</p></li>
+<code>adb shell "chmod 664 /system/etc/security/cacerts/证书新文件名"</code>。</p>
+<blockquote>
+<p>⚠ 注意：如果此前 <code>adb devices</code>
+返回了多个结果则命令可能执行失败，此时应改为执行命令
+<code>adb -s 目标设备 shell "chmod 664 /system/etc/security/cacerts/证书新文件名"</code>，对于
+MuMu 模拟器而言通常是
+<code>adb -s 127.0.0.1:7555 shell "chmod 664 /system/etc/security/cacerts/证书新文件名"</code>，对于其他模拟器则自行根据
+<code>adb devices</code> 的结果在 <code>-s</code>
+参数后指定目标设备。</p>
+</blockquote></li>
 </ol>
 <h2 id="开始抓包">开始抓包</h2>
 <p>首先在 Charles 上依次按 <code>Help</code> → <code>SSL Proxying</code>
 →
-<code>Install Charles Root Certificate on a mobile device or remote browser</code>，观察代理
-IP，如下所示：</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723022428768.png" alt="image-20250723022428768.png">
-<figcaption aria-hidden="true">image-20250723022428768.png</figcaption>
-</figure>
-<p>图中的代理 IP 为 <code>26.65.238.248:8888</code>，其中
+<code>Install Charles Root Certificate on a mobile device or remote browser</code>，查看代理
+IP，如下图所示：</p>
+<p><img src="/2025/07/23/pjskcapture/image-20250723022428768.png" alt="查看代理 IP"></p>
+<p>图中可见，当前代理 IP 为 <code>26.65.238.248:8888</code>，其中
 <code>26.65.238.248</code> 为
 <code>代理 IP 地址</code>、<code>8888</code> 为
 <code>代理端口</code>。</p>
@@ -467,26 +499,21 @@ IP，如下所示：</p>
 <p>现在我们可以解密 SSL 流量了。确保 Charles 处于 recording 与 SSL
 proxying
 状态，即右上角的录制图标和解锁图标应当处于选中、启用的状态：</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723022753750.png" alt="image-20250723022753750.png">
-<figcaption aria-hidden="true">image-20250723022753750.png</figcaption>
-</figure>
+<p><img src="/2025/07/23/pjskcapture/image-20250723022753750.png" alt="确保 Charles 正在工作"></p>
 <p>现在回到模拟器内，启动游戏并登录即可抓包。</p>
 <p>以台服为例，登录游戏后回到 Charles，可以看到如下内容：</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723023834677.png" alt="image-20250723023834677.png">
-<figcaption aria-hidden="true">image-20250723023834677.png</figcaption>
-</figure>
+<p><img src="/2025/07/23/pjskcapture/image-20250723023834677.png" alt="抓取 Suite"></p>
 <p>对于台服而言，其中域名 <code>mk-zian-obt-cdn.bytedgame.com</code>
-下的 Suite 就是我们的游戏数据，如果是其他服务器则自行寻找相应的 Suite
-即可。我们对 Suite 右键保存便大功告成：</p>
-<figure>
-<img src="/2025/07/23/pjskcapture/image-20250723024316245.png" alt="image-20250723024316245.png">
-<figcaption aria-hidden="true">image-20250723024316245.png</figcaption>
-</figure>
-<p>如果使用 HarukiBot / Lunabot，在
-https://haruki.seiunx.com/upload_suite 上传我们抓取的 Suite
-便可以使用组卡和 MySekai 查询功能了！</p>
+下的 Suite 就是我们的游戏数据（不包含
+MySekai），如果是其他服务器则自行寻找相应的 Suite 即可。我们对 Suite
+右键保存便大功告成：</p>
+<p><img src="/2025/07/23/pjskcapture/image-20250723024316245.png" alt="保存 Suite"></p>
+<p>如果使用 HarukiBot / Lunabot，在网站 <a target="_blank" rel="noopener" href="https://haruki.seiunx.com/upload_suite">上传Suite数据 | Haruki
+工具箱</a> 上传我们抓取的 Suite 便可以使用组卡功能了！</p>
+<p>MySekai 相关数据同理操作即可获取。待台服更新 MySekai 后本文再补充
+MySekai 数据抓取的案例——绝大部分步骤与 Suite 获取是相同的。</p>
+<p>如果希望对抓取的数据解密并进一步分析，可以参考 <a target="_blank" rel="noopener" href="https://mos9527.com/posts/pjsk/archive-20240105/">Project SEKAI
+逆向 - 笔记归档 | mos9527</a>。</p>
 <h2 id="后记">后记</h2>
 <p>参考文档 1：<a target="_blank" rel="noopener" href="https://mumu.163.com/help/20230306/35047_1076595.html">MuMu模拟器如何将系统磁盘更改为可读写？</a></p>
 <p>参考文档 2：<a target="_blank" rel="noopener" href="https://mumu.163.com/mac/tutorials/certificates-and-packet-capture.html">如何安装证书&amp;抓包？</a></p>
@@ -585,18 +612,18 @@ https://haruki.seiunx.com/upload_suite 上传我们抓取的 Suite
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">8</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
