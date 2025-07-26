@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="安卓模拟器证书抓包 前言 考虑到台服、韩服不支持引继，加之不少实体安卓设备 root 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root 的模拟器中可以使用证书解密流量，也可以考虑 eCapture（但依赖内核版本），本部分将一步一步介绍在模拟器上证书抓包的详细流程。  国服安卓版本存在虚拟机检测">
+  <meta name="description" content="游戏《世界计划：缤纷舞台！》（《初音未来：缤纷舞台！》）用户资产数据的抓取与解密文档。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PJSK 安卓证书抓包教程">
+<meta property="og:title" content="PJSK 证书抓包与 API 解密">
 <meta property="og:url" content="http://example.com/2025/07/23/pjskcapture/index.html">
 <meta property="og:site_name" content="二三事">
-<meta property="og:description" content="安卓模拟器证书抓包 前言 考虑到台服、韩服不支持引继，加之不少实体安卓设备 root 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL 流量），因此台服、韩服的安卓设备用户抓包需要借助模拟器。在 root 的模拟器中可以使用证书解密流量，也可以考虑 eCapture（但依赖内核版本），本部分将一步一步介绍在模拟器上证书抓包的详细流程。  国服安卓版本存在虚拟机检测">
+<meta property="og:description" content="游戏《世界计划：缤纷舞台！》（《初音未来：缤纷舞台！》）用户资产数据的抓取与解密文档。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723011131768.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723052808033.png">
@@ -36,8 +36,9 @@
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723023834677.png">
 <meta property="og:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723024316245.png">
 <meta property="article:published_time" content="2025-07-22T22:03:18.000Z">
-<meta property="article:modified_time" content="2025-07-25T11:59:25.705Z">
+<meta property="article:modified_time" content="2025-07-26T15:37:46.420Z">
 <meta property="article:author" content="Arth">
+<meta property="article:tag" content="PJSK抓包">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2025/07/23/pjskcapture/image-20250723011131768.png">
 
@@ -54,7 +55,7 @@
   };
 </script>
 
-  <title>PJSK 安卓证书抓包教程 | 二三事</title>
+  <title>PJSK 证书抓包与 API 解密 | 二三事</title>
   
 
 
@@ -228,7 +229,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          PJSK 安卓证书抓包教程
+          PJSK 证书抓包与 API 解密
         </h1>
 
         <div class="post-meta">
@@ -246,10 +247,20 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2025-07-25 19:59:25" itemprop="dateModified" datetime="2025-07-25T19:59:25+08:00">2025-07-25</time>
+                <time title="修改时间：2025-07-26 23:37:46" itemprop="dateModified" datetime="2025-07-26T23:37:46+08:00">2025-07-26</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PJSK%E6%8A%93%E5%8C%85/" itemprop="url" rel="index"><span itemprop="name">PJSK抓包</span></a>
+                </span>
+            </span>
 
           
+            <div class="post-description">游戏《世界计划：缤纷舞台！》（《初音未来：缤纷舞台！》）用户资产数据的抓取与解密文档。</div>
 
         </div>
       </header>
@@ -327,7 +338,14 @@
         
 
       
-        <h1 id="安卓模拟器证书抓包">安卓模拟器证书抓包</h1>
+        <h1 id="引言">引言</h1>
+<p>在本文中，我们将抓取 PJSK
+用户资产数据并解密。<strong><em>如果不需要进一步解密与分析，将获取到的加密用户资产数据文件上传至各
+bot 提供的接口即可。</em></strong>请按需阅读各章节~</p>
+<p>本文主要介绍通过证书抓取用户资产数据并解密数据文件的方法，其中逆向与解密的可行方案主要参考自
+<a target="_blank" rel="noopener" href="https://mos9527.com/posts/pjsk/archive-20240105/">Project SEKAI
+逆向 - 笔记归档 | mos9527</a>。</p>
+<h1 id="安卓模拟器证书抓包">安卓模拟器证书抓包</h1>
 <h2 id="前言">前言</h2>
 <p>考虑到台服、韩服不支持引继，加之不少实体安卓设备 root
 困难（无论是否经过自定义证书，至少需要 root 才能解密 SSL
@@ -335,7 +353,7 @@
 的模拟器中可以使用证书解密流量，也可以考虑
 eCapture（但依赖内核版本），本部分将一步一步介绍在模拟器上证书抓包的详细流程。</p>
 <ul>
-<li>国服安卓版本存在虚拟机检测和代理检测（SSL Pinning），非 root
+<li>国服安卓版本存在虚拟机检测和代理检测（通过 SSL Pinning），非 root
 安卓设备 / 模拟器基本无解；</li>
 <li>日服、国际服安卓用户可以考虑引继抓包，但也可以模拟器抓包；</li>
 <li>对于苹果用户，建议模块抓包，更加便捷。</li>
@@ -538,8 +556,6 @@ MySekai），如果是其他服务器则自行寻找相应的 Suite 即可。我
 <p>如果使用 HarukiBot / Lunabot，在网站 <a target="_blank" rel="noopener" href="https://haruki.seiunx.com/upload_suite">上传Suite数据 | Haruki
 工具箱</a> 上传我们抓取的 Suite 便可以使用组卡功能了！</p>
 <p>MySekai 的数据按相同流程操作即可获取，仅仅是 URL 存在区别。</p>
-<p>如果希望对抓取的数据解密并进一步分析，可以参考 <a target="_blank" rel="noopener" href="https://mos9527.com/posts/pjsk/archive-20240105/">Project SEKAI
-逆向 - 笔记归档 | mos9527</a>。</p>
 <h1 id="实体安卓设备证书抓包">实体安卓设备证书抓包</h1>
 <h2 id="前言-1">前言</h2>
 <p>由于谷歌安全策略的限制，非 root
@@ -630,15 +646,18 @@ Magisk，此时安卓设备上可能会弹出是否允许 Shell 获取 root
 Pinning）。如果在开启代理后登录被提示
 <code>网络连接异常，请稍后再试</code>，大概率是代理被检测。</p>
 </blockquote>
-<h1 id="苹果为安卓模块抓包">苹果为安卓模块抓包（?）</h1>
+<h1 id="苹果设备证书抓包">苹果设备证书抓包</h1>
+<blockquote>
+<p>苹果设备的证书抓包与上文安卓设备证书抓包没有任何本质区别，只不过在流程上较之安卓设备简化许多，因为苹果允许用户直接自行安装并信任证书。</p>
+<p>因此，苹果如何证书抓包就不过多介绍了，因为没有任何复杂的操作，在按提示安装并信任证书以后，与安卓设备证书抓包流程是一模一样的——配置代理，然后使用代理软件解密
+SSL 流量。</p>
+</blockquote>
+<h1 id="苹果设备模块转发抓包">苹果设备模块转发抓包</h1>
 <p>这一方法适用于任何服务器，即使是国服。缺点亦显而易见，你需要一台苹果设备。</p>
 <p>我们的目的是抓取来自服务器的原始账户资产数据，例如 Suite 与 MySekai
 数据。</p>
 <blockquote>
-<p>苹果设备的证书抓包与上文安卓设备证书抓包没有任何本质区别，只不过在流程上较之安卓设备简化许多，因为苹果允许用户直接自行安装并信任证书。</p>
-<p>因此，苹果如何证书抓包就不过多介绍了，安装并信任证书以后与安卓设备证书抓包流程是一模一样的——配置代理，然后使用代理软件解密
-SSL
-流量。本部分主要介绍模块抓包，因为这一方法更不易被检测，全服务器适用，包括限制最多的国服。</p>
+<p>本部分主要介绍模块抓包，因为这一方法更不易被检测，全服务器适用，包括限制最多的国服。</p>
 </blockquote>
 <h2 id="准备工作-2">准备工作</h2>
 <p>硬件：</p>
@@ -654,6 +673,8 @@ Termux 运行 Python，所以移动设备也可以做到，但可能操作不便
 Shadowrocket 模块做演示，其他软件灵活调整即可）</li>
 <li>Python3</li>
 </ol>
+<p>按 <a target="_blank" rel="noopener" href="https://bot.teaphenby.com/public/tutorial/tutorial.html#%E6%A8%A1%E5%9D%97%E6%8A%93%E5%8C%85">世界计划抓包教程
+· 模块抓包 | ルナ茶</a> 完成 Shadowrocket 模块抓包的前置准备工作。</p>
 <h2 id="模块配置">模块配置</h2>
 <blockquote>
 <p>魔改模块配置基于 <a target="_blank" rel="noopener" href="https://bot.teaphenby.com/public/tutorial/modules.html">Lunabot烤抓包模块
@@ -672,13 +693,45 @@ URL：</p>
 <figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!name=国服游戏数据本地转发</span></span><br><span class="line"><span class="comment">#!desc=抓取游戏数据并转发到本地计算机</span></span><br><span class="line"><span class="comment">#!author=魔改自NeuraXmy</span></span><br><span class="line"><span class="comment">#!mitm=2</span></span><br><span class="line"><span class="comment">#!total=3</span></span><br><span class="line"></span><br><span class="line"><span class="section">[URL Rewrite]</span></span><br><span class="line">^https:\/\/submit\.backtrace\.io\/  reject</span><br><span class="line"></span><br><span class="line"><span class="section">[Script]</span></span><br><span class="line"><span class="attr">SCRIPT_cn_suite</span> = type=http-response, requires-body=<span class="number">1</span>, binary-body-mode=<span class="number">1</span>, max-size=<span class="number">100000000</span>, timeout=<span class="number">60</span>, pattern=^https:\/\/mkcn-prod-public-<span class="number">60001</span>-<span class="number">1</span>\.dailygn\.com\/api\/suite\/user\/(\d+)$, script-path=http://<span class="number">192.168</span>.<span class="number">1.12</span>:<span class="number">8000</span>/upload.js</span><br><span class="line"></span><br><span class="line"><span class="section">[Mitm]</span></span><br><span class="line"><span class="attr">hostname</span>=%APPEND% mkcn-prod-public-<span class="number">60001</span>-<span class="number">1</span>.dailygn.com, submit.backtrace.io</span><br></pre></td></tr></table></figure>
 <p>模块的使用方法请移步 <a target="_blank" rel="noopener" href="https://bot.teaphenby.com/public/tutorial/tutorial.html#%E6%A8%A1%E5%9D%97%E6%8A%93%E5%8C%85">世界计划抓包教程
 · 模块抓包 | ルナ茶</a>。</p>
+<!--
+#!url=https://bot.teaphenby.com/public/modules/jp_all_force.sgmodule
+#!name=LunaBot世界计划抓包模块-日服(MysekaiForce+Suite)
+#!desc=抓取世界计划日服游戏的MysekaiForce+Suite数据并上传到bot服务器
+#!homepage=https://bot.teaphenby.com/public/tutorial/tutorial.html
+#!author=NeuraXmy
+#!redirect=2
+#!mitm=2
+#!total=4
+
+[URL Rewrite]
+^https:\/\/production-game-api\.sekai\.colorfulpalette\.org\/api\/user\/(\d+)\/mysekai\?isForceAllReloadOnlyMysekai\=(True|False)$ https://bot.teaphenby.com/api/jp/user/$1/upload/mysekai 307
+^https:\/\/submit\.backtrace\.io\/  reject
+
+[Script]
+SCRIPT_jp_all_force_1 = type=http-response, requires-body=1, binary-body-mode=1, max-size=100000000, timeout=60, pattern=^https:\/\/production-game-api\.sekai\.colorfulpalette\.org\/api\/suite\/user\/(\d+)$, script-path=https://bot.teaphenby.com/public/scripts/upload.js
+
+[Mitm]
+hostname=%APPEND% production-game-api.sekai.colorfulpalette.org, submit.backtrace.io
+-->
 <h2 id="python-脚本">Python 脚本</h2>
 <p>编写代码，为模块生成远程 JavaScript
 脚本，同时监听来自模块转发的数据。</p>
+<p>在使用脚本之前，记得修改 <code>LOCAL_IP</code>！</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> http.server</span><br><span class="line"><span class="keyword">import</span> socketserver</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urlparse</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"></span><br><span class="line">PORT = <span class="number">8000</span></span><br><span class="line">LOCAL_IP = <span class="string">&#x27;192.168.1.12&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">extract_api_type</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="keyword">match</span> = re.search(<span class="string">r&#x27;/api/([^/]+)&#x27;</span>, url)</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">match</span>:</span><br><span class="line">        api_type = <span class="keyword">match</span>.group(<span class="number">1</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;mysekai&#x27;</span> <span class="keyword">in</span> api_type.lower():</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;mysekai&#x27;</span></span><br><span class="line">        <span class="keyword">return</span> api_type.lower()</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;unknown&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generate_filename</span>(<span class="params">api_type, original_url</span>):</span><br><span class="line">    timestamp = datetime.now().strftime(<span class="string">&quot;%Y%m%d_%H%M%S&quot;</span>)</span><br><span class="line">    user_id = re.search(<span class="string">r&#x27;/user/(\d+)&#x27;</span>, original_url)</span><br><span class="line">    user_str = <span class="string">f&quot;_user<span class="subst">&#123;user_id.group(<span class="number">1</span>)&#125;</span>&quot;</span> <span class="keyword">if</span> user_id <span class="keyword">else</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">f&quot;<span class="subst">&#123;api_type&#125;</span><span class="subst">&#123;user_str&#125;</span>_<span class="subst">&#123;timestamp&#125;</span>_<span class="subst">&#123;os.getpid()&#125;</span>.bin&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">RequestHandler</span>(http.server.SimpleHTTPRequestHandler):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_GET</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> <span class="variable language_">self</span>.path == <span class="string">&#x27;/upload.js&#x27;</span>:</span><br><span class="line">            js_content = <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">            const upload = () =&gt; &#123;</span></span><br><span class="line"><span class="string">                $httpClient.post(&#123;</span></span><br><span class="line"><span class="string">                    url: &quot;http://%s:%d/upload&quot;,</span></span><br><span class="line"><span class="string">                    headers: &#123; </span></span><br><span class="line"><span class="string">                        &quot;X-Original-Url&quot;: $request.url,</span></span><br><span class="line"><span class="string">                        &quot;X-Request-Path&quot;: $request.path</span></span><br><span class="line"><span class="string">                    &#125;,</span></span><br><span class="line"><span class="string">                    body: $response.body</span></span><br><span class="line"><span class="string">                &#125;, (error) =&gt; $done(&#123;&#125;));</span></span><br><span class="line"><span class="string">            &#125;;</span></span><br><span class="line"><span class="string">            upload();</span></span><br><span class="line"><span class="string">            &quot;&quot;&quot;</span> % (LOCAL_IP, PORT)</span><br><span class="line"></span><br><span class="line">            js_content = js_content.strip()</span><br><span class="line">            <span class="variable language_">self</span>.send_response(<span class="number">200</span>)</span><br><span class="line">            <span class="variable language_">self</span>.send_header(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;application/javascript; charset=utf-8&#x27;</span>)</span><br><span class="line">            <span class="variable language_">self</span>.send_header(<span class="string">&#x27;Cache-Control&#x27;</span>, <span class="string">&#x27;no-store, no-cache, must-revalidate&#x27;</span>)</span><br><span class="line">            <span class="variable language_">self</span>.send_header(<span class="string">&#x27;Pragma&#x27;</span>, <span class="string">&#x27;no-cache&#x27;</span>)</span><br><span class="line">            <span class="variable language_">self</span>.send_header(<span class="string">&#x27;Expires&#x27;</span>, <span class="string">&#x27;0&#x27;</span>)</span><br><span class="line">            <span class="variable language_">self</span>.send_header(<span class="string">&#x27;Content-Length&#x27;</span>, <span class="built_in">str</span>(<span class="built_in">len</span>(js_content.encode(<span class="string">&#x27;utf-8&#x27;</span>))))</span><br><span class="line">            <span class="variable language_">self</span>.end_headers()</span><br><span class="line">            <span class="variable language_">self</span>.wfile.write(js_content.encode(<span class="string">&#x27;utf-8&#x27;</span>))</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.send_response(<span class="number">404</span>)</span><br><span class="line">        <span class="variable language_">self</span>.end_headers()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">do_POST</span>(<span class="params">self</span>):</span><br><span class="line">        original_url = <span class="variable language_">self</span>.headers.get(<span class="string">&#x27;X-Original-Url&#x27;</span>, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">        api_type = extract_api_type(original_url)</span><br><span class="line">        filename = generate_filename(api_type, original_url)</span><br><span class="line">        content_length = <span class="built_in">int</span>(<span class="variable language_">self</span>.headers[<span class="string">&#x27;Content-Length&#x27;</span>])</span><br><span class="line">        received_data = <span class="variable language_">self</span>.rfile.read(content_length)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            f.write(received_data)</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Saved [<span class="subst">&#123;api_type.upper()&#125;</span>]: <span class="subst">&#123;filename&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Source URL: <span class="subst">&#123;original_url[:<span class="number">100</span>]&#125;</span><span class="subst">&#123;<span class="string">&#x27;...&#x27;</span> <span class="keyword">if</span> <span class="built_in">len</span>(original_url) &gt; <span class="number">100</span> <span class="keyword">else</span> <span class="string">&#x27;&#x27;</span>&#125;</span>&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;File Size: <span class="subst">&#123;<span class="built_in">len</span>(received_data)/<span class="number">1024</span>:<span class="number">.2</span>f&#125;</span> KB\n&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.send_response(<span class="number">200</span>)</span><br><span class="line">        <span class="variable language_">self</span>.send_header(<span class="string">&#x27;Content-Type&#x27;</span>, <span class="string">&#x27;text/plain; charset=utf-8&#x27;</span>)</span><br><span class="line">        <span class="variable language_">self</span>.end_headers()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Universal Data Receiver running at http://0.0.0.0:<span class="subst">&#123;PORT&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;File naming format: [api_type]_[user]_[timestamp]_[pid].bin\n&quot;</span>)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">with</span> socketserver.TCPServer((<span class="string">&quot;&quot;</span>, PORT), RequestHandler) <span class="keyword">as</span> httpd:</span><br><span class="line">            httpd.serve_forever()</span><br><span class="line">    <span class="keyword">except</span> KeyboardInterrupt:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;\nServer stopped by user&quot;</span>)</span><br></pre></td></tr></table></figure>
 <h2 id="开始抓包-2">开始抓包</h2>
 <p>启动 Python 脚本，启用模块并登录游戏，抓取的数据将保存在 Python
 脚本当前的工作路径。</p>
+<h1 id="逆向工程与-api-解密">逆向工程与 API 解密</h1>
+<p>这部分工作主要参考了 <a target="_blank" rel="noopener" href="https://mos9527.com/posts/pjsk/archive-20240105/">Project SEKAI
+逆向 - 笔记归档 | mos9527</a> 的研究成果，十分感谢！</p>
+<p>以 Suite 为例。</p>
+<h2 id="sssekai-工具库直接解密">sssekai 工具库直接解密</h2>
+<p>安装由 <a target="_blank" rel="noopener" href="https://github.com/mos9527/">mos9527</a> 编写的工具库
+<code>sssekai</code>：<code>pip install -U sssekai</code>，然后执行命令
+<code>sssekai apidecrypt mysuite.bin suite.json</code>
+即可直接得到明文数据。</p>
+<h2 id="逆向密钥并解密">逆向密钥并解密</h2>
+<p>待更新……</p>
 <h1 id="后记">后记</h1>
 <p>参考文档 1：<a target="_blank" rel="noopener" href="https://mumu.163.com/help/20230306/35047_1076595.html">MuMu模拟器如何将系统磁盘更改为可读写？
 | MuMu模拟器</a></p>
@@ -686,8 +739,10 @@ URL：</p>
 | MuMu模拟器</a></p>
 <p>参考文档 3：<a target="_blank" rel="noopener" href="https://bot.teaphenby.com/public/tutorial/tutorial.html">世界计划抓包教程
 | ルナ茶</a></p>
+<p>参考文档 4：<a target="_blank" rel="noopener" href="https://mos9527.com/posts/pjsk/archive-20240105/">Project SEKAI
+逆向 - 笔记归档 | mos9527</a></p>
 <p>作者：<a target="_blank" rel="noopener" href="https://arthur-stat.github.io/">等待雨晴</a>，作于
-2025-7-23，更新于 2025-7-25</p>
+2025-7-23，更新于 2025-7-26</p>
 
     </div>
 
@@ -696,6 +751,9 @@ URL：</p>
     
 
       <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/PJSK%E6%8A%93%E5%8C%85/" rel="tag"># PJSK抓包</a>
+          </div>
 
         
 
@@ -765,7 +823,7 @@ URL：</p>
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%8D%93%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%AF%81%E4%B9%A6%E6%8A%93%E5%8C%85"><span class="nav-text">安卓模拟器证书抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#charles-%E8%AE%BE%E7%BD%AE"><span class="nav-text">Charles 设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-text">模拟器设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openssl-%E5%AE%89%E8%A3%85"><span class="nav-text">OpenSSL 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adb-%E6%93%8D%E4%BD%9C%E8%AF%81%E4%B9%A6%E5%AE%89%E8%A3%85"><span class="nav-text">adb 操作（证书安装）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85"><span class="nav-text">开始抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E5%AE%89%E5%8D%93%E8%AE%BE%E5%A4%87%E8%AF%81%E4%B9%A6%E6%8A%93%E5%8C%85"><span class="nav-text">实体安卓设备证书抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80-1"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%AE%9E%E4%BD%93%E8%AE%BE%E5%A4%87%E4%B8%8A%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6"><span class="nav-text">在实体设备上安装证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85-1"><span class="nav-text">开始抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8B%B9%E6%9E%9C%E4%B8%BA%E5%AE%89%E5%8D%93%E6%A8%A1%E5%9D%97%E6%8A%93%E5%8C%85"><span class="nav-text">苹果为安卓模块抓包（?）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-2"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE"><span class="nav-text">模块配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-%E8%84%9A%E6%9C%AC"><span class="nav-text">Python 脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85-2"><span class="nav-text">开始抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-text">后记</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E5%8D%93%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%AF%81%E4%B9%A6%E6%8A%93%E5%8C%85"><span class="nav-text">安卓模拟器证书抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#charles-%E8%AE%BE%E7%BD%AE"><span class="nav-text">Charles 设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E6%8B%9F%E5%99%A8%E8%AE%BE%E7%BD%AE"><span class="nav-text">模拟器设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#openssl-%E5%AE%89%E8%A3%85"><span class="nav-text">OpenSSL 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#adb-%E6%93%8D%E4%BD%9C%E8%AF%81%E4%B9%A6%E5%AE%89%E8%A3%85"><span class="nav-text">adb 操作（证书安装）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85"><span class="nav-text">开始抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%9E%E4%BD%93%E5%AE%89%E5%8D%93%E8%AE%BE%E5%A4%87%E8%AF%81%E4%B9%A6%E6%8A%93%E5%8C%85"><span class="nav-text">实体安卓设备证书抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80-1"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E5%AE%9E%E4%BD%93%E8%AE%BE%E5%A4%87%E4%B8%8A%E5%AE%89%E8%A3%85%E8%AF%81%E4%B9%A6"><span class="nav-text">在实体设备上安装证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85-1"><span class="nav-text">开始抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8B%B9%E6%9E%9C%E8%AE%BE%E5%A4%87%E8%AF%81%E4%B9%A6%E6%8A%93%E5%8C%85"><span class="nav-text">苹果设备证书抓包</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%8B%B9%E6%9E%9C%E8%AE%BE%E5%A4%87%E6%A8%A1%E5%9D%97%E8%BD%AC%E5%8F%91%E6%8A%93%E5%8C%85"><span class="nav-text">苹果设备模块转发抓包</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-2"><span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%A1%E5%9D%97%E9%85%8D%E7%BD%AE"><span class="nav-text">模块配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#python-%E8%84%9A%E6%9C%AC"><span class="nav-text">Python 脚本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E6%8A%93%E5%8C%85-2"><span class="nav-text">开始抓包</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%80%86%E5%90%91%E5%B7%A5%E7%A8%8B%E4%B8%8E-api-%E8%A7%A3%E5%AF%86"><span class="nav-text">逆向工程与 API 解密</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sssekai-%E5%B7%A5%E5%85%B7%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%A7%A3%E5%AF%86"><span class="nav-text">sssekai 工具库直接解密</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%86%E5%90%91%E5%AF%86%E9%92%A5%E5%B9%B6%E8%A7%A3%E5%AF%86"><span class="nav-text">逆向密钥并解密</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%8E%E8%AE%B0"><span class="nav-text">后记</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -787,12 +845,12 @@ URL：</p>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
-        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
