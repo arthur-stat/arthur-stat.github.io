@@ -1,0 +1,37 @@
+<svg width="550" height="420" xmlns="http://www.w3.org/2000/svg">
+
+ <g>
+  <title>Layer 1</title>
+  <rect id="svg_4" height="0" width="2" y="170.47182" x="274.59025" stroke="#000" fill="#fff"/>
+  <line stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_7" y2="209.54014" x2="492.59024" y1="211.54014" x1="60.59023" fill="none"/>
+  <line stroke-dasharray="2,2" stroke-width="5" stroke="#000" stroke-linecap="undefined" stroke-linejoin="undefined" id="svg_9" y2="415.60846" x2="276.59025" y1="7.60845" x1="276.59025" fill="none"/>
+  <line id="svg_11" y2="360.47181" x2="423.59024" y1="63.47182" x1="132.59025" stroke="#000" fill="none"/>
+  <line id="svg_13" y2="355.47181" x2="134.59025" y1="62.47182" x1="421.59024" stroke="#000" fill="none"/>
+  <text transform="matrix(1.39263 0 0 1.29541 -105.277 -37.3189)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_15" y="73.0625" x="154.48839" stroke-dasharray="2,2" fill="#000000">sin</text>
+  <text style="cursor: move;" transform="matrix(1.39263 0 0 1.29541 -105.277 -37.3189)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" stroke-width="0" id="svg_18" y="73.0625" x="362.16448" stroke-dasharray="2,2" fill="#000000">cos</text>
+  <text transform="matrix(1.30899 0 0 1.22689 -44.122 -65.7517)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_20" y="231.62081" x="39.47479" stroke-dasharray="2,2" stroke-width="0" fill="#000000">tan</text>
+  <text transform="matrix(1.30899 0 0 1.22689 -44.122 -65.7517)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_21" y="231.62104" x="39.47446" stroke-dasharray="2,2" stroke-width="0" fill="#000000">tan</text>
+  <text transform="matrix(1.30899 0 0 1.22689 -44.122 -65.7517)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_22" y="231.62104" x="413.21006" stroke-dasharray="2,2" stroke-width="0" fill="#000000">cot</text>
+  <text transform="matrix(1.31913 0 0 1.28053 -79.0341 150.452)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_23" y="179.77242" x="142.40233" stroke-dasharray="2,2" stroke-width="0" fill="#000000">sec</text>
+  <line id="svg_30" y2="185.19776" x2="301.24951" y1="185.19776" x1="253.10136" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line stroke="#000" id="svg_31" y2="164.82739" x2="320.23099" y1="164.82739" x1="233.19395" stroke-dasharray="2,2" fill="none"/>
+  <line stroke="#000" id="svg_32" y2="144.45702" x2="340.1384" y1="144.45702" x1="213.28654" stroke-dasharray="2,2" fill="none"/>
+  <line stroke="#000" id="svg_33" y2="275.47554" x2="340.1384" y1="275.47554" x1="213.28654" stroke-dasharray="2,2" fill="none"/>
+  <line id="svg_42" y2="235.59117" x2="301.71238" y1="235.93839" x1="252.05961" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_43" y2="256.4245" x2="321.15682" y1="256.4245" x1="232.26795" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_45" y2="121.00785" x2="363.51793" y1="121.70229" x1="189.2124" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_46" y2="298.7856" x2="363.51793" y1="299.48005" x1="189.2124" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_47" y2="224.84872" x2="291.34914" y1="195.68205" x1="291.34914" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_48" y2="224.84872" x2="261.86196" y1="195.68205" x1="261.86196" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_49" y2="247.92564" x2="313.14401" y1="173.56667" x1="312.8235" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_50" y2="247.92564" x2="241.02863" y1="173.56667" x1="240.70812" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line id="svg_51" y2="267.47692" x2="332.37478" y1="153.69488" x1="331.73375" stroke-dasharray="2,2" stroke="#000" fill="none"/>
+  <line stroke="#000" id="svg_52" y2="266.51538" x2="222.7594" y1="154.97693" x1="222.11838" stroke-dasharray="2,2" fill="none"/>
+  <line stroke-dasharray="2,2" id="svg_53" y2="289.20766" x2="354.16965" y1="131.83588" x1="353.84914" stroke="#000" fill="none"/>
+  <line stroke="#000" stroke-dasharray="2,2" id="svg_54" y2="286.32304" x2="202.24658" y1="134.7205" x1="201.92607" fill="none"/>
+  <line stroke-width="2" id="svg_55" y2="328.2961" x2="159.67305" y1="211.22295" x1="93.8194" stroke-dasharray="5,2,2,2,2,2" stroke="#000" fill="none"/>
+  <line stroke-width="2" id="svg_56" y2="327.07659" x2="393.81934" y1="210.00344" x1="461.50226" stroke-dasharray="5,2,2,2,2,2" stroke="#000" fill="none"/>
+  <line stroke-width="2" id="svg_57" y2="85.75332" x2="397.85444" y1="85.13604" x1="153.41" stroke-dasharray="5,2,2,2,2,2" stroke="#000" fill="none"/>
+  <text transform="matrix(1.31913 0 0 1.28053 -79.0341 150.452)" stroke="#000" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24" id="svg_58" y="181.70347" x="364.24581" stroke-dasharray="2,2" stroke-width="0" fill="#000000">csc</text>
+ </g>
+</svg>
